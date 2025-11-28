@@ -4,7 +4,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python3 init_db_postgres.py && gunicorn app:app",
+    "startCommand": ". .venv/bin/activate && python init_db_postgres.py && gunicorn app:app",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
