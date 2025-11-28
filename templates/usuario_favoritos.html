@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Favoritos - Campo Finder{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-8">
+    <!-- Header -->
+    <div class="mb-8">
+        <a href="{{ url_for('dashboard_usuario') }}" class="inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 mb-4 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            <span>Volver al Dashboard</span>
+        </a>
+        <h1 class="text-4xl font-black text-white mb-2">Mis Canchas Favoritas</h1>
+        <p class="text-primary-200">Tus lugares preferidos para jugar</p>
+    </div>
+
+    {% if favoritos and favoritos|length > 0 %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for cancha in favoritos %}
+                <div class="group bg-primary-950/80 backdrop-blur-md rounded-2xl overflow-hidden border border-primary-800/50 hover:border-primary-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-900/20 flex flex-col h-full relative" id="fav-card-{{ cancha['id_cancha'] }}">
+                    <!-- Imagen -->
+                    <div class="relative h-56 overflow-hidden">
+                        {% if cancha['imagen_url'] %}
+                            <img src="{{ url_for('static', filename=cancha['imagen_url'].replace('static/', '')) }}" 
+                                 alt="{{ cancha['nombre'] }}" 
+                                 class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                                 onerror="this.src='{{ url_for('static', filename='imagenes/cancha1.png') }}'">
+                        {% else %}
+                            <div class="w-full h-full bg-gradient-to-br from-primary-800 to-primary-900 flex items-center justify-center">
+                                <span class="text-6xl opacity-50">⚽</span>
+                            </div>
+                        {% endif %}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        
+                        <!-- Precio Badge -->
+                        <div class="absolute bottom-4 right-4 bg-primary-600/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-primary-400/30 shadow-lg">
+                            <span class="text-white font-bold text-lg">${{ "{:,.0f}".format(cancha['precio']|float).replace(",", ".") }}</span>
+                            <span class="text-primary-200 text-xs">/hora</span>
+                        </div>
+
+                        <!-- Botón Eliminar Favorito -->
+                        <button onclick="eliminarFavorito({{ cancha['id_cancha'] }})" 
+                                class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:bg-red-500/80 transition-all group/btn"
+                                title="Quitar de favoritos">
+                            <span class="text-xl text-red-500 group-hover/btn:text-white transition-colors">🗑️</span>
+                        </button>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-primary-400 transition-colors">{{ cancha['nombre'] }}</h3>
+                            
+                            {% if cancha['direccion'] %}
+                                <div class="flex items-start gap-2 text-gray-400 mb-4 text-sm">
+                                    <span class="mt-0.5">📍</span>
+                                    <span class="line-clamp-1">{{ cancha['direccion'] }}</span>
+                                </div>
+                            {% endif %}
+
+                            <p class="text-gray-300 mb-6 line-clamp-3 text-sm leading-relaxed">
+                                {{ cancha['descripcion'] }}
+                            </p>
+                        </div>
+
+                        <!-- Botón Reservar -->
+                        <a href="{{ url_for('usuario_reservar', id_cancha=cancha['id_cancha']) }}" 
+                           class="w-full py-3 bg-white/5 hover:bg-primary-600 text-white font-bold rounded-xl border border-white/10 hover:border-primary-500 transition-all flex items-center justify-center gap-2 group/btn">
+                            <span>📅</span>
+                            <span>Reservar Ahora</span>
+                            <svg class="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Empty State -->
+        <div class="flex flex-col items-center justify-center py-20 bg-primary-950/50 backdrop-blur-sm rounded-3xl border border-primary-800/30">
+            <div class="w-24 h-24 rounded-full bg-primary-900/50 flex items-center justify-center mb-6">
+                <span class="text-5xl">❤️</span>
+            </div>
+            <h2 class="text-3xl font-bold text-white mb-2">No tienes favoritos aún</h2>
+            <p class="text-gray-400 text-center max-w-md mb-8">
+                Guarda las canchas que más te gusten para acceder a ellas rápidamente.
+            </p>
+            <a href="{{ url_for('usuario_explorar') }}" class="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-white font-bold rounded-xl transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-primary-600/30">
+                Explorar Canchas
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+async function eliminarFavorito(idCancha) {
+    if (!confirm('¿Estás seguro de que deseas quitar esta cancha de tus favoritos?')) return;
+
+    try {
+        const response = await fetch(`/usuario/favoritos/eliminar/${idCancha}`, { method: 'POST' });
+        const data = await response.json();
+        
+        if (data.success) {
+            const card = document.getElementById(`fav-card-${idCancha}`);
+            card.style.transform = 'scale(0.9)';
+            card.style.opacity = '0';
+            setTimeout(() => {
+                card.remove();
+                // Si no quedan cards, recargar para mostrar empty state
+                if (document.querySelectorAll('[id^="fav-card-"]').length === 0) {
+                    window.location.reload();
+                }
+            }, 300);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un error al eliminar de favoritos');
+    }
+}
+</script>
+{% endblock %}

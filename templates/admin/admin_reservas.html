@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestión de Reservas - CampoFinder{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row gap-6">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 bg-white rounded-lg shadow-lg p-4 h-fit">
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <span>🛡️</span> Admin Panel
+            </h2>
+        </div>
+        <nav class="space-y-2">
+            <a href="{{ url_for('admin_usuarios.dashboard') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>📊</span> Resumen
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_usuarios') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>👥</span> Usuarios
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_canchas') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>⚽</span> Canchas
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_reservas') }}" class="flex items-center gap-3 px-4 py-2 bg-primary-50 text-primary-700 rounded-lg font-medium">
+                <span>📅</span> Reservas
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+            <h3 class="text-lg font-bold text-gray-800">Todas las Reservas</h3>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 text-gray-600 text-sm uppercase">
+                    <tr>
+                        <th class="px-6 py-3 font-medium">ID</th>
+                        <th class="px-6 py-3 font-medium">Cancha</th>
+                        <th class="px-6 py-3 font-medium">Usuario</th>
+                        <th class="px-6 py-3 font-medium">Fecha</th>
+                        <th class="px-6 py-3 font-medium">Horario</th>
+                        <th class="px-6 py-3 font-medium">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for reserva in reservas %}
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 text-sm text-gray-600">#{{ reserva.id_reserva }}</td>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ reserva.cancha }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ reserva.usuario }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ reserva.fecha }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ reserva.horario }}</td>
+                        <td class="px-6 py-4 text-sm">
+                            {% if reserva.estado == 'cancelada' %}
+                                <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">Cancelada</span>
+                            {% elif reserva.fecha < today %}
+                                <span class="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">Completada</span>
+                            {% else %}
+                                <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">Activa</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                            No hay reservas registradas.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

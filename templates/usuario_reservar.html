@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block title %}Reservar Cancha - Campo Finder{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-8">
+    <!-- Header -->
+    <div class="mb-8">
+        <a href="{{ url_for('usuario_explorar') }}" class="inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 mb-4 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            <span>Volver a Explorar</span>
+        </a>
+        <h1 class="text-4xl font-black text-white mb-2">Completar Reserva</h1>
+        <p class="text-primary-200">Estás a un paso de tu próximo partido</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <!-- Columna Izquierda: Información de la Cancha -->
+        <div class="lg:col-span-1">
+            <div class="bg-primary-950/80 backdrop-blur-md rounded-2xl overflow-hidden border border-primary-800/50 sticky top-8">
+                <div class="relative h-48">
+                    {% if cancha['imagen_url'] %}
+                        <img src="{{ url_for('static', filename=cancha['imagen_url'].replace('static/', '')) }}" 
+                             alt="{{ cancha['nombre'] }}" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='{{ url_for('static', filename='imagenes/cancha1.png') }}'">
+                    {% else %}
+                        <div class="w-full h-full bg-gradient-to-br from-primary-800 to-primary-900 flex items-center justify-center">
+                            <span class="text-4xl opacity-50">⚽</span>
+                        </div>
+                    {% endif %}
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <h2 class="text-2xl font-bold text-white mb-1">{{ cancha['nombre'] }}</h2>
+                        {% if cancha['direccion'] %}
+                            <p class="text-gray-300 text-sm flex items-center gap-1">
+                                <span>📍</span> {{ cancha['direccion'] }}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="p-6 space-y-6">
+                    <div>
+                        <h3 class="text-sm font-bold text-primary-400 uppercase tracking-wider mb-2">Descripción</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">{{ cancha['descripcion'] }}</p>
+                    </div>
+                    
+                    <div class="pt-6 border-t border-white/10">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-gray-400">Precio por hora</span>
+                            <span class="text-xl font-bold text-white">${{ "{:,.0f}".format(cancha['precio']|float).replace(",", ".") }}</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400">Duración</span>
+                            <span class="text-white">60 minutos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Formulario -->
+        <div class="lg:col-span-2">
+            <div class="bg-primary-950/80 backdrop-blur-md rounded-2xl p-8 border border-primary-800/50">
+                <form method="POST" class="space-y-8">
+                    <!-- Selección de Fecha y Hora -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="fecha" class="block text-sm font-semibold text-primary-200 mb-2">
+                                Fecha del Partido *
+                            </label>
+                            <div class="relative group">
+                                <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400 text-xl">📅</span>
+                                <input type="date" 
+                                       id="fecha" 
+                                       name="fecha" 
+                                       required
+                                       min="{{ now }}"
+                                       class="w-full pl-12 pr-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white placeholder-primary-400/50 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all hover:bg-white/10 [color-scheme:dark]">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="horario" class="block text-sm font-semibold text-primary-200 mb-2">
+                                Horario *
+                            </label>
+                            <div class="relative group">
+                                <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400 text-xl">🕐</span>
+                                <select id="horario" 
+                                        name="horario" 
+                                        required
+                                        class="w-full pl-12 pr-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all hover:bg-white/10 appearance-none cursor-pointer">
+                                    <option value="" class="bg-gray-900">Selecciona una hora</option>
+                                    {% for hour in range(8, 23) %}
+                                        <option value="{{ '%02d:00' % hour }}" class="bg-gray-900">{{ '%02d:00' % hour }} - {{ '%02d:00' % (hour + 1) }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">▼</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Datos de Contacto -->
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-bold text-white border-b border-white/10 pb-2">Datos de Contacto</h3>
+                        
+                        <div>
+                            <label for="numero" class="block text-sm font-semibold text-primary-200 mb-2">
+                                Teléfono de Contacto
+                            </label>
+                            <div class="relative group">
+                                <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400 text-xl">📱</span>
+                                <input type="tel" 
+                                       id="numero" 
+                                       name="numero" 
+                                       placeholder="Ej: 3001234567"
+                                       class="w-full pl-12 pr-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all hover:bg-white/10">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="mensaje" class="block text-sm font-semibold text-primary-200 mb-2">
+                                Mensaje para el Dueño (Opcional)
+                            </label>
+                            <div class="relative group">
+                                <textarea id="mensaje" 
+                                          name="mensaje" 
+                                          rows="3"
+                                          placeholder="¿Necesitas algo especial? Balones, petos, etc."
+                                          class="w-full px-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all hover:bg-white/10 resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resumen de Pago -->
+                    <div class="bg-primary-900/30 rounded-xl p-6 border border-primary-500/20">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-gray-300">Subtotal</span>
+                            <span class="text-white font-semibold">${{ "{:,.0f}".format(cancha['precio']|float).replace(",", ".") }}</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
+                            <span class="text-gray-300">Tarifa de servicio</span>
+                            <span class="text-white font-semibold">$0</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xl font-bold text-white">Total a Pagar</span>
+                            <span class="text-2xl font-black text-primary-400">${{ "{:,.0f}".format(cancha['precio']|float).replace(",", ".") }}</span>
+                        </div>
+                        <p class="text-xs text-center text-gray-400 mt-4">
+                            * El pago se realiza directamente en la cancha
+                        </p>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="flex gap-4">
+                        <button type="submit" 
+                                class="flex-1 py-4 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 group">
+                            <span>✅</span>
+                            <span>Confirmar Reserva</span>
+                        </button>
+                        <a href="{{ url_for('usuario_explorar') }}" 
+                           class="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl border border-white/10 transition-all">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Establecer fecha mínima como hoy
+const dateInput = document.getElementById('fecha');
+const horarioSelect = document.getElementById('horario');
+const today = new Date().toISOString().split('T')[0];
+dateInput.min = today;
+
+// Función para verificar disponibilidad
+async function checkAvailability(date) {
+    if (!date) return;
+    
+    // Mostrar estado de carga
+    horarioSelect.disabled = true;
+    const originalText = horarioSelect.options[0].text;
+    horarioSelect.options[0].text = "Verificando disponibilidad...";
+    
+    try {
+        const response = await fetch(`/api/disponibilidad/{{ cancha['id_cancha'] }}/${date}`);
+        const data = await response.json();
+        
+        if (data.success) {
+            const ocupados = data.horarios_ocupados;
+            
+            // Resetear opciones
+            Array.from(horarioSelect.options).forEach(option => {
+                if (option.value) {
+                    option.disabled = false;
+                    option.text = option.value + " - " + (parseInt(option.value.split(':')[0]) + 1).toString().padStart(2, '0') + ":00";
+                    option.classList.remove('bg-red-900', 'text-gray-400');
+                    option.classList.add('bg-gray-900');
+                }
+            });
+            
+            // Marcar ocupados
+            ocupados.forEach(hora => {
+                // Formato de hora puede venir como "10:00:00" o "10:00"
+                const horaSimple = hora.substring(0, 5);
+                const option = Array.from(horarioSelect.options).find(opt => opt.value === horaSimple);
+                
+                if (option) {
+                    option.disabled = true;
+                    option.text += " (Reservado)";
+                    option.classList.remove('bg-gray-900');
+                    option.classList.add('bg-red-900/50', 'text-gray-400');
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Error al verificar disponibilidad:', error);
+    } finally {
+        horarioSelect.disabled = false;
+        horarioSelect.options[0].text = "Selecciona una hora";
+    }
+}
+
+// Escuchar cambios en la fecha
+dateInput.addEventListener('change', (e) => {
+    checkAvailability(e.target.value);
+    horarioSelect.value = ""; // Resetear selección
+});
+
+// Verificar si ya hay fecha seleccionada al cargar (por ejemplo si hubo error de validación)
+if (dateInput.value) {
+    checkAvailability(dateInput.value);
+}
+</script>
+{% endblock %}

@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Dueño - Campo Finder{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-8">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-black text-white mb-2">¡Bienvenido, {{ current_user.nombre }}!</h1>
+        <p class="text-primary-200">Gestiona tus canchas y visualiza tus estadísticas</p>
+    </div>
+
+    <!-- Estadísticas Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Total Canchas -->
+        <div class="group relative bg-gradient-to-br from-primary-900/80 to-primary-950/80 backdrop-blur-md rounded-2xl p-6 border border-primary-800/50 hover:border-primary-600/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-900/50">
+            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-primary-500 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center group-hover:bg-primary-500 transition-colors">
+                        <span class="text-2xl">⚽</span>
+                    </div>
+                    <span class="text-3xl font-black text-white">{{ total_canchas }}</span>
+                </div>
+                <h3 class="text-primary-200 font-semibold">Total Canchas</h3>
+            </div>
+        </div>
+
+        <!-- Reservas del Mes -->
+        <div class="group relative bg-gradient-to-br from-blue-900/80 to-blue-950/80 backdrop-blur-md rounded-2xl p-6 border border-blue-800/50 hover:border-blue-600/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-900/50">
+            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-blue-500 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center group-hover:bg-blue-500 transition-colors">
+                        <span class="text-2xl">📅</span>
+                    </div>
+                    <span class="text-3xl font-black text-white">{{ reservas_mes }}</span>
+                </div>
+                <h3 class="text-blue-200 font-semibold">Reservas este Mes</h3>
+            </div>
+        </div>
+
+        <!-- Ingresos Estimados -->
+        <div class="group relative bg-gradient-to-br from-emerald-900/80 to-emerald-950/80 backdrop-blur-md rounded-2xl p-6 border border-emerald-800/50 hover:border-emerald-600/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-900/50">
+            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-emerald-500 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center group-hover:bg-emerald-500 transition-colors">
+                        <span class="text-2xl">💰</span>
+                    </div>
+                    <span class="text-2xl font-black text-white">${{ "{:,.0f}".format(ingresos_mes).replace(",", ".") }}</span>
+                </div>
+                <h3 class="text-emerald-200 font-semibold">Ingresos del Mes</h3>
+            </div>
+        </div>
+
+        <!-- Tasa de Ocupación -->
+        <div class="group relative bg-gradient-to-br from-purple-900/80 to-purple-950/80 backdrop-blur-md rounded-2xl p-6 border border-purple-800/50 hover:border-purple-600/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-purple-900/50">
+            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-purple-500 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:bg-purple-500 transition-colors">
+                        <span class="text-2xl">📊</span>
+                    </div>
+                    <span class="text-3xl font-black text-white">{% if total_canchas > 0 %}{{ ((reservas_mes / (total_canchas * 30)) * 100)|round|int }}%{% else %}0%{% endif %}</span>
+                </div>
+                <h3 class="text-purple-200 font-semibold">Ocupación</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accesos Rápidos -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <a href="{{ url_for('dueno_agregar_cancha') }}" class="group relative bg-gradient-to-br from-primary-900/60 to-primary-950/60 backdrop-blur-md rounded-2xl p-6 border border-primary-800/50 hover:border-primary-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="relative z-10 flex items-center gap-4">
+                <div class="w-14 h-14 rounded-xl bg-primary-500/20 flex items-center justify-center group-hover:bg-primary-500 transition-colors">
+                    <span class="text-3xl">➕</span>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-1">Agregar Cancha</h3>
+                    <p class="text-primary-300 text-sm">Publica una nueva cancha</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{{ url_for('dueno_canchas') }}" class="group relative bg-gradient-to-br from-blue-900/60 to-blue-950/60 backdrop-blur-md rounded-2xl p-6 border border-blue-800/50 hover:border-blue-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="relative z-10 flex items-center gap-4">
+                <div class="w-14 h-14 rounded-xl bg-blue-500/20 flex items-center justify-center group-hover:bg-blue-500 transition-colors">
+                    <span class="text-3xl">🏟️</span>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-1">Mis Canchas</h3>
+                    <p class="text-blue-300 text-sm">Gestiona tus canchas</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{{ url_for('dueno_reservas') }}" class="group relative bg-gradient-to-br from-emerald-900/60 to-emerald-950/60 backdrop-blur-md rounded-2xl p-6 border border-emerald-800/50 hover:border-emerald-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="relative z-10 flex items-center gap-4">
+                <div class="w-14 h-14 rounded-xl bg-emerald-500/20 flex items-center justify-center group-hover:bg-emerald-500 transition-colors">
+                    <span class="text-3xl">📋</span>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-1">Ver Reservas</h3>
+                    <p class="text-emerald-300 text-sm">Consulta las reservas</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{{ url_for('perfil_dueño') }}" class="group relative bg-gradient-to-br from-purple-900/60 to-purple-950/60 backdrop-blur-md rounded-2xl p-6 border border-purple-800/50 hover:border-purple-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="relative z-10 flex items-center gap-4">
+                <div class="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:bg-purple-500 transition-colors">
+                    <span class="text-3xl">👤</span>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-1">Mi Perfil</h3>
+                    <p class="text-purple-300 text-sm">Editar datos</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Canchas Recientes y Reservas Recientes -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Canchas Recientes -->
+        <div class="bg-primary-950/80 backdrop-blur-md rounded-2xl p-6 border border-primary-800/50">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <span>🏟️</span>
+                    Canchas Recientes
+                </h2>
+                <a href="{{ url_for('dueno_canchas') }}" class="text-primary-400 hover:text-primary-300 text-sm font-semibold transition-colors">Ver todas →</a>
+            </div>
+            
+            {% if canchas_recientes and canchas_recientes|length > 0 %}
+                <div class="space-y-4">
+                    {% for cancha in canchas_recientes %}
+                        <div class="group bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/5 hover:border-primary-500/30 transition-all">
+                            <div class="flex items-center gap-4">
+                                {% if cancha[3] %}
+                                    <img src="{{ url_for('static', filename=cancha[3].replace('static/', '')) }}" 
+                                         alt="{{ cancha[1] }}" 
+                                         class="w-16 h-16 rounded-lg object-cover"
+                                         onerror="this.src='{{ url_for('static', filename='imagenes/cancha1.png') }}'">
+                                {% else %}
+                                    <div class="w-16 h-16 rounded-lg bg-primary-500/20 flex items-center justify-center">
+                                        <span class="text-2xl">⚽</span>
+                                    </div>
+                                {% endif %}
+                                <div class="flex-1">
+                                    <h3 class="font-bold text-white group-hover:text-primary-400 transition-colors">{{ cancha[1] }}</h3>
+                                    <p class="text-sm text-gray-400">${{ "{:,.0f}".format(cancha[2]|float).replace(",", ".") }}/hora</p>
+                                </div>
+                                <a href="{{ url_for('dueno_editar_cancha', id=cancha[0]) }}" class="px-4 py-2 bg-primary-600 hover:bg-primary-500 text-white rounded-lg text-sm font-semibold transition-colors">
+                                    Editar
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-12">
+                    <div class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-4xl">🏟️</span>
+                    </div>
+                    <p class="text-gray-400">No has agregado canchas aún</p>
+                    <a href="{{ url_for('dueno_agregar_cancha') }}" class="inline-block mt-4 px-6 py-2 bg-primary-600 hover:bg-primary-500 text-white rounded-lg font-semibold transition-colors">
+                        Agregar Primera Cancha
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Reservas Recientes -->
+        <div class="bg-primary-950/80 backdrop-blur-md rounded-2xl p-6 border border-primary-800/50">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <span>📅</span>
+                    Reservas Recientes
+                </h2>
+                <a href="{{ url_for('dueno_reservas') }}" class="text-primary-400 hover:text-primary-300 text-sm font-semibold transition-colors">Ver todas →</a>
+            </div>
+            
+            {% if reservas_recientes and reservas_recientes|length > 0 %}
+                <div class="space-y-3">
+                    {% for reserva in reservas_recientes %}
+                        <div class="bg-white/5 rounded-xl p-4 border border-white/5">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <h3 class="font-bold text-white">{{ reserva[1] }}</h3>
+                                    <p class="text-sm text-primary-300">{{ reserva[4] }}</p>
+                                </div>
+                                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs font-semibold">Confirmada</span>
+                            </div>
+                            <div class="flex items-center gap-4 text-sm text-gray-400">
+                                <span>📅 {{ reserva[2] }}</span>
+                                <span>🕐 {{ reserva[3] }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-12">
+                    <div class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-4xl">📅</span>
+                    </div>
+                    <p class="text-gray-400">No hay reservas aún</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

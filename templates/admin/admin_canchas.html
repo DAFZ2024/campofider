@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestión de Canchas - CampoFinder{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row gap-6">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 bg-white rounded-lg shadow-lg p-4 h-fit">
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <span>🛡️</span> Admin Panel
+            </h2>
+        </div>
+        <nav class="space-y-2">
+            <a href="{{ url_for('admin_usuarios.dashboard') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>📊</span> Resumen
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_usuarios') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>👥</span> Usuarios
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_canchas') }}" class="flex items-center gap-3 px-4 py-2 bg-primary-50 text-primary-700 rounded-lg font-medium">
+                <span>⚽</span> Canchas
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_reservas') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>📅</span> Reservas
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+            <h3 class="text-lg font-bold text-gray-800">Gestión de Canchas</h3>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 text-gray-600 text-sm uppercase">
+                    <tr>
+                        <th class="px-6 py-3 font-medium">Nombre</th>
+                        <th class="px-6 py-3 font-medium">Dueño</th>
+                        <th class="px-6 py-3 font-medium">Precio</th>
+                        <th class="px-6 py-3 font-medium">Dirección</th>
+                        <th class="px-6 py-3 font-medium">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for cancha in canchas %}
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ cancha.nombre }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ cancha.dueno }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ cancha.precio }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ cancha.direccion }}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <form action="{{ url_for('admin_usuarios.eliminar_cancha', id=cancha.id_cancha) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta cancha? Se eliminarán también sus reservas.');" class="inline">
+                                <button type="submit" class="text-red-600 hover:text-red-800 font-medium">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                            No hay canchas registradas.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

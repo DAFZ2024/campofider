@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %}Panel de Administración - CampoFinder{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row gap-6">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 bg-white rounded-lg shadow-lg p-4 h-fit">
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <span>🛡️</span> Admin Panel
+            </h2>
+        </div>
+        <nav class="space-y-2">
+            <a href="{{ url_for('admin_usuarios.dashboard') }}" class="flex items-center gap-3 px-4 py-2 bg-primary-50 text-primary-700 rounded-lg font-medium">
+                <span>📊</span> Resumen
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_usuarios') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>👥</span> Usuarios
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_canchas') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>⚽</span> Canchas
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_reservas') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>📅</span> Reservas
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 space-y-6">
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Total Usuarios -->
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Total Usuarios</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ total_usuarios }}</h3>
+                    </div>
+                    <div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+                        👥
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dueños -->
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-indigo-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Dueños de Canchas</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ total_duenos }}</h3>
+                    </div>
+                    <div class="p-2 bg-indigo-50 rounded-lg text-indigo-600">
+                        👔
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canchas -->
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Canchas Registradas</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ total_canchas }}</h3>
+                    </div>
+                    <div class="p-2 bg-green-50 rounded-lg text-green-600">
+                        ⚽
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reservas -->
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-orange-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Total Reservas</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ total_reservas }}</h3>
+                    </div>
+                    <div class="p-2 bg-orange-50 rounded-lg text-orange-600">
+                        📅
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+                <h3 class="text-lg font-bold text-gray-800">Reservas Recientes</h3>
+                <a href="{{ url_for('admin_usuarios.listar_reservas') }}" class="text-sm text-primary-600 hover:text-primary-700 font-medium">Ver todas →</a>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 text-gray-600 text-sm uppercase">
+                        <tr>
+                            <th class="px-6 py-3 font-medium">Usuario</th>
+                            <th class="px-6 py-3 font-medium">Cancha</th>
+                            <th class="px-6 py-3 font-medium">Fecha</th>
+                            <th class="px-6 py-3 font-medium">Horario</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        {% for reserva in recent_reservas %}
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ reserva[1] }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-600">{{ reserva[2] }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-600">{{ reserva[3] }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-600">{{ reserva[4] }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="px-6 py-8 text-center text-gray-500">
+                                No hay reservas recientes.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

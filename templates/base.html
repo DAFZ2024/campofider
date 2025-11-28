@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Campo Finder{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="soccer-field-bg min-h-screen">
+    <!-- Navbar Premium -->
+    <nav class="bg-primary-950 border-b border-primary-800 sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo Area -->
+                <a href="{{ url_for('index') }}" class="flex items-center gap-3 group">
+                    <div class="inline-block mb-1 relative group">
+                <div class="absolute inset-0 bg-primary-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 rounded-full"></div>
+                <img src="{{ url_for('static', filename='imagenes/logo.png') }}" 
+                     alt="Logo Campofinder" 
+                     class="h-20 w-20 mx-auto relative z-10 drop-shadow-2xl transform group-hover:scale-105 transition-transform duration-300"
+                     onerror="this.style.display='none'">
+            </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black text-white tracking-tight">
+                            Campo<span class="text-primary-500">Finder</span>
+                        </span>
+                        <span class="text-[10px] uppercase tracking-widest text-primary-400 font-semibold hidden sm:block">Tu cancha ideal</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-1">
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.rol == 'administrador' %}
+                            <a href="{{ url_for('dashboard_admin') }}" class="px-4 py-2 text-primary-100 hover:text-white hover:bg-primary-900 rounded-lg transition-all font-medium flex items-center gap-2">
+                                <span></span> Panel
+                            </a>
+                        {% elif current_user.rol == 'dueño' %}
+                            <a href="{{ url_for('dashboard_dueño') }}" class="px-4 py-2 text-primary-100 hover:text-white hover:bg-primary-900 rounded-lg transition-all font-medium flex items-center gap-2">
+                                <span></span> Panel
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('dashboard_usuario') }}" class="px-4 py-2 text-primary-100 hover:text-white hover:bg-primary-900 rounded-lg transition-all font-medium flex items-center gap-2">
+                                <span></span> Panel
+                            </a>
+                        {% endif %}
+
+                        <a href="{{ url_for('perfil_dueño' if current_user.rol == 'dueño' else 'perfil_usuario') }}" class="px-4 py-2 text-primary-100 hover:text-white hover:bg-primary-900 rounded-lg transition-all font-medium flex items-center gap-2">
+                            <span></span> Mi Perfil
+                        </a>
+
+                        <div class="h-6 w-px bg-primary-800 mx-2"></div>
+
+                        <a href="{{ url_for('logout') }}" class="px-5 py-2.5 bg-primary-900 hover:bg-primary-800 text-white rounded-full border border-primary-700 transition-all font-medium text-sm hover:shadow-lg hover:shadow-primary-900/50">
+                            Cerrar Sesión
+                        </a>
+                    {% else %}
+                        <!-- Guest Links -->
+                        <a href="{{ url_for('index') }}" class="px-4 py-2 text-primary-100 hover:text-white hover:bg-primary-900 rounded-lg transition-all font-medium">
+                            Inicio
+                        </a>
+                        <a href="{{ url_for('login') }}" class="px-4 py-2 text-primary-100 hover:text-white hover:bg-primary-900 rounded-lg transition-all font-medium">
+                            Iniciar Sesión
+                        </a>
+                        <a href="{{ url_for('register') }}" class="ml-2 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white rounded-full shadow-lg shadow-primary-900/50 transition-all transform hover:scale-105 font-bold border border-primary-400/20">
+                            Registrarse
+                        </a>
+                    {% endif %}
+                </div>
+
+                <!-- Mobile Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-primary-200 hover:text-white hover:bg-primary-900 rounded-lg transition-colors">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+                <div id="mobile-menu" class="hidden md:hidden bg-primary-900 border-t border-primary-800 animate-fade-in">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                {% if current_user.is_authenticated %}
+                    <div class="flex items-center gap-3 px-4 py-3 mb-2 bg-primary-800/50 rounded-lg">
+                        <div class="bg-primary-700 p-2 rounded-full text-white">👤</div>
+                        <div>
+                            <p class="text-sm text-primary-200">Hola,</p>
+                            <p class="text-white font-bold">{{ current_user.nombre }}</p>
+                        </div>
+                    </div>
+                    {% if current_user.rol == 'administrador' %}
+                        <a href="{{ url_for('dashboard_admin') }}" class="block px-4 py-3 text-primary-100 hover:bg-primary-800 rounded-lg transition-colors">
+                            Panel
+                        </a>
+                    {% elif current_user.rol == 'dueño' %}
+                        <a href="{{ url_for('dashboard_dueño') }}" class="block px-4 py-3 text-primary-100 hover:bg-primary-800 rounded-lg transition-colors">
+                            ⬆Panel
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('dashboard_usuario') }}" class="block px-4 py-3 text-primary-100 hover:bg-primary-800 rounded-lg transition-colors">
+                            Panel
+                        </a>
+                    {% endif %}
+                    
+                    <a href="{{ url_for('perfil_dueño' if current_user.rol == 'dueño' else 'perfil_usuario') }}" class="block px-4 py-3 text-primary-100 hover:bg-primary-800 rounded-lg transition-colors">
+                        👤 Mi Perfil
+                    </a>
+
+                    <div class="border-t border-primary-800 my-2"></div>
+                    <a href="{{ url_for('logout') }}" class="block px-4 py-3 text-red-300 hover:bg-primary-800 rounded-lg transition-colors">
+                        Cerrar Sesión
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('index') }}" class="block px-4 py-3 text-primary-100 hover:bg-primary-800 rounded-lg transition-colors">
+                        Inicio
+                    </a>
+                    <a href="{{ url_for('login') }}" class="block px-4 py-3 text-primary-100 hover:bg-primary-800 rounded-lg transition-colors">
+                        Iniciar Sesión
+                    </a>
+                    <a href="{{ url_for('register') }}" class="block px-4 py-3 bg-primary-600 text-white text-center rounded-lg font-bold shadow-lg mt-4">
+                        Registrarse
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+                {% for category, message in messages %}
+                    <div class="animate-fade-in rounded-lg p-4 mb-4 {% if category == 'success' %}bg-green-100 border-l-4 border-green-500 text-green-700{% elif category == 'error' %}bg-red-100 border-l-4 border-red-500 text-red-700{% elif category == 'info' %}bg-blue-100 border-l-4 border-blue-500 text-blue-700{% else %}bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700{% endif %}">
+                        <div class="flex items-center">
+                            <span class="mr-2">
+                                {% if category == 'success' %}✅{% elif category == 'error' %}❌{% elif category == 'info' %}ℹ️{% else %}⚠️{% endif %}
+                            </span>
+                            <p>{{ message }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative bg-gradient-to-br from-primary-950 via-primary-900 to-primary-950 text-white mt-16 overflow-hidden border-t border-primary-800/50">
+        <!-- Decorative background elements -->
+        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+        <div class="absolute top-0 right-0 -mt-32 -mr-32 w-96 h-96 bg-primary-500 rounded-full blur-3xl opacity-10"></div>
+        <div class="absolute bottom-0 left-0 -mb-32 -ml-32 w-96 h-96 bg-primary-400 rounded-full blur-3xl opacity-10"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Brand Section -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-4 group">
+                        <div class="relative">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-primary-500 to-primary-400 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+                            <div class="relative bg-primary-900 p-2 rounded-lg border border-primary-700">
+                                <div class="absolute inset-0 bg-primary-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 rounded-full"></div>
+                                <img src="{{ url_for('static', filename='imagenes/logo.png') }}" 
+                                     alt="Logo Campofinder" 
+                                     class="h-20 w-20 mx-auto relative z-10 drop-shadow-2xl transform group-hover:scale-105 transition-transform duration-300"
+                                     onerror="this.style.display='none'">
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-black text-white tracking-tight">
+                                Campo<span class="text-primary-400">Finder</span>
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-primary-200 text-sm leading-relaxed mb-4">
+                        Tu plataforma de confianza para reservar canchas deportivas en Soacha.
+                    </p>
+                    <!-- Social Media Icons -->
+                    <div class="flex gap-3">
+                        <a href="#" class="group relative bg-white/5 backdrop-blur-sm p-2.5 rounded-lg border border-white/10 hover:border-primary-500/50 transition-all duration-300 hover:-translate-y-1">
+                            <span class="text-lg">📘</span>
+                        </a>
+                        <a href="#" class="group relative bg-white/5 backdrop-blur-sm p-2.5 rounded-lg border border-white/10 hover:border-primary-500/50 transition-all duration-300 hover:-translate-y-1">
+                            <span class="text-lg">📷</span>
+                        </a>
+                        <a href="#" class="group relative bg-white/5 backdrop-blur-sm p-2.5 rounded-lg border border-white/10 hover:border-primary-500/50 transition-all duration-300 hover:-translate-y-1">
+                            <span class="text-lg">🐦</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Enlaces Rápidos -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-white flex items-center gap-2">
+                        <span class="text-primary-400">⚡</span> Enlaces Rápidos
+                    </h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="{{ url_for('usuario_explorar') }}" class="text-primary-200 hover:text-white transition-colors flex items-center gap-2 group">
+                                <span class="text-primary-500 group-hover:translate-x-1 transition-transform">→</span>
+                                <span>Canchas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('index') }}" class="text-primary-200 hover:text-white transition-colors flex items-center gap-2 group">
+                                <span class="text-primary-500 group-hover:translate-x-1 transition-transform">→</span>
+                                <span>Inicio</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('register') }}" class="text-primary-200 hover:text-white transition-colors flex items-center gap-2 group">
+                                <span class="text-primary-500 group-hover:translate-x-1 transition-transform">→</span>
+                                <span>Registrarse</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Contacto -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-white flex items-center gap-2">
+                        <span class="text-primary-400">📞</span> Contacto
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3 text-primary-200 group">
+                            <span class="text-primary-400 mt-0.5">📧</span>
+                            <a href="mailto:info@campofinder.com" class="hover:text-white transition-colors">
+                                info@campofinder.com
+                            </a>
+                        </li>
+                        <li class="flex items-start gap-3 text-primary-200 group">
+                            <span class="text-primary-400 mt-0.5">📞</span>
+                            <a href="tel:+573001234567" class="hover:text-white transition-colors">
+                                +57 300 123 4567
+                            </a>
+                        </li>
+                        <li class="flex items-start gap-3 text-primary-200">
+                            <span class="text-primary-400 mt-0.5">📍</span>
+                            <span>Soacha, Colombia</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Horarios -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-white flex items-center gap-2">
+                        <span class="text-primary-400">🕐</span> Horarios
+                    </h3>
+                    <ul class="space-y-3 text-primary-200 text-sm">
+                        <li class="flex justify-between">
+                            <span class="font-medium">Lun - Vie:</span>
+                            <span>6:00 AM - 10:00 PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="font-medium">Sábados:</span>
+                            <span>7:00 AM - 11:00 PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="font-medium">Domingos:</span>
+                            <span>7:00 AM - 9:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Bar -->
+            <div class="border-t border-primary-800/50 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-primary-300 text-sm">
+                        &copy; 2025 <span class="font-semibold text-white">Campo Finder</span>. Todos los derechos reservados.
+                    </p>
+                    <div class="flex gap-6 text-sm">
+                        <a href="#" class="text-primary-300 hover:text-white transition-colors">Términos de Servicio</a>
+                        <span class="text-primary-700">|</span>
+                        <a href="#" class="text-primary-300 hover:text-white transition-colors">Política de Privacidad</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

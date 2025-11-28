@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Reservas - Campo Finder{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-8">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-black text-white mb-2">Reservas de Mis Canchas</h1>
+        <p class="text-primary-200">Consulta todas las reservas realizadas en tus canchas</p>
+    </div>
+
+    <!-- Reservas Table/List -->
+    {% if reservas and reservas|length > 0 %}
+        <div class="bg-primary-950/80 backdrop-blur-md rounded-2xl border border-primary-800/50 overflow-hidden">
+            <!-- Desktop Table -->
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-primary-900/50 border-b border-primary-800/50">
+                            <th class="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">Cancha</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">Cliente</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">Fecha</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">Horario</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">Contacto</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-primary-300 uppercase tracking-wider">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-primary-800/30">
+                        {% for reserva in reservas %}
+                            <tr class="hover:bg-white/5 transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-primary-500/20 flex items-center justify-center flex-shrink-0">
+                                            <span class="text-lg">⚽</span>
+                                        </div>
+                                        <span class="font-semibold text-white">{{ reserva[1] }}</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div>
+                                        <p class="font-medium text-white">{{ reserva[6] }}</p>
+                                        <p class="text-sm text-gray-400">{{ reserva[7] }}</p>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-2 text-gray-300">
+                                        <span>📅</span>
+                                        <span>{{ reserva[2] }}</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-2 text-gray-300">
+                                        <span>🕐</span>
+                                        <span>{{ reserva[3] }}</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    {% if reserva[4] %}
+                                        <div class="flex items-center gap-2 text-gray-300">
+                                            <span>📞</span>
+                                            <span>{{ reserva[4] }}</span>
+                                        </div>
+                                    {% else %}
+                                        <span class="text-gray-500">-</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs font-semibold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                        Confirmada
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile Cards -->
+            <div class="md:hidden divide-y divide-primary-800/30">
+                {% for reserva in reservas %}
+                    <div class="p-6 hover:bg-white/5 transition-colors">
+                        <!-- Cancha y Estado -->
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-lg bg-primary-500/20 flex items-center justify-center flex-shrink-0">
+                                    <span class="text-2xl">⚽</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-white">{{ reserva[1] }}</h3>
+                                    <p class="text-sm text-gray-400">{{ reserva[6] }}</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs font-semibold">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Confirmada
+                            </span>
+                        </div>
+
+                        <!-- Detalles -->
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <span>📅</span>
+                                <span>{{ reserva[2] }}</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <span>🕐</span>
+                                <span>{{ reserva[3] }}</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <span>📧</span>
+                                <span>{{ reserva[7] }}</span>
+                            </div>
+                            {% if reserva[4] %}
+                                <div class="flex items-center gap-2 text-gray-300">
+                                    <span>📞</span>
+                                    <span>{{ reserva[4] }}</span>
+                                </div>
+                            {% endif %}
+                            {% if reserva[5] %}
+                                <div class="mt-3 p-3 bg-white/5 rounded-lg border border-white/5">
+                                    <p class="text-xs text-primary-300 font-semibold mb-1">Mensaje:</p>
+                                    <p class="text-gray-300">{{ reserva[5] }}</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Resumen -->
+        <div class="mt-6 flex items-center justify-between px-4">
+            <p class="text-gray-400">
+                Mostrando <span class="font-semibold text-white">{{ reservas|length }}</span> reserva(s)
+            </p>
+        </div>
+    {% else %}
+        <!-- Empty State -->
+        <div class="flex flex-col items-center justify-center py-20">
+            <div class="relative mb-8">
+                <div class="absolute inset-0 bg-blue-500 blur-3xl opacity-20 animate-pulse"></div>
+                <div class="relative w-32 h-32 rounded-full bg-blue-900/50 backdrop-blur-sm border border-blue-800/50 flex items-center justify-center">
+                    <span class="text-6xl">📅</span>
+                </div>
+            </div>
+            <h2 class="text-3xl font-bold text-white mb-2">No hay reservas aún</h2>
+            <p class="text-gray-400 mb-8 text-center max-w-md">
+                Cuando los usuarios reserven tus canchas, las verás aquí
+            </p>
+            <a href="{{ url_for('dueno_canchas') }}" 
+               class="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white font-semibold rounded-xl transition-colors">
+                <span>🏟️</span>
+                <span>Ver Mis Canchas</span>
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

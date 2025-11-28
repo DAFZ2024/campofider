@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión - Campo Finder{% endblock %}
+
+{% block content %}
+<div class="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 px-4 relative z-10">
+    <div class="max-w-md w-full">
+        <!-- Logo Section -->
+        <div class="text-center mb-8">
+            <div class="inline-block mb-4 relative group">
+                <div class="absolute inset-0 bg-primary-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 rounded-full"></div>
+                <img src="{{ url_for('static', filename='imagenes/logo.png') }}" 
+                     alt="Logo Campofinder" 
+                     class="h-24 w-24 mx-auto relative z-10 drop-shadow-2xl transform group-hover:scale-105 transition-transform duration-300"
+                     onerror="this.style.display='none'">
+            </div>
+            <h1 class="text-4xl font-black text-white mb-2 drop-shadow-lg tracking-tight">
+                Campo<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-200">Finder</span>
+            </h1>
+            <p class="text-primary-200 font-medium drop-shadow-md">Encuentra tu cancha perfecta</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="bg-primary-950/80 backdrop-blur-md rounded-2xl shadow-2xl border border-primary-800/50 p-8 animate-fade-in relative overflow-hidden">
+            <!-- Decorative gradient glow -->
+            <div class="absolute top-0 right-0 -mt-16 -mr-16 w-32 h-32 bg-primary-500 rounded-full blur-3xl opacity-20"></div>
+            <div class="absolute bottom-0 left-0 -mb-16 -ml-16 w-32 h-32 bg-primary-400 rounded-full blur-3xl opacity-10"></div>
+
+            <h2 class="text-2xl font-bold text-white mb-6 text-center drop-shadow-md">Iniciar Sesión</h2>
+            
+            <form method="POST" action="{{ url_for('login') }}" class="space-y-6 relative z-10">
+                <!-- Email -->
+                <div>
+                    <label for="correo" class="block text-sm font-medium text-primary-200 mb-2">
+                        Correo Electrónico
+                    </label>
+                    <div class="relative group">
+                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-400 text-xl group-hover:text-primary-300 transition-colors">
+                            📧
+                        </span>
+                        <input type="email" 
+                               id="correo" 
+                               name="correo" 
+                               placeholder="ejemplo@correo.com" 
+                               required 
+                               autocomplete="email"
+                               class="w-full pl-12 pr-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white placeholder-primary-400/50 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-300 hover:bg-white/10">
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="contraseña" class="block text-sm font-medium text-primary-200 mb-2">
+                        Contraseña
+                    </label>
+                    <div class="relative group">
+                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-400 text-xl group-hover:text-primary-300 transition-colors">
+                            🔒
+                        </span>
+                        <input type="password" 
+                               id="contraseña" 
+                               name="contraseña" 
+                               placeholder="••••••••" 
+                               required 
+                               autocomplete="current-password"
+                               class="w-full pl-12 pr-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white placeholder-primary-400/50 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-300 hover:bg-white/10">
+                    </div>
+                </div>
+
+                <!-- Forgot Password -->
+                <div class="text-right">
+                    <a href="{{ url_for('reset_contrasena') }}" 
+                       class="text-sm text-primary-400 hover:text-primary-300 font-medium transition-colors hover:underline decoration-primary-400/50 underline-offset-4">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-bold rounded-xl shadow-lg shadow-primary-900/50 hover:shadow-primary-600/30 transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group">
+                    <span>Iniciar Sesión</span>
+                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </form>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a href="{{ url_for('index') }}" class="text-primary-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-2 group">
+                <span class="group-hover:-translate-x-1 transition-transform">←</span> Volver al inicio
+            </a>
+            <span class="text-primary-600 hidden sm:inline">•</span>
+            <a href="{{ url_for('register') }}" class="text-primary-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-2 group">
+                Crear cuenta nueva <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

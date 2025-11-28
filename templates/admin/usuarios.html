@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestión de Usuarios - CampoFinder{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row gap-6">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 bg-white rounded-lg shadow-lg p-4 h-fit">
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <span>🛡️</span> Admin Panel
+            </h2>
+        </div>
+        <nav class="space-y-2">
+            <a href="{{ url_for('admin_usuarios.dashboard') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>📊</span> Resumen
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_usuarios') }}" class="flex items-center gap-3 px-4 py-2 bg-primary-50 text-primary-700 rounded-lg font-medium">
+                <span>👥</span> Usuarios
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_canchas') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>⚽</span> Canchas
+            </a>
+            <a href="{{ url_for('admin_usuarios.listar_reservas') }}" class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary-600 rounded-lg transition-colors">
+                <span>📅</span> Reservas
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+            <h3 class="text-lg font-bold text-gray-800">Gestión de Usuarios</h3>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 text-gray-600 text-sm uppercase">
+                    <tr>
+                        <th class="px-6 py-3 font-medium">ID</th>
+                        <th class="px-6 py-3 font-medium">Nombre</th>
+                        <th class="px-6 py-3 font-medium">Correo</th>
+                        <th class="px-6 py-3 font-medium">Rol</th>
+                        <th class="px-6 py-3 font-medium">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for usuario in usuarios %}
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 text-sm text-gray-600">#{{ usuario.id }}</td>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ usuario.nombre }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ usuario.correo }}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <span class="px-2 py-1 rounded-full text-xs font-medium 
+                                {% if usuario.rol == 'administrador' %} bg-purple-100 text-purple-700
+                                {% elif usuario.rol == 'dueño' %} bg-blue-100 text-blue-700
+                                {% else %} bg-gray-100 text-gray-700 {% endif %}">
+                                {{ usuario.rol|capitalize }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm flex gap-2">
+                            <a href="{{ url_for('admin_usuarios.editar_usuario', id=usuario.id) }}" class="text-blue-600 hover:text-blue-800 font-medium">Editar</a>
+                            <form action="{{ url_for('admin_usuarios.eliminar_usuario', id=usuario.id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este usuario?');" class="inline">
+                                <button type="submit" class="text-red-600 hover:text-red-800 font-medium">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                            No hay usuarios registrados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
