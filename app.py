@@ -113,7 +113,7 @@ def register():
             flash(f'¡Bienvenido {nombre}! Te has registrado exitosamente como {rol}', 'success')
 
             if rol == 'administrador':
-                return redirect(url_for('dashboard_admin'))
+                return redirect(url_for('admin_usuarios.dashboard'))
             elif rol == 'dueño':
                 return redirect(url_for('dashboard_dueño'))
             else:
@@ -132,7 +132,7 @@ def register():
 def login():
     if current_user.is_authenticated:
         if current_user.rol == 'administrador':
-            return redirect(url_for('dashboard_admin'))
+            return redirect(url_for('admin_usuarios.dashboard'))
         if current_user.rol == 'dueño':
             return redirect(url_for('dashboard_dueño'))
         return redirect(url_for('dashboard_usuario'))
@@ -151,7 +151,7 @@ def login():
             login_user(usuario)
             flash(f'¡Bienvenido {usuario.nombre}!', 'success')
             if usuario.rol == 'administrador':
-                return redirect(url_for('dashboard_admin'))
+                return redirect(url_for('admin_usuarios.dashboard'))
             if usuario.rol == 'dueño':
                 return redirect(url_for('dashboard_dueño'))
             return redirect(url_for('dashboard_usuario'))
@@ -778,11 +778,11 @@ def check_availability(id_cancha, fecha):
         
         # Obtener reservas activas para esa cancha y fecha
         cur.execute("""
-            SELECT horario 
-            FROM reservas 
-            WHERE id_cancha = ? 
-            AND fecha = ? 
-            AND estado != 'cancelada'
+            SELECT r.horario 
+            FROM reservas r
+            JOIN canchas c ON r.cancha = c.nombre
+            WHERE c.id_cancha = ? 
+            AND r.fecha = ?
         """, (id_cancha, fecha))
         
         reservas = cur.fetchall()
