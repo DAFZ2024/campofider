@@ -15,6 +15,9 @@ if IS_PRODUCTION:
     # Configuración PostgreSQL para Railway
     DATABASE_URL = os.getenv('DATABASE_URL')
     
+    if DATABASE_URL:
+        DATABASE_URL = DATABASE_URL.strip()
+    
     # Railway proporciona la URL en formato postgres://
     # pero psycopg2 necesita postgresql://
     if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
