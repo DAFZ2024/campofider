@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Mi Perfil (Dueño) - Campo Finder{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+        <div>
+            <h1 class="text-4xl font-black text-white mb-2">Mi Perfil</h1>
+            <p class="text-primary-200">Gestiona tu información y tus canchas</p>
+        </div>
+        <div class="flex gap-3 mt-4 md:mt-0">
+            <a href="{{ url_for('dashboard_dueño') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary-800/60 text-primary-100 rounded-xl hover:bg-primary-800 transition-all">
+                ← Volver
+            </a>
+            <a href="{{ url_for('dueno_canchas') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-bold rounded-xl shadow-lg transition-all">
+                <span class="text-xl">🏟️</span>
+                <span>Mis Canchas</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <!-- Columna Izquierda: Tarjeta de Perfil y Estadísticas -->
+        <div class="space-y-6">
+            <!-- Tarjeta de Perfil -->
+            <div class="bg-primary-950/80 backdrop-blur-md rounded-2xl p-8 border border-primary-800/50 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-primary-600/20 to-transparent"></div>
+                <div class="relative z-10">
+                    <div class="w-32 h-32 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 p-1 mx-auto mb-4 shadow-2xl">
+                        <div class="w-full h-full rounded-full bg-primary-900 flex items-center justify-center overflow-hidden">
+                            <span class="text-6xl">👤</span>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-1">{{ current_user.nombre }}</h2>
+                    <p class="text-primary-300">{{ current_user.correo }}</p>
+                    <div class="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-primary-500/20 text-primary-300 text-sm font-semibold border border-primary-500/30">
+                        Dueño
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="bg-primary-950/80 backdrop-blur-md rounded-2xl p-6 border border-primary-800/50">
+                <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <span>📊</span> Mis Estadísticas
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400">🏟️</div>
+                            <span class="text-gray-300">Total Canchas</span>
+                        </div>
+                        <span class="text-2xl font-bold text-white">{{ total_canchas|default(0) }}</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">📅</div>
+                            <span class="text-gray-300">Reservas Recibidas</span>
+                        </div>
+                        <span class="text-2xl font-bold text-white">{{ total_reservas|default(0) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Formulario de Edición -->
+        <div class="lg:col-span-2">
+            <div class="bg-primary-950/80 backdrop-blur-md rounded-2xl p-8 border border-primary-800/50">
+                <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                    <span>✏️</span> Editar Información
+                </h3>
+                
+                <form method="POST" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Nombre -->
+                        <div>
+                            <label for="nombre" class="block text-sm font-semibold text-primary-200 mb-2">Nombre Completo</label>
+                            <input type="text" id="nombre" name="nombre" value="{{ current_user.nombre }}" required
+                                   class="w-full px-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all hover:bg-white/10">
+                        </div>
+
+                        <!-- Edad -->
+                        <div>
+                            <label for="edad" class="block text-sm font-semibold text-primary-200 mb-2">Edad</label>
+                            <input type="number" id="edad" name="edad" value="{{ current_user.edad }}" required min="18"
+                                   class="w-full px-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all hover:bg-white/10">
+                        </div>
+                    </div>
+
+                    <!-- Correo -->
+                    <div>
+                        <label for="correo" class="block text-sm font-semibold text-primary-200 mb-2">Correo Electrónico</label>
+                        <input type="email" id="correo" name="correo" value="{{ current_user.correo }}" required
+                               class="w-full px-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all hover:bg-white/10">
+                    </div>
+
+                    <!-- Dirección -->
+                    <div>
+                        <label for="direccion" class="block text-sm font-semibold text-primary-200 mb-2">Dirección</label>
+                        <input type="text" id="direccion" name="direccion" value="{{ current_user.direccion if current_user.direccion else '' }}"
+                               class="w-full px-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all hover:bg-white/10">
+                    </div>
+
+                    <div class="pt-6 border-t border-white/10">
+                        <h4 class="text-lg font-semibold text-white mb-4">Cambiar Contraseña</h4>
+                        <p class="text-sm text-gray-400 mb-4">Deja este campo vacío si no deseas cambiar tu contraseña.</p>
+                        
+                        <div>
+                            <label for="nueva_contraseña" class="block text-sm font-semibold text-primary-200 mb-2">Nueva Contraseña</label>
+                            <input type="password" id="nueva_contraseña" name="nueva_contraseña" minlength="6"
+                                   class="w-full px-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all hover:bg-white/10">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center pt-4">
+                        <div>
+                            <a href="{{ url_for('dueno_agregar_cancha') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary-700/60 text-primary-100 rounded-lg hover:bg-primary-700 transition-all">
+                                <span>➕</span>
+                                <span>Agregar Cancha</span>
+                            </a>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <button type="submit" 
+                                    class="px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                                <span>💾</span>
+                                <span>Guardar Cambios</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
