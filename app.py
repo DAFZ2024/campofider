@@ -479,6 +479,51 @@ def dueno_reservas():
     
     return render_template('dueño_reservas.html', reservas=reservas)
 
+@app.route('/dueño/partido/<int:id>')
+@login_required
+def dueno_partido_live(id):
+    if not current_user.is_owner():
+        flash('Acceso denegado', 'error')
+        return redirect(url_for('index'))
+    
+    db = get_db()
+    cur = db.cursor()
+    
+    # Obtener la reserva con todos los datos
+    cur.execute("""
+        SELECT r.id_reserva, r.cancha, r.fecha, r.horario, r.numero, r.mensaje,
+               r.goles_equipo1, r.goles_equipo2, r.tarjetas_amarillas, r.tarjetas_rojas,
+               u.nombre as usuario_nombre, u.correo as usuario_correo
+        FROM reservas r
+        JOIN canchas c ON r.cancha = c.nombre
+        JOIN usuarios u ON r.id_usuario = u.id
+        WHERE r.id_reserva = ? AND c.usuario_id = ?
+    """, (id, current_user.id))
+    
+    reserva = cur.fetchone()
+    
+    if not reserva:
+        flash('Reserva no encontrada o no tienes permiso para verla', 'error')
+        return redirect(url_for('dueno_reservas'))
+    
+    # Convertir a diccionario para facilitar el acceso en el template
+    reserva_dict = {
+        'id_reserva': reserva[0],
+        'cancha': reserva[1],
+        'fecha': reserva[2],
+        'horario': reserva[3],
+        'numero': reserva[4],
+        'mensaje': reserva[5],
+        'goles_equipo1': reserva[6] if reserva[6] is not None else 0,
+        'goles_equipo2': reserva[7] if reserva[7] is not None else 0,
+        'tarjetas_amarillas': reserva[8] if reserva[8] is not None else 0,
+        'tarjetas_rojas': reserva[9] if reserva[9] is not None else 0,
+        'usuario_nombre': reserva[10],
+        'usuario_correo': reserva[11]
+    }
+    
+    return render_template('dueño_partido_live.html', reserva=reserva_dict)
+
 @app.route('/perfil_dueño', methods=['GET', 'POST'])
 @login_required
 def perfil_dueño():
@@ -756,6 +801,11 @@ def usuario_eliminar_favorito(id_cancha):
         get_db().rollback()
         print(f"Error al eliminar favorito: {str(e)}")
         return jsonify({'success': False, 'message': 'Error al eliminar'}), 500
+
+# ---------------------- API ----------------------
+
+
+
 
 @app.route('/perfil_usuario', methods=['GET', 'POST'])
 @login_required
