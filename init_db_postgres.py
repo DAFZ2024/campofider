@@ -161,7 +161,16 @@ if __name__ == "__main__":
     
     if create_schema():
         print("\n✅ ¡Base de datos lista para usar!")
-        print("💡 Ahora puedes ejecutar tu aplicación Flask")
+        
+        # Ejecutar migración para agregar columnas faltantes
+        print("\n🔄 Ejecutando migraciones...")
+        try:
+            from migrate_reservas import migrate_reservas
+            migrate_reservas()
+        except Exception as e:
+            print(f"⚠️  Error al ejecutar migración: {e}")
+        
+        print("\n💡 Ahora puedes ejecutar tu aplicación Flask")
     else:
         print("\n❌ Hubo un error al crear la base de datos")
         print("💡 Verifica que DATABASE_URL esté configurada correctamente")
