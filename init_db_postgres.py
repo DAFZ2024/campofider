@@ -21,6 +21,9 @@ def create_schema():
         print("❌ Error: DATABASE_URL no está configurada")
         print("💡 Para desarrollo local, usa SQLite con init_db.py")
         return False
+        
+    # Limpiar espacios en blanco o saltos de línea
+    database_url = database_url.strip()
     
     # Convertir formato si es necesario
     if database_url.startswith('postgres://'):
