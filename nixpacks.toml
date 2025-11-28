@@ -2,7 +2,7 @@
 providers = ["python", "node"]
 
 [phases.setup]
-nixPkgs = ["python3", "postgresql", "gcc"]
+nixPkgs = ["python3", "python3Packages.pip", "postgresql", "gcc"]
 
 [phases.install]
 cmds = ["python3 -m pip install -r requirements.txt", "npm ci"]
