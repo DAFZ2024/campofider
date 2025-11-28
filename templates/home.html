@@ -292,19 +292,105 @@
 </section>
 {% endif %}
 
+<!-- Cómo Funciona Section -->
+<section class="relative py-20 mb-12">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary-900/20 via-transparent to-primary-900/20 pointer-events-none"></div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+                Tu Partido en <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-emerald-400">3 Pasos</span>
+            </h2>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                Simplificamos el proceso para que solo te preocupes por jugar.
+            </p>
+        </div>
+
+        <!-- Steps Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            <!-- Connecting Line (Desktop) -->
+            <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-primary-500/20 via-primary-500/40 to-primary-500/20 -translate-y-1/2 z-0"></div>
+
+            <!-- Step 1 -->
+            <div class="group relative z-10">
+                <div class="bg-gray-900/80 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-primary-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary-500/20 text-center h-full">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-primary-500/20 to-emerald-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-primary-500/30 relative">
+                        <span class="absolute -top-3 -right-3 w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold text-sm border-4 border-gray-900">1</span>
+                        <svg class="w-10 h-10 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Explora</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Encuentra las mejores canchas cerca de ti. Filtra por ubicación, precio y servicios disponibles.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="group relative z-10">
+                <div class="bg-gray-900/80 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/20 text-center h-full">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-blue-500/30 relative">
+                        <span class="absolute -top-3 -right-3 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm border-4 border-gray-900">2</span>
+                        <svg class="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Reserva</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Elige el horario que más te convenga y asegura tu cancha al instante sin llamadas ni esperas.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="group relative z-10">
+                <div class="bg-gray-900/80 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20 text-center h-full">
+                    <div class="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-purple-500/30 relative">
+                        <span class="absolute -top-3 -right-3 w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm border-4 border-gray-900">3</span>
+                        <svg class="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Juega</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Llega a la cancha, paga en el sitio y disfruta del partido con tus amigos. ¡Así de fácil!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Sección Quiénes Somos Redesign -->
 <section id="about" class="relative py-24 overflow-hidden">
-    <!-- Decorative Background -->
+    <!-- Decorative Elements -->
     <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-500/50 to-transparent"></div>
-    <div class="absolute inset-0 bg-gray-900/20 backdrop-blur-sm pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-500/30 to-transparent"></div>
+    
+    <!-- Floating Orbs -->
+    <div class="absolute -left-32 top-1/4 w-64 h-64 bg-primary-500/5 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute -right-32 bottom-1/4 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
     
     <div class="relative container mx-auto px-4 z-10">
         <!-- Header -->
         <div class="text-center max-w-3xl mx-auto mb-20">
-            <h2 class="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">
-                Nuestra <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-emerald-400">Esencia</span>
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-primary-400 font-bold tracking-wider text-sm uppercase mb-6">
+                <span class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
+                <span>Conócenos</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight">
+                Nuestra <span class="relative inline-block">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-emerald-400 to-primary-500">Esencia</span>
+                    <svg class="absolute -bottom-2 left-0 w-full h-3 text-primary-500/30" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 10C50 2 150 2 198 10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </span>
             </h2>
-            <p class="text-gray-400 text-lg leading-relaxed">
+            <p class="text-gray-300 text-lg leading-relaxed">
                 Más que una plataforma, somos el puente entre tu pasión por el deporte y los mejores espacios para practicarlo.
             </p>
         </div>
@@ -313,63 +399,134 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
             
             <!-- Card 1: Equipo (Large) -->
-            <div class="lg:col-span-4 group relative bg-gray-800/50 hover:bg-gray-800/80 backdrop-blur-md rounded-3xl p-8 border border-white/5 hover:border-primary-500/30 transition-all duration-300 cursor-pointer overflow-hidden" onclick="openModal('quienes')">
-                <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
+            <div class="lg:col-span-4 group relative bg-white/[0.02] hover:bg-white/[0.05] backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:border-primary-500/40 transition-all duration-500 cursor-pointer overflow-hidden" onclick="openModal('quienes')">
+                <!-- Animated Background Gradient -->
+                <div class="absolute inset-0 bg-gradient-to-br from-primary-500/0 via-primary-500/0 to-primary-500/0 group-hover:from-primary-500/5 group-hover:via-transparent group-hover:to-emerald-500/5 transition-all duration-500"></div>
+                
+                <!-- Decorative Icon -->
+                <div class="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
                     <svg class="w-32 h-32 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                 </div>
+                
                 <div class="relative z-10 h-full flex flex-col justify-between">
-                    <div class="w-12 h-12 rounded-2xl bg-primary-500/20 flex items-center justify-center mb-6 group-hover:bg-primary-500 transition-colors duration-300">
-                        <svg class="w-6 h-6 text-primary-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500/20 to-primary-600/20 backdrop-blur-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:from-primary-500/30 group-hover:to-primary-600/30 transition-all duration-300 border border-primary-500/20">
+                        <svg class="w-7 h-7 text-primary-400 group-hover:text-primary-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-white mb-2">Nuestro Equipo</h3>
-                        <p class="text-gray-400 text-sm">Innovadores comprometidos con el deporte.</p>
+                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-primary-300 transition-colors">Nuestro Equipo</h3>
+                        <p class="text-gray-400 text-sm md:text-base">Innovadores comprometidos con el deporte y la tecnología.</p>
+                    </div>
+                </div>
+                
+                <!-- Hover Indicator -->
+                <div class="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="flex items-center gap-2 text-primary-400 text-sm font-medium">
+                        <span>Ver más</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </div>
                 </div>
             </div>
 
             <!-- Card 2: Por Qué Nacimos -->
-            <div class="lg:col-span-2 group relative bg-gray-800/50 hover:bg-gray-800/80 backdrop-blur-md rounded-3xl p-8 border border-white/5 hover:border-blue-500/30 transition-all duration-300 cursor-pointer" onclick="openModal('problema')">
-                <div class="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center mb-6 group-hover:bg-blue-500 transition-colors duration-300">
-                    <svg class="w-6 h-6 text-blue-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+            <div class="lg:col-span-2 group relative bg-white/[0.02] hover:bg-white/[0.05] backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:border-blue-500/40 transition-all duration-500 cursor-pointer" onclick="openModal('problema')">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-blue-500/0 group-hover:from-blue-500/5 group-hover:to-transparent transition-all duration-500 rounded-3xl"></div>
+                
+                <div class="relative z-10">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:from-blue-500/30 group-hover:to-blue-600/30 transition-all duration-300 border border-blue-500/20">
+                        <svg class="w-7 h-7 text-blue-400 group-hover:text-blue-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">El Origen</h3>
+                    <p class="text-gray-400 text-sm">Solucionando el caos de las reservas deportivas.</p>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-2">El Origen</h3>
-                <p class="text-gray-400 text-sm">Solucionando el caos de las reservas.</p>
+                
+                <div class="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
             </div>
 
             <!-- Card 3: Objetivos -->
-            <div class="lg:col-span-2 group relative bg-gray-800/50 hover:bg-gray-800/80 backdrop-blur-md rounded-3xl p-8 border border-white/5 hover:border-emerald-500/30 transition-all duration-300 cursor-pointer" onclick="openModal('objetivos')">
-                <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center mb-6 group-hover:bg-emerald-500 transition-colors duration-300">
-                    <svg class="w-6 h-6 text-emerald-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <div class="lg:col-span-2 group relative bg-white/[0.02] hover:bg-white/[0.05] backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:border-emerald-500/40 transition-all duration-500 cursor-pointer" onclick="openModal('objetivos')">
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/5 group-hover:to-transparent transition-all duration-500 rounded-3xl"></div>
+                
+                <div class="relative z-10">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 backdrop-blur-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:from-emerald-500/30 group-hover:to-emerald-600/30 transition-all duration-300 border border-emerald-500/20">
+                        <svg class="w-7 h-7 text-emerald-400 group-hover:text-emerald-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-emerald-300 transition-colors">Misión</h3>
+                    <p class="text-gray-400 text-sm">Centralizar y facilitar el acceso al deporte.</p>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-2">Misión</h3>
-                <p class="text-gray-400 text-sm">Centralizar y facilitar el deporte.</p>
+                
+                <div class="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
             </div>
 
             <!-- Card 4: Proyecto (Large) -->
-            <div class="lg:col-span-4 group relative bg-gray-800/50 hover:bg-gray-800/80 backdrop-blur-md rounded-3xl p-8 border border-white/5 hover:border-purple-500/30 transition-all duration-300 cursor-pointer overflow-hidden" onclick="openModal('proyecto')">
-                <div class="absolute -right-10 -bottom-10 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:rotate-12 duration-500">
+            <div class="lg:col-span-4 group relative bg-white/[0.02] hover:bg-white/[0.05] backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:border-purple-500/40 transition-all duration-500 cursor-pointer overflow-hidden" onclick="openModal('proyecto')">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-purple-500/0 to-purple-500/0 group-hover:from-purple-500/5 group-hover:via-transparent group-hover:to-pink-500/5 transition-all duration-500"></div>
+                
+                <!-- Decorative Icon -->
+                <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:rotate-12 duration-500">
                     <svg class="w-48 h-48 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 7m0 13V7"></path></svg>
                 </div>
+                
                 <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-500 transition-colors duration-300">
-                        <svg class="w-6 h-6 text-purple-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:from-purple-500/30 group-hover:to-purple-600/30 transition-all duration-300 border border-purple-500/20">
+                        <svg class="w-7 h-7 text-purple-400 group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-white mb-2">Proyecto Inicial</h3>
-                        <p class="text-gray-400 text-sm max-w-md">Una revolución digital para el acceso a espacios deportivos.</p>
+                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-purple-300 transition-colors">Proyecto Inicial</h3>
+                        <p class="text-gray-400 text-sm md:text-base max-w-md">Una revolución digital para el acceso a espacios deportivos.</p>
+                    </div>
+                </div>
+                
+                <div class="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="flex items-center gap-2 text-purple-400 text-sm font-medium">
+                        <span>Explorar</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </div>
                 </div>
             </div>
 
             <!-- Card 5: Impacto (Full Width) -->
-            <div class="lg:col-span-6 group relative bg-gradient-to-r from-gray-800/50 to-gray-900/50 hover:from-gray-800/80 hover:to-gray-900/80 backdrop-blur-md rounded-3xl p-8 border border-white/5 hover:border-pink-500/30 transition-all duration-300 cursor-pointer text-center" onclick="openModal('conclusion')">
-                <div class="flex flex-col items-center justify-center">
-                    <div class="w-16 h-16 rounded-full bg-pink-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+            <div class="lg:col-span-6 group relative bg-gradient-to-r from-white/[0.02] to-white/[0.03] hover:from-white/[0.05] hover:to-white/[0.06] backdrop-blur-md rounded-3xl p-10 border border-white/10 hover:border-pink-500/40 transition-all duration-500 cursor-pointer text-center overflow-hidden" onclick="openModal('conclusion')">
+                <!-- Animated Gradient Background -->
+                <div class="absolute inset-0 bg-gradient-to-r from-pink-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-pink-500/5 group-hover:via-purple-500/5 group-hover:to-pink-500/5 transition-all duration-700"></div>
+                
+                <!-- Floating Particles -->
+                <div class="absolute top-10 left-10 w-2 h-2 bg-pink-400/30 rounded-full animate-pulse"></div>
+                <div class="absolute top-20 right-20 w-3 h-3 bg-purple-400/30 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+                <div class="absolute bottom-10 left-1/4 w-2 h-2 bg-pink-400/30 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+                
+                <div class="relative z-10 flex flex-col items-center justify-center">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-pink-500/10 to-purple-500/10 backdrop-blur-sm flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-pink-500/20">
+                        <svg class="w-10 h-10 text-pink-400 group-hover:text-pink-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Nuestro Impacto</h3>
-                    <p class="text-gray-400 max-w-2xl mx-auto">Transformamos la experiencia deportiva digitalizando el proceso de reservas y promoviendo una comunidad más activa.</p>
+                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-pink-300 transition-colors">Nuestro Impacto</h3>
+                    <p class="text-gray-300 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">Transformamos la experiencia deportiva digitalizando el proceso de reservas y promoviendo una comunidad más activa.</p>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-6 mt-8 max-w-xl mx-auto">
+                        <div class="text-center">
+                            <div class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 mb-1">100+</div>
+                            <div class="text-xs text-gray-400 uppercase tracking-wider">Usuarios</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-1">24/7</div>
+                            <div class="text-xs text-gray-400 uppercase tracking-wider">Disponible</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 mb-1">10+</div>
+                            <div class="text-xs text-gray-400 uppercase tracking-wider">Canchas</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="flex items-center gap-2 text-pink-400 text-sm font-medium">
+                        <span>Conocer más</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
                 </div>
             </div>
 

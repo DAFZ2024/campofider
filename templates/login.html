@@ -4,95 +4,182 @@
 
 {% block content %}
 <div class="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 px-4 relative z-10">
-    <div class="max-w-md w-full">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 -left-32 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary-400/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+    </div>
+
+    <div class="max-w-md w-full relative">
         <!-- Logo Section -->
-        <div class="text-center mb-8">
-            <div class="inline-block mb-4 relative group">
-                <div class="absolute inset-0 bg-primary-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 rounded-full"></div>
-                <img src="{{ url_for('static', filename='imagenes/logo.png') }}" 
-                     alt="Logo Campofinder" 
-                     class="h-24 w-24 mx-auto relative z-10 drop-shadow-2xl transform group-hover:scale-105 transition-transform duration-300"
-                     onerror="this.style.display='none'">
+        <div class="text-center mb-10">
+            <div class="inline-block mb-6 relative group">
+                <!-- Glow Effect -->
+                <div class="absolute -inset-4 bg-gradient-to-r from-primary-500 to-emerald-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-all duration-500"></div>
+                <!-- Logo Container -->
+                <div class="relative bg-gradient-to-br from-primary-800/40 to-primary-900/40 p-4 rounded-2xl border border-primary-600/30 backdrop-blur-sm shadow-2xl">
+                    <img src="{{ url_for('static', filename='imagenes/logo.png') }}" 
+                         alt="Logo Campofinder" 
+                         class="h-20 w-20 mx-auto relative z-10 drop-shadow-2xl transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500"
+                         onerror="this.style.display='none'">
+                </div>
             </div>
-            <h1 class="text-4xl font-black text-white mb-2 drop-shadow-lg tracking-tight">
-                Campo<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-200">Finder</span>
+            <h1 class="text-4xl md:text-5xl font-black mb-3 tracking-tight">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-primary-100 to-white">Campo</span><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-primary-300 to-emerald-400">Finder</span>
             </h1>
-            <p class="text-primary-200 font-medium drop-shadow-md">Encuentra tu cancha perfecta</p>
+            <p class="text-gray-300 font-medium text-lg">Bienvenido de vuelta</p>
+            <div class="flex items-center justify-center gap-2 mt-2">
+                <div class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></div>
+                <p class="text-primary-400 text-sm font-semibold">Inicia sesión para continuar</p>
+            </div>
         </div>
 
         <!-- Login Card -->
-        <div class="bg-primary-950/80 backdrop-blur-md rounded-2xl shadow-2xl border border-primary-800/50 p-8 animate-fade-in relative overflow-hidden">
-            <!-- Decorative gradient glow -->
-            <div class="absolute top-0 right-0 -mt-16 -mr-16 w-32 h-32 bg-primary-500 rounded-full blur-3xl opacity-20"></div>
-            <div class="absolute bottom-0 left-0 -mb-16 -ml-16 w-32 h-32 bg-primary-400 rounded-full blur-3xl opacity-10"></div>
-
-            <h2 class="text-2xl font-bold text-white mb-6 text-center drop-shadow-md">Iniciar Sesión</h2>
+        <div class="relative group">
+            <!-- Animated Border Gradient -->
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-primary-600 via-emerald-600 to-primary-600 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500 animate-gradient-x"></div>
             
-            <form method="POST" action="{{ url_for('login') }}" class="space-y-6 relative z-10">
-                <!-- Email -->
-                <div>
-                    <label for="correo" class="block text-sm font-medium text-primary-200 mb-2">
-                        Correo Electrónico
-                    </label>
-                    <div class="relative group">
-                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-400 text-xl group-hover:text-primary-300 transition-colors">
-                            📧
-                        </span>
-                        <input type="email" 
-                               id="correo" 
-                               name="correo" 
-                               placeholder="ejemplo@correo.com" 
-                               required 
-                               autocomplete="email"
-                               class="w-full pl-12 pr-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white placeholder-primary-400/50 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-300 hover:bg-white/10">
-                    </div>
-                </div>
+            <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 p-8 md:p-10 overflow-hidden">
+                <!-- Decorative Elements -->
+                <div class="absolute top-0 right-0 -mt-20 -mr-20 w-40 h-40 bg-gradient-to-br from-primary-500/20 to-emerald-500/20 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-40 h-40 bg-gradient-to-tr from-primary-400/20 to-primary-500/20 rounded-full blur-3xl"></div>
+                
+                <!-- Floating Particles -->
+                <div class="absolute top-10 right-10 w-1 h-1 bg-primary-400/40 rounded-full animate-pulse"></div>
+                <div class="absolute top-20 left-10 w-2 h-2 bg-emerald-400/30 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+                <div class="absolute bottom-20 right-20 w-1.5 h-1.5 bg-primary-400/40 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
 
-                <!-- Password -->
-                <div>
-                    <label for="contraseña" class="block text-sm font-medium text-primary-200 mb-2">
-                        Contraseña
-                    </label>
-                    <div class="relative group">
-                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-400 text-xl group-hover:text-primary-300 transition-colors">
-                            🔒
-                        </span>
-                        <input type="password" 
-                               id="contraseña" 
-                               name="contraseña" 
-                               placeholder="••••••••" 
-                               required 
-                               autocomplete="current-password"
-                               class="w-full pl-12 pr-4 py-3 bg-white/5 border border-primary-800/50 rounded-xl text-white placeholder-primary-400/50 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-300 hover:bg-white/10">
-                    </div>
-                </div>
+                <div class="relative z-10">
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
+                        <span class="bg-gradient-to-r from-white to-primary-200 bg-clip-text text-transparent">Iniciar Sesión</span>
+                    </h2>
+                    
+                    <form method="POST" action="{{ url_for('login') }}" class="space-y-6">
+                        <!-- Email -->
+                        <div class="space-y-2">
+                            <label for="correo" class="block text-sm font-semibold text-gray-300">
+                                Correo Electrónico
+                            </label>
+                            <div class="relative group">
+                                <!-- Icon -->
+                                <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400 group-hover:text-primary-300 transition-colors pointer-events-none">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <input type="email" 
+                                       id="correo" 
+                                       name="correo" 
+                                       placeholder="tu@email.com" 
+                                       required 
+                                       autocomplete="email"
+                                       class="w-full pl-12 pr-4 py-4 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 focus:bg-white/[0.08] outline-none transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20">
+                            </div>
+                        </div>
 
-                <!-- Forgot Password -->
-                <div class="text-right">
-                    <a href="{{ url_for('reset_contrasena') }}" 
-                       class="text-sm text-primary-400 hover:text-primary-300 font-medium transition-colors hover:underline decoration-primary-400/50 underline-offset-4">
-                        ¿Olvidaste tu contraseña?
-                    </a>
-                </div>
+                        <!-- Password -->
+                        <div class="space-y-2">
+                            <label for="contraseña" class="block text-sm font-semibold text-gray-300">
+                                Contraseña
+                            </label>
+                            <div class="relative group">
+                                <!-- Icon -->
+                                <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400 group-hover:text-primary-300 transition-colors pointer-events-none">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                </div>
+                                <input type="password" 
+                                       id="contraseña" 
+                                       name="contraseña" 
+                                       placeholder="••••••••" 
+                                       required 
+                                       autocomplete="current-password"
+                                       class="w-full pl-12 pr-4 py-4 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 focus:bg-white/[0.08] outline-none transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20">
+                            </div>
+                        </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-bold rounded-xl shadow-lg shadow-primary-900/50 hover:shadow-primary-600/30 transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group">
-                    <span>Iniciar Sesión</span>
-                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </button>
-            </form>
+                        <!-- Forgot Password -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="remember" name="remember" class="w-4 h-4 rounded border-white/20 bg-white/5 text-primary-500 focus:ring-primary-500/50 focus:ring-offset-0">
+                                <label for="remember" class="ml-2 text-sm text-gray-400 hover:text-gray-300 transition-colors cursor-pointer">
+                                    Recordarme
+                                </label>
+                            </div>
+                            <a href="{{ url_for('reset_contrasena') }}" 
+                               class="text-sm text-primary-400 hover:text-primary-300 font-semibold transition-colors relative group/link">
+                                ¿Olvidaste tu contraseña?
+                                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-400 group-hover/link:w-full transition-all duration-300"></span>
+                            </a>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="group/btn relative w-full py-4 bg-gradient-to-r from-primary-600 via-primary-500 to-emerald-600 hover:from-primary-500 hover:via-emerald-500 hover:to-primary-600 text-white font-bold rounded-xl shadow-lg shadow-primary-900/50 hover:shadow-primary-500/50 transform hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 overflow-hidden">
+                            <!-- Animated Shine Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-1000"></div>
+                            
+                            <span class="relative z-10 flex items-center justify-center gap-2">
+                                <span>Iniciar Sesión</span>
+                                <svg class="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                    </svg>
+                            </span>
+                        </button>
+
+                        <!-- Divider -->
+                        <div class="relative my-8">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-white/10"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-4 bg-white/[0.03] text-gray-400 backdrop-blur-sm rounded-full border border-white/10">
+                                    ¿No tienes cuenta?
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Register Link -->
+                        <a href="{{ url_for('register') }}" class="group/reg relative w-full py-4 bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 hover:border-primary-500/50 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary-500/0 via-primary-500/10 to-primary-500/0 opacity-0 group-hover/reg:opacity-100 transition-opacity duration-300"></div>
+                            <span class="relative z-10 flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                </svg>
+                                <span>Crear cuenta nueva</span>
+                            </span>
+                        </a>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <!-- Navigation Buttons -->
-        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a href="{{ url_for('index') }}" class="text-primary-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-2 group">
-                <span class="group-hover:-translate-x-1 transition-transform">←</span> Volver al inicio
-            </a>
-            <span class="text-primary-600 hidden sm:inline">•</span>
-            <a href="{{ url_for('register') }}" class="text-primary-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-2 group">
-                Crear cuenta nueva <span class="group-hover:translate-x-1 transition-transform">→</span>
+        <!-- Back to Home -->
+        <div class="mt-8 text-center">
+            <a href="{{ url_for('index') }}" class="inline-flex items-center gap-2 text-gray-400 hover:text-white text-sm font-medium transition-all duration-300 group">
+                <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                <span>Volver al inicio</span>
             </a>
         </div>
     </div>
 </div>
+
+<style>
+@keyframes gradient-x {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 3s ease infinite;
+}
+</style>
 {% endblock %}

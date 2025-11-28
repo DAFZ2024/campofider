@@ -161,11 +161,24 @@ def listar_canchas():
     db = get_db()
     cur = db.cursor()
     cur.execute("""
-        SELECT c.id_cancha, c.nombre, c.precio, c.direccion, u.nombre as dueno
+        SELECT c.id_cancha, c.nombre, c.precio, c.direccion, c.imagen_url, u.nombre as dueno
         FROM canchas c
         LEFT JOIN usuarios u ON c.usuario_id = u.id
     """)
-    canchas = cur.fetchall()
+    canchas_raw = cur.fetchall()
+    
+    # Convert to dict for easier template access
+    canchas = []
+    for cancha in canchas_raw:
+        canchas.append({
+            'id_cancha': cancha[0],
+            'nombre': cancha[1],
+            'precio': cancha[2],
+            'direccion': cancha[3],
+            'imagen_url': cancha[4],
+            'dueno': cancha[5]
+        })
+    
     return render_template('admin_canchas.html', canchas=canchas)
 
 @admin_usuarios.route('/canchas/eliminar/<int:id>', methods=['POST'])
@@ -209,12 +222,13 @@ def listar_reservas():
         reservas_procesadas.append({
             'id_reserva': reserva[0],
             'cancha': reserva[1],
-            'fecha': reserva[2],  # Mantener como string para mostrar
+            'fecha': reserva[2],  # Mantener como viene de la BD (puede ser string o date)
             'horario': reserva[3],
-            'usuario': reserva[4]
+            'usuario': reserva[4],
+            'estado': 'activa'  # Por defecto todas son activas ya que no hay columna estado en la BD
         })
     
-    # Pasar today como string en formato YYYY-MM-DD para comparación con strings
-    today_str = date.today().strftime('%Y-%m-%d')
+    # Pasar today como objeto date para comparación
+    today = date.today()
     
-    return render_template('admin_reservas.html', reservas=reservas_procesadas, today=today_str)
+    return render_template('admin_reservas.html', reservas=reservas_procesadas, today=today)

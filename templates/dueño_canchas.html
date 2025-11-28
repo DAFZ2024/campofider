@@ -3,110 +3,158 @@
 {% block title %}Mis Canchas - Campo Finder{% endblock %}
 
 {% block content %}
-<div class="min-h-screen py-8">
-    <!-- Header -->
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-        <div>
-            <h1 class="text-4xl font-black text-white mb-2">Mis Canchas</h1>
-            <p class="text-primary-200">Gestiona todas tus canchas deportivas</p>
-        </div>
-        <a href="{{ url_for('dueno_agregar_cancha') }}" class="mt-4 md:mt-0 inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
-            <span class="text-xl">➕</span>
-            <span>Agregar Cancha</span>
-        </a>
+<div class="min-h-screen py-8 px-4 relative">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 -left-32 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 -right-32 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
     </div>
 
-    <!-- Canchas Grid -->
-    {% if canchas and canchas|length > 0 %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for cancha in canchas %}
-                <div class="group relative bg-primary-950/80 backdrop-blur-md rounded-2xl overflow-hidden border border-primary-800/50 hover:border-primary-600/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary-900/50">
-                    <!-- Image -->
-                    <div class="relative h-48 overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-t from-primary-950 via-transparent to-transparent z-10"></div>
-                        {% if cancha[4] %}
-                            <img src="{{ url_for('static', filename=cancha[4].replace('static/', '')) }}" 
-                                 alt="{{ cancha[1] }}" 
-                                 class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                                 onerror="this.src='{{ url_for('static', filename='imagenes/cancha1.png') }}'">
-                        {% else %}
-                            <div class="w-full h-full bg-gradient-to-br from-primary-800 to-primary-900 flex items-center justify-center">
-                                <span class="text-6xl opacity-50">⚽</span>
-                            </div>
-                        {% endif %}
-                        
-                        <!-- Status Badge -->
-                        <div class="absolute top-4 left-4 z-20">
-                            <div class="px-3 py-1 bg-emerald-500/90 backdrop-blur-sm rounded-full flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-                                <span class="text-xs font-bold text-white">ACTIVA</span>
-                            </div>
+    <div class="max-w-7xl mx-auto relative z-10">
+        <!-- Header -->
+        <div class="mb-10">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-primary-600 to-blue-600 rounded-xl blur opacity-30"></div>
+                        <div class="relative w-14 h-14 rounded-xl bg-gradient-to-br from-primary-500/20 to-blue-500/20 flex items-center justify-center border border-primary-500/30">
+                            <svg class="w-8 h-8 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
                         </div>
                     </div>
-
-                    <!-- Content -->
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-primary-400 transition-colors">
-                            {{ cancha[1] }}
-                        </h3>
-                        
-                        {% if cancha[5] %}
-                            <div class="flex items-center gap-2 text-sm text-gray-400 mb-3">
-                                <span>📍</span>
-                                <span class="line-clamp-1">{{ cancha[5] }}</span>
-                            </div>
-                        {% endif %}
-                        
-                        <p class="text-gray-400 text-sm line-clamp-2 mb-4 leading-relaxed">
-                            {{ cancha[3] if cancha[3] else 'Sin descripción' }}
-                        </p>
-                        
-                        <!-- Price -->
-                        <div class="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
-                            <span class="text-sm text-gray-400">Precio por hora</span>
-                            <span class="text-2xl font-black text-white">${{ "{:,.0f}".format(cancha[2]|float).replace(",", ".") }}</span>
-                        </div>
-                        
-                        <!-- Actions -->
-                        <div class="flex gap-2">
-                            <a href="{{ url_for('dueno_editar_cancha', id=cancha[0]) }}" 
-                               class="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-500 text-white rounded-lg font-semibold text-center transition-colors flex items-center justify-center gap-2">
-                                <span>✏️</span>
-                                <span>Editar</span>
-                            </a>
-                            <form method="POST" action="{{ url_for('dueno_eliminar_cancha', id=cancha[0]) }}" 
-                                  onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta cancha?');" 
-                                  class="flex-1">
-                                <button type="submit" 
-                                        class="w-full px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
-                                    <span>🗑️</span>
-                                    <span>Eliminar</span>
-                                </button>
-                            </form>
-                        </div>
+                    <div>
+                        <h1 class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-primary-100 to-white">
+                            Mis Canchas
+                        </h1>
+                        <p class="text-gray-300 font-medium mt-1">Gestiona todas tus canchas deportivas</p>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <!-- Empty State -->
-        <div class="flex flex-col items-center justify-center py-20">
-            <div class="relative mb-8">
-                <div class="absolute inset-0 bg-primary-500 blur-3xl opacity-20 animate-pulse"></div>
-                <div class="relative w-32 h-32 rounded-full bg-primary-900/50 backdrop-blur-sm border border-primary-800/50 flex items-center justify-center">
-                    <span class="text-6xl">🏟️</span>
-                </div>
+                <a href="{{ url_for('dueno_agregar_cancha') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-500 hover:to-blue-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-primary-900/50 hover:shadow-xl hover:shadow-primary-900/60 hover:-translate-y-0.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Agregar Cancha
+                </a>
             </div>
-            <h2 class="text-3xl font-bold text-white mb-2">No tienes canchas aún</h2>
-            <p class="text-gray-400 mb-8 text-center max-w-md">
-                Comienza agregando tu primera cancha para que los usuarios puedan reservarla
-            </p>
-            <a href="{{ url_for('dueno_agregar_cancha') }}" 
-               class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
-                <span class="text-2xl">➕</span>
-                <span>Agregar Primera Cancha</span>
-            </a>
         </div>
-    {% endif %}
+
+        <!-- Canchas Grid -->
+        {% if canchas and canchas|length > 0 %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for cancha in canchas %}
+                    <div class="group relative bg-white/[0.03] backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-primary-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary-900/30">
+                        <!-- Image -->
+                        <div class="relative h-48 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10"></div>
+                            {% if cancha[4] %}
+                                <img src="{{ url_for('static', filename=cancha[4].replace('static/', '')) }}" 
+                                     alt="{{ cancha[1] }}" 
+                                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                     onerror="this.src='{{ url_for('static', filename='imagenes/cancha1.png') }}'">
+                            {% else %}
+                                <div class="w-full h-full bg-gradient-to-br from-primary-500/20 to-blue-500/20 flex items-center justify-center border-b border-white/10">
+                                    <svg class="w-20 h-20 text-primary-400/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                            
+                            <!-- Status Badge -->
+                            <div class="absolute top-4 left-4 z-20">
+                                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 backdrop-blur-sm">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    ACTIVA
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors line-clamp-1">
+                                {{ cancha[1] }}
+                            </h3>
+                            
+                            {% if cancha[5] %}
+                                <div class="flex items-center gap-2 text-sm text-gray-400 mb-3">
+                                    <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    <span class="line-clamp-1">{{ cancha[5] }}</span>
+                                </div>
+                            {% endif %}
+                            
+                            <p class="text-gray-400 text-sm line-clamp-2 mb-4 leading-relaxed">
+                                {{ cancha[3] if cancha[3] else 'Sin descripción' }}
+                            </p>
+                            
+                            <!-- Price -->
+                            <div class="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
+                                <div class="flex items-center gap-2 text-sm text-gray-400">
+                                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Por hora
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span class="text-2xl font-black text-white">${{ "{:,.0f}".format(cancha[2]|float).replace(",", ".") }}</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Actions -->
+                            <div class="flex gap-3">
+                                <a href="{{ url_for('dueno_editar_cancha', id=cancha[0]) }}" 
+                                   class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600/20 hover:bg-primary-600/30 text-primary-400 rounded-lg font-semibold transition-all border border-primary-500/30 hover:border-primary-500/50">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                    Editar
+                                </a>
+                                <form method="POST" action="{{ url_for('dueno_eliminar_cancha', id=cancha[0]) }}" 
+                                      onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta cancha?');" 
+                                      class="flex-1">
+                                    <button type="submit" 
+                                            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-lg font-semibold transition-all border border-red-500/30 hover:border-red-500/50">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Empty State -->
+            <div class="flex flex-col items-center justify-center py-20">
+                <div class="relative mb-8">
+                    <div class="absolute inset-0 bg-primary-500/20 blur-3xl animate-pulse"></div>
+                    <div class="relative w-32 h-32 rounded-full bg-white/[0.03] backdrop-blur-sm border border-white/10 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                    </div>
+                </div>
+                <h2 class="text-3xl font-bold text-white mb-3">No tienes canchas aún</h2>
+                <p class="text-gray-400 mb-8 text-center max-w-md">
+                    Comienza agregando tu primera cancha para que los usuarios puedan reservarla
+                </p>
+                <a href="{{ url_for('dueno_agregar_cancha') }}" 
+                   class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-500 hover:to-blue-500 text-white rounded-xl text-lg font-bold transition-all shadow-lg shadow-primary-900/50 hover:shadow-xl hover:shadow-primary-900/60 hover:-translate-y-1">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Agregar Primera Cancha
+                </a>
+            </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

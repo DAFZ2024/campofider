@@ -75,6 +75,10 @@ CREATE TABLE IF NOT EXISTS reservas (
     fecha DATE NOT NULL,
     numero TEXT,
     mensaje TEXT,
+    goles_equipo1 INTEGER DEFAULT 0,
+    goles_equipo2 INTEGER DEFAULT 0,
+    tarjetas_amarillas INTEGER DEFAULT 0,
+    tarjetas_rojas INTEGER DEFAULT 0,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
 

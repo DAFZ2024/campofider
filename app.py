@@ -282,8 +282,58 @@ def dashboard_dueño():
 @app.route('/dueño/canchas')
 @login_required
 def dueno_canchas():
-    """Alias route for dashboard_dueño to match template url_for references"""
-    return dashboard_dueño()
+    if not current_user.is_owner():
+        flash('Acceso denegado', 'error')
+        return redirect(url_for('index'))
+    
+    db = get_db()
+    cur = db.cursor()
+    
+    cur.execute("""
+        SELECT id_cancha, nombre, precio, descripcion, imagen_url, direccion
+        FROM canchas
+        WHERE usuario_id = ?
+        ORDER BY id_cancha DESC
+    """, (current_user.id,))
+    canchas = cur.fetchall()
+    
+    return render_template('dueño_canchas.html', canchas=canchas)
+
+@app.route('/dueño/reserva/<int:id>/actualizar_stats', methods=['POST'])
+@login_required
+def actualizar_stats_reserva(id):
+    if not current_user.is_owner():
+        return jsonify({'success': False, 'error': 'No autorizado'}), 403
+    
+    data = request.get_json()
+    field = data.get('field')
+    value = data.get('value')
+    
+    allowed_fields = ['goles_equipo1', 'goles_equipo2', 'tarjetas_amarillas', 'tarjetas_rojas']
+    if field not in allowed_fields:
+        return jsonify({'success': False, 'error': 'Campo inválido'}), 400
+        
+    db = get_db()
+    cur = db.cursor()
+    
+    try:
+        # Verificar que la reserva pertenece a una cancha del dueño
+        cur.execute("""
+            SELECT r.id_reserva 
+            FROM reservas r
+            JOIN canchas c ON r.cancha = c.nombre
+            WHERE r.id_reserva = ? AND c.usuario_id = ?
+        """, (id, current_user.id))
+        
+        if not cur.fetchone():
+            return jsonify({'success': False, 'error': 'Reserva no encontrada o no autorizada'}), 404
+
+        query = f"UPDATE reservas SET {field} = ? WHERE id_reserva = ?"
+        cur.execute(query, (value, id))
+        db.commit()
+        return jsonify({'success': True})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/dueño/canchas/agregar', methods=['GET', 'POST'])
 @login_required
@@ -417,6 +467,7 @@ def dueno_reservas():
     cur = db.cursor()
     cur.execute("""
         SELECT r.id_reserva, r.cancha, r.fecha, r.horario, r.numero, r.mensaje,
+               r.goles_equipo1, r.goles_equipo2, r.tarjetas_amarillas, r.tarjetas_rojas,
                u.nombre as usuario_nombre, u.correo as usuario_correo
         FROM reservas r
         JOIN canchas c ON r.cancha = c.nombre

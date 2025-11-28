@@ -92,6 +92,10 @@ def create_schema():
             fecha DATE NOT NULL,
             numero VARCHAR(50),
             mensaje TEXT,
+            goles_equipo1 INTEGER DEFAULT 0,
+            goles_equipo2 INTEGER DEFAULT 0,
+            tarjetas_amarillas INTEGER DEFAULT 0,
+            tarjetas_rojas INTEGER DEFAULT 0,
             FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
         );
         
