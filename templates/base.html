@@ -36,7 +36,7 @@
                 <div class="hidden md:flex items-center space-x-1">
                     {% if current_user.is_authenticated %}
                         {% if current_user.rol == 'administrador' %}
-                            <a href="{{ url_for('dashboard_admin') }}" class="px-4 py-2 text-primary-100 hover:text-white hover:bg-primary-900 rounded-lg transition-all font-medium flex items-center gap-2">
+                            <a href="{{ url_for('admin_usuarios.dashboard') }}" class="px-4 py-2 text-primary-100 hover:text-white hover:bg-primary-900 rounded-lg transition-all font-medium flex items-center gap-2">
                                 <span></span> Panel
                             </a>
                         {% elif current_user.rol == 'dueño' %}
