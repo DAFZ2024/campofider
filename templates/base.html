@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     {% if current_user.rol == 'administrador' %}
-                        <a href="{{ url_for('dashboard_admin') }}" class="block px-4 py-3 text-primary-100 hover:bg-primary-800 rounded-lg transition-colors">
+                        <a href="{{ url_for('admin_usuarios.dashboard') }}" class="block px-4 py-3 text-primary-100 hover:bg-primary-800 rounded-lg transition-colors">
                             Panel
                         </a>
                     {% elif current_user.rol == 'dueño' %}
