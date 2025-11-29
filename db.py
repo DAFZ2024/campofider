@@ -5,6 +5,7 @@ Soporta SQLite (desarrollo) y PostgreSQL (producción) con compatibilidad de sin
 import sqlite3
 from flask import g
 from config import DB_CONFIG
+import time
 
 # Importar psycopg2 solo si estamos en producción
 if DB_CONFIG['type'] == 'postgresql':
@@ -85,11 +86,26 @@ def get_db():
         if DB_CONFIG['type'] == 'postgresql':
             # Conexión PostgreSQL
             # Usamos DictCursor para permitir acceso por nombre, pero también soporta índices
-            real_conn = psycopg2.connect(
-                DB_CONFIG['url'],
-                cursor_factory=psycopg2.extras.DictCursor
-            )
-            db = g._database = ConnectionWrapper(real_conn, 'postgresql')
+            # Implementamos lógica de reintento para cuando la BD se está despertando (Railway)
+            max_retries = 5
+            retry_delay = 2
+            
+            for attempt in range(max_retries):
+                try:
+                    real_conn = psycopg2.connect(
+                        DB_CONFIG['url'],
+                        cursor_factory=psycopg2.extras.DictCursor
+                    )
+                    db = g._database = ConnectionWrapper(real_conn, 'postgresql')
+                    break # Conexión exitosa
+                except psycopg2.OperationalError as e:
+                    if attempt < max_retries - 1:
+                        print(f"⚠️ Error conectando a BD (intento {attempt+1}/{max_retries}): {e}")
+                        print(f"   Esperando {retry_delay} segundos...")
+                        time.sleep(retry_delay)
+                    else:
+                        print("❌ No se pudo conectar a la base de datos después de varios intentos.")
+                        raise e
         else:
             # Conexión SQLite
             real_conn = sqlite3.connect(DB_CONFIG['database'])
