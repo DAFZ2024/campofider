@@ -3,9 +3,9 @@
 {% block title %}Panel de Administración - CampoFinder{% endblock %}
 
 {% block content %}
-<div class="min-h-screen py-8 px-4 relative">
-    <!-- Animated Background Elements -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+<div class="min-h-screen py-6 px-2 sm:px-4 relative">
+    <!-- Animated Background Elements (hidden on small screens) -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
         <div class="absolute top-20 -left-32 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl animate-pulse"></div>
         <div class="absolute bottom-20 -right-32 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-400/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
@@ -15,20 +15,20 @@
         <!-- Header -->
         <div class="mb-10">
             <div class="flex items-center justify-between flex-wrap gap-4">
-                <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-3">
                     <div class="relative">
                         <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-primary-600 rounded-xl blur opacity-30"></div>
-                        <div class="relative w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-primary-500/20 flex items-center justify-center border border-purple-500/30">
-                            <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-primary-500/20 flex items-center justify-center border border-purple-500/30">
+                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                             </svg>
                         </div>
                     </div>
                     <div>
-                        <h1 class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-white">
+                        <h1 class="text-2xl sm:text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-white">
                             Panel de Administración
                         </h1>
-                        <p class="text-gray-300 font-medium mt-1">Gestiona todo el sistema desde aquí</p>
+                        <p class="text-gray-300 font-medium mt-1 text-sm sm:text-base">Gestiona todo el sistema desde aquí</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 px-4 py-2 bg-white/[0.05] backdrop-blur-sm rounded-xl border border-white/10">
@@ -39,22 +39,22 @@
         </div>
 
         <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
             <!-- Total Usuarios -->
             <div class="group relative">
                 <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
-                <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-blue-500/50 transition-all duration-300 overflow-hidden">
-                    <div class="absolute top-0 right-0 -mt-10 -mr-10 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-transparent rounded-full blur-2xl"></div>
+                <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-blue-500/50 transition-all duration-300 overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-8 -mr-8 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-blue-500/20 to-transparent rounded-full blur-2xl"></div>
                     <div class="relative z-10">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-blue-500/30">
-                                <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-blue-500/30">
+                                <svg class="w-6 h-6 sm:w-7 sm:h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                                 </svg>
                             </div>
                             <div class="text-right">
                                 <p class="text-sm text-gray-400 font-medium mb-1">Total</p>
-                                <h3 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-blue-200">{{ total_usuarios }}</h3>
+                                <h3 class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-blue-200">{{ total_usuarios }}</h3>
                             </div>
                         </div>
                         <div class="flex items-center justify-between">
@@ -73,18 +73,18 @@
             <!-- Dueños -->
             <div class="group relative">
                 <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-purple-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
-                <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-purple-500/50 transition-all duration-300 overflow-hidden">
-                    <div class="absolute top-0 right-0 -mt-10 -mr-10 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-transparent rounded-full blur-2xl"></div>
+                <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-purple-500/50 transition-all duration-300 overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-8 -mr-8 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-purple-500/20 to-transparent rounded-full blur-2xl"></div>
                     <div class="relative z-10">
                         <div class="flex items-start justify-between mb-4">
-                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-purple-500/30">
-                                <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-purple-500/30">
+                                <svg class="w-6 h-6 sm:w-7 sm:h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
                             </div>
                             <div class="text-right">
                                 <p class="text-sm text-gray-400 font-medium mb-1">Total</p>
-                                <h3 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-purple-200">{{ total_duenos }}</h3>
+                                <h3 class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-purple-200">{{ total_duenos }}</h3>
                             </div>
                         </div>
                         <div class="flex items-center justify-between">
@@ -103,19 +103,19 @@
             <!-- Canchas -->
             <div class="group relative">
                 <div class="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-emerald-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
-                <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-emerald-500/50 transition-all duration-300 overflow-hidden">
-                    <div class="absolute top-0 right-0 -mt-10 -mr-10 w-32 h-32 bg-gradient-to-br from-emerald-500/20 to-transparent rounded-full blur-2xl"></div>
+                <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-emerald-500/50 transition-all duration-300 overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-8 -mr-8 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-emerald-500/20 to-transparent rounded-full blur-2xl"></div>
                     <div class="relative z-10">
                         <div class="flex items-start justify-between mb-4">
-                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-emerald-500/30">
-                                <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-emerald-500/30">
+                                <svg class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                             </div>
                             <div class="text-right">
                                 <p class="text-sm text-gray-400 font-medium mb-1">Total</p>
-                                <h3 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-emerald-200">{{ total_canchas }}</h3>
+                                <h3 class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-emerald-200">{{ total_canchas }}</h3>
                             </div>
                         </div>
                         <div class="flex items-center justify-between">
@@ -134,18 +134,18 @@
             <!-- Reservas -->
             <div class="group relative">
                 <div class="absolute -inset-0.5 bg-gradient-to-r from-orange-600 to-orange-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
-                <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-orange-500/50 transition-all duration-300 overflow-hidden">
-                    <div class="absolute top-0 right-0 -mt-10 -mr-10 w-32 h-32 bg-gradient-to-br from-orange-500/20 to-transparent rounded-full blur-2xl"></div>
+                <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-orange-500/50 transition-all duration-300 overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-8 -mr-8 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-orange-500/20 to-transparent rounded-full blur-2xl"></div>
                     <div class="relative z-10">
                         <div class="flex items-start justify-between mb-4">
-                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-orange-500/30">
-                                <svg class="w-7 h-7 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-orange-500/30">
+                                <svg class="w-6 h-6 sm:w-7 sm:h-7 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
                             </div>
                             <div class="text-right">
                                 <p class="text-sm text-gray-400 font-medium mb-1">Total</p>
-                                <h3 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-orange-200">{{ total_reservas }}</h3>
+                                <h3 class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-orange-200">{{ total_reservas }}</h3>
                             </div>
                         </div>
                         <div class="flex items-center justify-between">
@@ -165,18 +165,18 @@
         <!-- Navigation Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
             <!-- Gestión de Usuarios -->
-            <a href="{{ url_for('admin_usuarios.listar_usuarios') }}" class="group relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+            <a href="{{ url_for('admin_usuarios.listar_usuarios') }}" class="group relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div class="relative z-10">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-blue-500/30">
-                            <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-blue-500/30">
+                            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-1">Usuarios</h3>
-                            <p class="text-sm text-gray-400">Gestionar usuarios del sistema</p>
+                            <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Usuarios</h3>
+                            <p class="text-xs sm:text-sm text-gray-400">Gestionar usuarios del sistema</p>
                         </div>
                     </div>
                     <div class="flex items-center justify-between text-sm">
@@ -189,19 +189,19 @@
             </a>
 
             <!-- Gestión de Canchas -->
-            <a href="{{ url_for('admin_usuarios.listar_canchas') }}" class="group relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-emerald-500/50 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+            <a href="{{ url_for('admin_usuarios.listar_canchas') }}" class="group relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-emerald-500/50 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/10 to-emerald-500/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div class="relative z-10">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-emerald-500/30">
-                            <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-emerald-500/30">
+                            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-1">Canchas</h3>
-                            <p class="text-sm text-gray-400">Administrar canchas registradas</p>
+                            <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Canchas</h3>
+                            <p class="text-xs sm:text-sm text-gray-400">Administrar canchas registradas</p>
                         </div>
                     </div>
                     <div class="flex items-center justify-between text-sm">
@@ -214,12 +214,12 @@
             </a>
 
             <!-- Gestión de Reservas -->
-            <a href="{{ url_for('admin_usuarios.listar_reservas') }}" class="group relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+            <a href="{{ url_for('admin_usuarios.listar_reservas') }}" class="group relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/10 to-orange-500/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div class="relative z-10">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-orange-500/30">
-                            <svg class="w-7 h-7 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/20 flex items-center justify-center group-hover:scale-110 transition-transform border border-orange-500/30">
+                            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
                         </div>
@@ -242,7 +242,7 @@
         <div class="relative">
             <div class="absolute -inset-0.5 bg-gradient-to-r from-primary-600 to-purple-600 rounded-2xl blur opacity-10"></div>
             <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden">
-                <div class="p-6 border-b border-white/10 flex items-center justify-between">
+                        <div class="p-4 sm:p-6 border-b border-white/10 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500/20 to-purple-500/20 flex items-center justify-center border border-primary-500/30">
                             <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -262,27 +262,27 @@
                     <table class="w-full">
                         <thead class="bg-white/[0.02] border-b border-white/10">
                             <tr>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Usuario</th>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Cancha</th>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Fecha</th>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Horario</th>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Estado</th>
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Usuario</th>
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Cancha</th>
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Fecha</th>
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Horario</th>
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Estado</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-white/5">
                             {% for reserva in recent_reservas %}
                             <tr class="hover:bg-white/[0.02] transition-colors">
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center border border-blue-500/30">
-                                            <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center border border-blue-500/30">
+                                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                             </svg>
                                         </div>
                                         <span class="text-sm font-semibold text-white">{{ reserva[1] }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -291,7 +291,7 @@
                                         <span class="text-sm text-gray-300">{{ reserva[2] }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -299,7 +299,7 @@
                                         <span class="text-sm text-gray-300">{{ reserva[3] }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -307,7 +307,7 @@
                                         <span class="text-sm text-gray-300">{{ reserva[4] }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>

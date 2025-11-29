@@ -56,7 +56,7 @@
             </div>
             
             <!-- Stats mejorados -->
-            <div class="grid grid-cols-3 gap-4 pt-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6">
                 <div class="group relative bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 hover:border-primary-500/50 transition-all duration-300 hover:bg-white/10 hover:-translate-y-1">
                     <div class="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="relative text-center">
@@ -88,7 +88,7 @@
                 <img 
                     src="{{ url_for('static', filename='img/hero_img.png') }}" 
                     alt="Campo Finder - Canchas Sintéticas" 
-                    class="w-full h-full object-cover"
+                    class="w-full h-full object-cover hero-filter"
                     style="filter: drop-shadow(0 0 30px rgba(34, 197, 94, 0.6)) drop-shadow(0 0 60px rgba(34, 197, 94, 0.4)) drop-shadow(0 0 90px rgba(34, 197, 94, 0.2));">
             </div>
         </div>
@@ -99,8 +99,8 @@
 <section id="canchas-list" class="relative mb-20">
     <!-- Background Elements -->
     <div class="absolute inset-0 bg-gradient-to-b from-gray-900/0 via-gray-900/50 to-gray-900/0 pointer-events-none"></div>
-    <div class="absolute -left-20 top-20 w-96 h-96 bg-primary-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-    <div class="absolute -right-20 bottom-20 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute -left-20 top-20 w-96 h-96 bg-primary-500/10 rounded-full blur-[100px] pointer-events-none hidden md:block"></div>
+    <div class="absolute -right-20 bottom-20 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none hidden md:block"></div>
 
     <div class="relative container mx-auto px-4">
         <!-- Section Header -->
@@ -139,7 +139,7 @@
                     <div class="group relative bg-gray-900/40 backdrop-blur-md rounded-[2rem] border border-white/5 hover:border-primary-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary-500/10 overflow-hidden flex flex-col h-full">
                         
                         <!-- Image Area -->
-                        <div class="relative h-64 overflow-hidden">
+                        <div class="relative h-48 md:h-64 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10 opacity-80"></div>
                             
                             <!-- Badge -->
@@ -157,7 +157,7 @@
                                 </svg>
                             </button>
 
-                            <img src="{{ url_for('static', filename=cancha[2]) }}" 
+                               <img src="{{ url_for('static', filename=cancha[2]) }}" 
                                  alt="{{ cancha[0] }}" 
                                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
                                  onerror="this.src='{{ url_for('static', filename='img/hero_img.png') }}'">
@@ -372,8 +372,8 @@
     <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-500/30 to-transparent"></div>
     
     <!-- Floating Orbs -->
-    <div class="absolute -left-32 top-1/4 w-64 h-64 bg-primary-500/5 rounded-full blur-3xl animate-pulse"></div>
-    <div class="absolute -right-32 bottom-1/4 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+    <div class="absolute -left-32 top-1/4 w-64 h-64 bg-primary-500/5 rounded-full blur-3xl animate-pulse hidden md:block"></div>
+    <div class="absolute -right-32 bottom-1/4 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl animate-pulse hidden md:block" style="animation-delay: 1s;"></div>
     
     <div class="relative container mx-auto px-4 z-10">
         <!-- Header -->
@@ -493,10 +493,10 @@
                 <!-- Animated Gradient Background -->
                 <div class="absolute inset-0 bg-gradient-to-r from-pink-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-pink-500/5 group-hover:via-purple-500/5 group-hover:to-pink-500/5 transition-all duration-700"></div>
                 
-                <!-- Floating Particles -->
-                <div class="absolute top-10 left-10 w-2 h-2 bg-pink-400/30 rounded-full animate-pulse"></div>
-                <div class="absolute top-20 right-20 w-3 h-3 bg-purple-400/30 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
-                <div class="absolute bottom-10 left-1/4 w-2 h-2 bg-pink-400/30 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+                <!-- Floating Particles (hidden on small screens) -->
+                <div class="absolute top-10 left-10 w-2 h-2 bg-pink-400/30 rounded-full animate-pulse hidden md:block"></div>
+                <div class="absolute top-20 right-20 w-3 h-3 bg-purple-400/30 rounded-full animate-pulse hidden md:block" style="animation-delay: 0.5s;"></div>
+                <div class="absolute bottom-10 left-1/4 w-2 h-2 bg-pink-400/30 rounded-full animate-pulse hidden md:block" style="animation-delay: 1s;"></div>
                 
                 <div class="relative z-10 flex flex-col items-center justify-center">
                     <div class="w-20 h-20 rounded-full bg-gradient-to-br from-pink-500/10 to-purple-500/10 backdrop-blur-sm flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-pink-500/20">
@@ -798,3 +798,15 @@
     }
 </script>
 {% endblock %}
+
+<style>
+/* Responsive tweaks: remove heavy hero shadows on small screens and ensure compact spacing */
+@media (max-width: 768px) {
+    .hero-filter { filter: none !important; }
+}
+
+/* Improve readability on very small devices */
+@media (max-width: 420px) {
+    .text-4xl { font-size: 1.5rem; }
+}
+</style>

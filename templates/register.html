@@ -4,22 +4,22 @@
 
 {% block content %}
 <div class="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 px-4 relative z-10">
-    <!-- Animated Background Elements -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <!-- Animated Background Elements (hidden on small screens) -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
         <div class="absolute top-1/4 -left-32 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-400/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
     </div>
 
-    <div class="max-w-2xl w-full relative">
+    <div class="max-w-2xl w-full relative px-2 sm:px-0">
         <!-- Header -->
         <div class="text-center mb-10">
-            <div class="inline-block mb-6 relative group">
+            <div class="inline-block mb-6 relative group px-2 sm:px-0">
                 <!-- Glow Effect -->
                 <div class="absolute -inset-4 bg-gradient-to-r from-primary-500 via-emerald-500 to-blue-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-all duration-500"></div>
                 <!-- Icon Container -->
-                <div class="relative bg-gradient-to-br from-primary-800/40 to-emerald-900/40 p-4 rounded-2xl border border-primary-600/30 backdrop-blur-sm shadow-2xl">
-                    <svg class="w-16 h-16 text-primary-300 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="relative bg-gradient-to-br from-primary-800/40 to-emerald-900/40 p-3 sm:p-4 rounded-2xl border border-primary-600/30 backdrop-blur-sm shadow-2xl">
+                    <svg class="w-12 h-12 md:w-16 md:h-16 text-primary-300 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
                     </svg>
                 </div>
@@ -40,14 +40,14 @@
             <div class="absolute -inset-0.5 bg-gradient-to-r from-primary-600 via-emerald-600 to-blue-600 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500 animate-gradient-x"></div>
             
             <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 p-8 md:p-10 overflow-hidden">
-                <!-- Decorative Elements -->
-                <div class="absolute top-0 right-0 -mt-20 -mr-20 w-40 h-40 bg-gradient-to-br from-primary-500/20 to-emerald-500/20 rounded-full blur-3xl"></div>
-                <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-40 h-40 bg-gradient-to-tr from-emerald-400/20 to-blue-500/20 rounded-full blur-3xl"></div>
+                <!-- Decorative Elements (hidden on small screens) -->
+                <div class="absolute top-0 right-0 -mt-20 -mr-20 w-40 h-40 bg-gradient-to-br from-primary-500/20 to-emerald-500/20 rounded-full blur-3xl hidden md:block"></div>
+                <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-40 h-40 bg-gradient-to-tr from-emerald-400/20 to-blue-500/20 rounded-full blur-3xl hidden md:block"></div>
                 
-                <!-- Floating Particles -->
-                <div class="absolute top-10 right-10 w-1 h-1 bg-primary-400/40 rounded-full animate-pulse"></div>
-                <div class="absolute top-20 left-10 w-2 h-2 bg-emerald-400/30 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
-                <div class="absolute bottom-20 right-20 w-1.5 h-1.5 bg-blue-400/40 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+                <!-- Floating Particles (hidden on small screens) -->
+                <div class="absolute top-10 right-10 w-1 h-1 bg-primary-400/40 rounded-full animate-pulse hidden md:block"></div>
+                <div class="absolute top-20 left-10 w-2 h-2 bg-emerald-400/30 rounded-full animate-pulse hidden md:block" style="animation-delay: 0.5s;"></div>
+                <div class="absolute bottom-20 right-20 w-1.5 h-1.5 bg-blue-400/40 rounded-full animate-pulse hidden md:block" style="animation-delay: 1s;"></div>
 
                 <div class="relative z-10">
                     <form method="POST" action="{{ url_for('register') }}" class="space-y-5">
@@ -69,7 +69,7 @@
                                            name="nombre" 
                                            placeholder="Juan Pérez" 
                                            required
-                                           class="w-full pl-12 pr-4 py-3.5 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 focus:bg-white/[0.08] outline-none transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20">
+                                             class="w-full pl-12 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 focus:bg-white/[0.08] outline-none transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20">
                                 </div>
                             </div>
 
@@ -89,7 +89,7 @@
                                            name="correo" 
                                            placeholder="tu@email.com" 
                                            required
-                                           class="w-full pl-12 pr-4 py-3.5 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 focus:bg-white/[0.08] outline-none transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20">
+                                           class="w-full pl-12 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 focus:bg-white/[0.08] outline-none transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20">
                                 </div>
                             </div>
 
@@ -111,7 +111,7 @@
                                            min="18" 
                                            max="99" 
                                            required
-                                           class="w-full pl-12 pr-4 py-3.5 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 focus:bg-white/[0.08] outline-none transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20">
+                                           class="w-full pl-12 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 focus:bg-white/[0.08] outline-none transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20">
                                 </div>
                             </div>
 
@@ -196,7 +196,7 @@
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="group/btn relative w-full py-4 bg-gradient-to-r from-primary-600 via-emerald-500 to-primary-600 hover:from-primary-500 hover:via-emerald-400 hover:to-primary-500 text-white font-bold rounded-xl shadow-lg shadow-primary-900/50 hover:shadow-emerald-500/50 transform hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 overflow-hidden mt-8">
+                        <button type="submit" class="group/btn relative w-full py-3 md:py-4 bg-gradient-to-r from-primary-600 via-emerald-500 to-primary-600 hover:from-primary-500 hover:via-emerald-400 hover:to-primary-500 text-white font-bold rounded-xl shadow-lg shadow-primary-900/50 hover:shadow-emerald-500/50 transform hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 overflow-hidden mt-8">
                             <!-- Animated Shine Effect -->
                             <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-1000"></div>
                             
@@ -224,7 +224,7 @@
                         </div>
 
                         <!-- Login Link -->
-                        <a href="{{ url_for('login') }}" class="group/login relative w-full py-3.5 bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 hover:border-primary-500/50 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden">
+                        <a href="{{ url_for('login') }}" class="group/login relative w-full py-3 bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 hover:border-primary-500/50 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-r from-primary-500/0 via-primary-500/10 to-primary-500/0 opacity-0 group-hover/login:opacity-100 transition-opacity duration-300"></div>
                             <span class="relative z-10 flex items-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

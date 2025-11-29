@@ -3,9 +3,9 @@
 {% block title %}Gestión de Reservas - CampoFinder{% endblock %}
 
 {% block content %}
-<div class="min-h-screen py-8 px-4 relative">
-    <!-- Animated Background Elements -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+<div class="min-h-screen py-6 px-2 sm:px-4 relative">
+    <!-- Animated Background Elements (ocultar en móviles) -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
         <div class="absolute top-20 -left-32 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-pulse"></div>
         <div class="absolute bottom-20 -right-32 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
     </div>
@@ -32,18 +32,18 @@
             <div class="flex items-center justify-between flex-wrap gap-4">
                 <div class="flex items-center gap-4">
                     <div class="relative">
-                        <div class="absolute -inset-1 bg-gradient-to-r from-orange-600 to-blue-600 rounded-xl blur opacity-30"></div>
-                        <div class="relative w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500/20 to-blue-500/20 flex items-center justify-center border border-orange-500/30">
-                            <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="hidden md:block absolute -inset-1 bg-gradient-to-r from-orange-600 to-blue-600 rounded-xl blur opacity-30"></div>
+                        <div class="relative w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-orange-500/20 to-blue-500/20 flex items-center justify-center border border-orange-500/30">
+                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
                         </div>
                     </div>
                     <div>
-                        <h1 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-100 to-white">
+                        <h1 class="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-100 to-white">
                             Gestión de Reservas
                         </h1>
-                        <p class="text-gray-300 font-medium mt-1">Monitorea todas las reservas del sistema</p>
+                        <p class="text-sm sm:text-base text-gray-300 font-medium mt-1">Monitorea todas las reservas del sistema</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
@@ -56,16 +56,16 @@
         </div>
 
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <!-- Total Reservas -->
-            <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+            <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-400 font-medium mb-1">Total</p>
-                        <h3 class="text-3xl font-black text-white">{{ reservas|length }}</h3>
+                        <h3 class="text-2xl sm:text-3xl font-black text-white">{{ reservas|length }}</h3>
                     </div>
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/20 flex items-center justify-center border border-orange-500/30">
-                        <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/20 flex items-center justify-center border border-orange-500/30">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                     </div>
@@ -73,15 +73,15 @@
             </div>
 
             <!-- Activas -->
-            <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+            <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-400 font-medium mb-1">Activas</p>
                         {% set activas = reservas|selectattr('estado', 'ne', 'cancelada')|selectattr('fecha', 'ge', today)|list %}
-                        <h3 class="text-3xl font-black text-white">{{ activas|length }}</h3>
+                        <h3 class="text-2xl sm:text-3xl font-black text-white">{{ activas|length }}</h3>
                     </div>
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 flex items-center justify-center border border-emerald-500/30">
-                        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 flex items-center justify-center border border-emerald-500/30">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
@@ -89,15 +89,15 @@
             </div>
 
             <!-- Completadas -->
-            <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+            <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-400 font-medium mb-1">Completadas</p>
                         {% set completadas = reservas|selectattr('estado', 'ne', 'cancelada')|selectattr('fecha', 'lt', today)|list %}
-                        <h3 class="text-3xl font-black text-white">{{ completadas|length }}</h3>
+                        <h3 class="text-2xl sm:text-3xl font-black text-white">{{ completadas|length }}</h3>
                     </div>
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center border border-blue-500/30">
-                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center border border-blue-500/30">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                         </svg>
                     </div>
@@ -105,15 +105,15 @@
             </div>
 
             <!-- Canceladas -->
-            <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/10">
+            <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-white/10">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-400 font-medium mb-1">Canceladas</p>
                         {% set canceladas = reservas|selectattr('estado', 'equalto', 'cancelada')|list %}
-                        <h3 class="text-3xl font-black text-white">{{ canceladas|length }}</h3>
+                        <h3 class="text-2xl sm:text-3xl font-black text-white">{{ canceladas|length }}</h3>
                     </div>
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center border border-red-500/30">
-                        <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center border border-red-500/30">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
@@ -124,21 +124,21 @@
         <!-- Filters and Search -->
         <div class="mb-6 flex items-center justify-between flex-wrap gap-4">
             <div class="flex items-center gap-3">
-                <button id="filterAll" class="px-4 py-2 bg-primary-500/20 text-primary-400 rounded-lg text-sm font-semibold transition-all border border-primary-500/30">
+                <button id="filterAll" class="px-3 py-1.5 sm:px-4 sm:py-2 bg-primary-500/20 text-primary-400 rounded-lg text-sm font-semibold transition-all border border-primary-500/30">
                     Todas
                 </button>
-                <button id="filterActive" class="px-4 py-2 bg-white/[0.05] text-gray-400 rounded-lg text-sm font-semibold transition-all border border-white/10">
+                <button id="filterActive" class="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/[0.05] text-gray-400 rounded-lg text-sm font-semibold transition-all border border-white/10">
                     Activas
                 </button>
-                <button id="filterCompleted" class="px-4 py-2 bg-white/[0.05] text-gray-400 rounded-lg text-sm font-semibold transition-all border border-white/10">
+                <button id="filterCompleted" class="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/[0.05] text-gray-400 rounded-lg text-sm font-semibold transition-all border border-white/10">
                     Completadas
                 </button>
-                <button id="filterCancelled" class="px-4 py-2 bg-white/[0.05] text-gray-400 rounded-lg text-sm font-semibold transition-all border border-white/10">
+                <button id="filterCancelled" class="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/[0.05] text-gray-400 rounded-lg text-sm font-semibold transition-all border border-white/10">
                     Canceladas
                 </button>
             </div>
             <div class="relative">
-                <input type="text" id="searchInput" placeholder="Buscar reserva..." class="pl-10 pr-4 py-2 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 outline-none transition-all text-sm">
+                <input type="text" id="searchInput" placeholder="Buscar reserva..." class="pl-10 pr-4 py-2 sm:py-2 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 outline-none transition-all text-sm">
                 <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
@@ -147,10 +147,10 @@
 
         <!-- Reservations Table -->
         <div class="relative">
-            <div class="absolute -inset-0.5 bg-gradient-to-r from-orange-600 to-blue-600 rounded-2xl blur opacity-10"></div>
+            <div class="hidden md:block absolute -inset-0.5 bg-gradient-to-r from-orange-600 to-blue-600 rounded-2xl blur opacity-10"></div>
             <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden">
                 <!-- Table Header -->
-                <div class="p-6 border-b border-white/10 flex items-center justify-between">
+                <div class="p-4 sm:p-6 border-b border-white/10 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500/20 to-blue-500/20 flex items-center justify-center border border-orange-500/30">
                             <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,7 +166,7 @@
                     <table class="w-full">
                         <thead class="bg-white/[0.02] border-b border-white/10">
                             <tr>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
@@ -174,7 +174,7 @@
                                         ID
                                     </div>
                                 </th>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -183,7 +183,7 @@
                                         Cancha
                                     </div>
                                 </th>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
@@ -191,7 +191,7 @@
                                         Usuario
                                     </div>
                                 </th>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -199,7 +199,7 @@
                                         Fecha
                                     </div>
                                 </th>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -207,7 +207,7 @@
                                         Horario
                                     </div>
                                 </th>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
+                                <th class="px-3 py-2 sm:px-6 sm:py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -233,12 +233,12 @@
                                 {% set estado_color = 'emerald' %}
                             {% endif %}
                             <tr class="reservation-row hover:bg-white/[0.02] transition-colors" data-estado="{{ estado_class }}" data-cancha="{{ reserva.cancha|lower }}" data-usuario="{{ reserva.usuario|lower }}" data-fecha="{{ reserva.fecha }}">
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <span class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white/[0.05] border border-white/10 text-sm font-mono text-gray-300">
                                         #{{ reserva.id_reserva }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -247,9 +247,9 @@
                                         <span class="text-sm font-semibold text-white">{{ reserva.cancha }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center border border-blue-500/30">
+                                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center border border-blue-500/30">
                                             <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                             </svg>
@@ -257,7 +257,7 @@
                                         <span class="text-sm text-gray-300">{{ reserva.usuario }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -265,7 +265,7 @@
                                         <span class="text-sm text-gray-300">{{ reserva.fecha }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <div class="flex items-center gap-2">
                                         <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -273,7 +273,7 @@
                                         <span class="text-sm text-gray-300">{{ reserva.horario }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 py-2 sm:px-6 sm:py-4">
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-{{ estado_color }}-500/20 text-{{ estado_color }}-400 border border-{{ estado_color }}-500/30">
                                         {% if estado_class == 'activa' %}
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -294,9 +294,9 @@
                             </tr>
                             {% else %}
                             <tr>
-                                <td colspan="6" class="px-6 py-16 text-center">
+                                <td colspan="6" class="px-3 py-12 sm:px-6 sm:py-16 text-center">
                                     <div class="flex flex-col items-center gap-3">
-                                        <div class="w-16 h-16 rounded-full bg-white/[0.03] flex items-center justify-center border border-white/10">
+                                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/[0.03] flex items-center justify-center border border-white/10">
                                             <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                             </svg>
