@@ -32,7 +32,8 @@ def migrate_reservas():
             ("goles_equipo1", "INTEGER DEFAULT 0"),
             ("goles_equipo2", "INTEGER DEFAULT 0"),
             ("tarjetas_amarillas", "INTEGER DEFAULT 0"),
-            ("tarjetas_rojas", "INTEGER DEFAULT 0")
+            ("tarjetas_rojas", "INTEGER DEFAULT 0"),
+            ("estado", "VARCHAR(20) DEFAULT 'pendiente'")
         ]
         
         for col_name, col_type in columns_to_add:

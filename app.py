@@ -660,8 +660,8 @@ def usuario_reservar(id_cancha):
                 return render_template('usuario_reservar.html', cancha=cancha)
             
             cur.execute("""
-                INSERT INTO reservas (id_usuario, cancha, fecha, horario, numero, mensaje)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO reservas (id_usuario, cancha, fecha, horario, numero, mensaje, estado)
+                VALUES (?, ?, ?, ?, ?, ?, 'pendiente')
             """, (current_user.id, cancha['nombre'], fecha, horario, numero, mensaje))
             db.commit()
             
@@ -683,12 +683,7 @@ def usuario_mis_reservas():
     
     cur.execute("""
         SELECT r.id_reserva, r.cancha, r.fecha, r.horario, r.numero, r.mensaje,
-               c.precio, c.imagen_url, c.direccion,
-               CASE 
-                   WHEN r.fecha < date('now') THEN 'Completada'
-                   WHEN r.fecha = date('now') THEN 'Hoy'
-                   ELSE 'Próxima'
-               END as estado
+               c.precio, c.imagen_url, c.direccion, r.estado
         FROM reservas r
         JOIN canchas c ON r.cancha = c.nombre
         WHERE r.id_usuario = ?

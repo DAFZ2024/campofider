@@ -96,6 +96,7 @@ def create_schema():
             goles_equipo2 INTEGER DEFAULT 0,
             tarjetas_amarillas INTEGER DEFAULT 0,
             tarjetas_rojas INTEGER DEFAULT 0,
+            estado VARCHAR(20) DEFAULT 'pendiente',
             FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
         );
         
@@ -106,6 +107,7 @@ def create_schema():
         CREATE INDEX IF NOT EXISTS idx_favoritos_usuario ON favoritos(id_usuario);
         CREATE INDEX IF NOT EXISTS idx_reservas_usuario ON reservas(id_usuario);
         CREATE INDEX IF NOT EXISTS idx_reservas_fecha ON reservas(fecha);
+        CREATE INDEX IF NOT EXISTS idx_reservas_estado ON reservas(estado);
         """
         
         # Ejecutar el script
