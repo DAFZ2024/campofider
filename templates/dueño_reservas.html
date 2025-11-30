@@ -47,151 +47,363 @@
             </div>
         </div>
 
-        <!-- Reservas Table/List -->
-        {% if reservas and reservas|length > 0 %}
-            <div class="relative">
-                <div class="absolute -inset-0.5 bg-gradient-to-r from-primary-600 to-emerald-600 rounded-2xl blur opacity-10"></div>
-                <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden">
-                    <!-- Desktop Table -->
-                    <div class="hidden md:block overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="bg-white/[0.02] border-b border-white/10">
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Cancha</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Cliente</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Fecha/Hora</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Estado</th>
-                                    <th class="px-6 py-4 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-white/5">
-                                {% for reserva in reservas %}
-                                    <tr class="hover:bg-white/[0.02] transition-colors group">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-10 h-10 rounded-lg bg-primary-500/20 flex items-center justify-center flex-shrink-0 border border-primary-500/30 group-hover:scale-110 transition-transform">
-                                                    <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                    </svg>
-                                                </div>
-                                                <span class="font-semibold text-white group-hover:text-primary-400 transition-colors">{{ reserva[1] }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div>
-                                                <p class="font-medium text-white">{{ reserva[10] }}</p>
-                                                <p class="text-xs text-gray-400">{{ reserva[11] }}</p>
-                                                {% if reserva[4] %}
-                                                    <p class="text-xs text-gray-500 font-mono mt-0.5">{{ reserva[4] }}</p>
-                                                {% endif %}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex flex-col gap-1 text-gray-300">
-                                                <span class="text-sm font-medium">{{ reserva[2] }}</span>
-                                                <span class="px-2 py-0.5 rounded bg-white/5 text-xs w-fit">{{ reserva[3] }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs font-bold border border-emerald-500/30">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                                Confirmada
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 text-center">
-                                            <a href="{{ url_for('dueno_partido_live', id=reserva[0]) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 hover:from-red-500/30 hover:to-orange-500/30 border border-red-500/30 hover:border-red-500/50 rounded-lg text-red-400 font-bold text-xs transition-all hover:scale-105">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                                                </svg>
-                                                Gestionar Partido
-                                            </a>
-                                        </td>
+        <!-- Tabs Navigation -->
+        <div class="flex justify-center mb-8" x-data="{ activeTab: 'pendientes' }">
+            <div class="bg-white/[0.05] p-1 rounded-xl inline-flex border border-white/10">
+                <button onclick="switchTab('pendientes')" id="tab-pendientes" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 bg-primary-600 text-white shadow-lg shadow-primary-900/20">
+                    Pendientes
+                </button>
+                <button onclick="switchTab('completadas')" id="tab-completadas" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/[0.05]">
+                    Completadas
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter Lists -->
+        {% set pendientes = [] %}
+        {% set completadas = [] %}
+        {% for r in reservas %}
+            {% if r[12] == 'pendiente' %}
+                {% set _ = pendientes.append(r) %}
+            {% elif r[12] == 'completada' %}
+                {% set _ = completadas.append(r) %}
+            {% endif %}
+        {% endfor %}
+
+        <!-- Contenedor de Reservas Pendientes -->
+        <div id="content-pendientes" class="space-y-6 transition-all duration-300">
+            {% if pendientes|length > 0 %}
+                <div class="relative">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-primary-600 to-emerald-600 rounded-2xl blur opacity-10"></div>
+                    <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden">
+                        <!-- Desktop Table -->
+                        <div class="hidden md:block overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-white/[0.02] border-b border-white/10">
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Cancha</th>
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Cliente</th>
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Fecha/Hora</th>
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Estado</th>
+                                        <th class="px-6 py-4 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Acciones</th>
                                     </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody class="divide-y divide-white/5">
+                                    {% for reserva in pendientes %}
+                                        <tr class="hover:bg-white/[0.02] transition-colors group">
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 rounded-lg bg-primary-500/20 flex items-center justify-center flex-shrink-0 border border-primary-500/30 group-hover:scale-110 transition-transform">
+                                                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <span class="font-semibold text-white group-hover:text-primary-400 transition-colors">{{ reserva[1] }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div>
+                                                    <p class="font-medium text-white">{{ reserva[10] }}</p>
+                                                    <p class="text-xs text-gray-400">{{ reserva[11] }}</p>
+                                                    {% if reserva[4] %}
+                                                        <p class="text-xs text-gray-500 font-mono mt-0.5">{{ reserva[4] }}</p>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex flex-col gap-1 text-gray-300">
+                                                    <span class="text-sm font-medium">{{ reserva[2] }}</span>
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 text-xs w-fit">{{ reserva[3] }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs font-bold border border-blue-500/30">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                                                    Pendiente
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 text-center">
+                                                <a href="{{ url_for('dueno_partido_live', id=reserva[0]) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 hover:from-red-500/30 hover:to-orange-500/30 border border-red-500/30 hover:border-red-500/50 rounded-lg text-red-400 font-bold text-xs transition-all hover:scale-105">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                                    </svg>
+                                                    Gestionar Partido
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <!-- Mobile Cards -->
-                    <div class="md:hidden divide-y divide-white/5">
-                        {% for reserva in reservas %}
-                            <div class="p-4 sm:p-6 hover:bg-white/[0.02] transition-colors rounded-xl shadow-sm hover:shadow-md">
-                                <!-- Cancha y Estado -->
-                                <div class="flex items-start justify-between mb-3">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center flex-shrink-0 border border-primary-500/30">
-                                            <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            </svg>
+                        <!-- Mobile Cards -->
+                        <div class="md:hidden divide-y divide-white/5">
+                            {% for reserva in pendientes %}
+                                <div class="p-4 sm:p-6 hover:bg-white/[0.02] transition-colors rounded-xl shadow-sm hover:shadow-md">
+                                    <!-- Cancha y Estado -->
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center flex-shrink-0 border border-primary-500/30">
+                                                <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="min-w-0">
+                                                <h3 class="font-bold text-white truncate max-w-[60vw]">{{ reserva[1] }}</h3>
+                                                <p class="text-sm text-gray-400 truncate max-w-[60vw]">{{ reserva[10] }}</p>
+                                            </div>
                                         </div>
-                                        <div class="min-w-0">
-                                            <h3 class="font-bold text-white truncate max-w-[60vw]">{{ reserva[1] }}</h3>
-                                            <p class="text-sm text-gray-400 truncate max-w-[60vw]">{{ reserva[10] }}</p>
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs font-bold border border-blue-500/30">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                                            Pendiente
+                                        </span>
+                                    </div>
+
+                                    <!-- Detalles -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                                        <div class="bg-white/[0.02] rounded-xl p-3 border border-white/5">
+                                            <span class="text-xs text-gray-500 block mb-1">Fecha</span>
+                                            <span class="text-white font-medium text-sm">{{ reserva[2] }}</span>
+                                        </div>
+                                        <div class="bg-white/[0.02] rounded-xl p-3 border border-white/5">
+                                            <span class="text-xs text-gray-500 block mb-1">Horario</span>
+                                            <span class="text-white font-medium text-sm">{{ reserva[3] }}</span>
                                         </div>
                                     </div>
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs font-bold border border-emerald-500/30">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                        Confirmada
-                                    </span>
+
+                                    <!-- Action Button -->
+                                    <a href="{{ url_for('dueno_partido_live', id=reserva[0]) }}" role="button" aria-label="Gestionar partido {{ reserva[1] }}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-500/20 to-orange-500/20 hover:from-red-500/30 hover:to-orange-500/30 border border-red-500/30 hover:border-red-500/50 rounded-lg text-red-400 font-bold text-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500/30 active:scale-95">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                        </svg>
+                                        Gestionar Partido en Vivo
+                                    </a>
+
+                                    {% if reserva[5] %}
+                                        <div class="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20 mt-4">
+                                            <p class="text-xs text-blue-400 font-bold mb-1">Mensaje:</p>
+                                            <p class="text-gray-300 text-sm italic">"{{ reserva[5] }}"</p>
+                                        </div>
+                                    {% endif %}
                                 </div>
-
-                                <!-- Detalles -->
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-                                    <div class="bg-white/[0.02] rounded-xl p-3 border border-white/5">
-                                        <span class="text-xs text-gray-500 block mb-1">Fecha</span>
-                                        <span class="text-white font-medium text-sm">{{ reserva[2] }}</span>
-                                    </div>
-                                    <div class="bg-white/[0.02] rounded-xl p-3 border border-white/5">
-                                        <span class="text-xs text-gray-500 block mb-1">Horario</span>
-                                        <span class="text-white font-medium text-sm">{{ reserva[3] }}</span>
-                                    </div>
-                                </div>
-
-                                <!-- Action Button -->
-                                <a href="{{ url_for('dueno_partido_live', id=reserva[0]) }}" role="button" aria-label="Gestionar partido {{ reserva[1] }}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-500/20 to-orange-500/20 hover:from-red-500/30 hover:to-orange-500/30 border border-red-500/30 hover:border-red-500/50 rounded-lg text-red-400 font-bold text-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500/30 active:scale-95">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                                    </svg>
-                                    Gestionar Partido en Vivo
-                                </a>
-
-                                {% if reserva[5] %}
-                                    <div class="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20 mt-4">
-                                        <p class="text-xs text-blue-400 font-bold mb-1">Mensaje:</p>
-                                        <p class="text-gray-300 text-sm italic">"{{ reserva[5] }}"</p>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% else %}
-            <!-- Empty State -->
-            <div class="flex flex-col items-center justify-center py-20">
-                <div class="relative mb-8">
-                    <div class="absolute inset-0 bg-emerald-500/20 blur-3xl animate-pulse"></div>
-                    <div class="relative w-32 h-32 rounded-full bg-white/[0.03] backdrop-blur-sm border border-white/10 flex items-center justify-center">
-                        <svg class="w-16 h-16 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            {% else %}
+                <!-- Empty State Pendientes -->
+                <div class="flex flex-col items-center justify-center py-12 bg-white/[0.03] rounded-2xl border border-white/10">
+                    <div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
+                    <h3 class="text-xl font-bold text-white mb-2">No hay reservas pendientes</h3>
+                    <p class="text-gray-400 text-sm">Las nuevas reservas aparecerán aquí</p>
                 </div>
-                <h2 class="text-3xl font-bold text-white mb-3">No hay reservas aún</h2>
-                <p class="text-gray-400 mb-8 text-center max-w-md">
-                    Cuando los usuarios reserven tus canchas, las verás aquí
-                </p>
-                <a href="{{ url_for('dueno_canchas') }}" 
-                   class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-emerald-600 hover:from-primary-500 hover:to-emerald-500 text-white rounded-xl text-lg font-bold transition-all shadow-lg shadow-primary-900/50 hover:shadow-xl hover:shadow-primary-900/60 hover:-translate-y-1">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                    </svg>
-                    Ver Mis Canchas
-                </a>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
+
+        <!-- Contenedor de Reservas Completadas -->
+        <div id="content-completadas" class="space-y-6 hidden transition-all duration-300">
+            {% if completadas|length > 0 %}
+                <div class="relative">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-primary-600 to-emerald-600 rounded-2xl blur opacity-10"></div>
+                    <div class="relative bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden">
+                        <!-- Desktop Table -->
+                        <div class="hidden md:block overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-white/[0.02] border-b border-white/10">
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Cancha</th>
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Cliente</th>
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Fecha/Hora</th>
+                                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Estado</th>
+                                        <th class="px-6 py-4 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-white/5">
+                                    {% for reserva in completadas %}
+                                        <tr class="hover:bg-white/[0.02] transition-colors group">
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 rounded-lg bg-primary-500/20 flex items-center justify-center flex-shrink-0 border border-primary-500/30 group-hover:scale-110 transition-transform">
+                                                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <span class="font-semibold text-white group-hover:text-primary-400 transition-colors">{{ reserva[1] }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div>
+                                                    <p class="font-medium text-white">{{ reserva[10] }}</p>
+                                                    <p class="text-xs text-gray-400">{{ reserva[11] }}</p>
+                                                    {% if reserva[4] %}
+                                                        <p class="text-xs text-gray-500 font-mono mt-0.5">{{ reserva[4] }}</p>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex flex-col gap-1 text-gray-300">
+                                                    <span class="text-sm font-medium">{{ reserva[2] }}</span>
+                                                    <span class="px-2 py-0.5 rounded bg-white/5 text-xs w-fit">{{ reserva[3] }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-gray-500/20 text-gray-400 rounded-full text-xs font-bold border border-gray-500/30">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                                                    Completada
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 text-center">
+                                                <div class="flex flex-col gap-2">
+                                                    <div class="flex items-center justify-center gap-2 text-sm font-bold text-white bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
+                                                        <span>{{ reserva[6] }}</span>
+                                                        <span class="text-gray-500">-</span>
+                                                        <span>{{ reserva[7] }}</span>
+                                                    </div>
+                                                    <div class="flex items-center justify-center gap-3 text-xs">
+                                                        <span class="flex items-center gap-1 text-yellow-400">
+                                                            <div class="w-2 h-3 bg-yellow-400 rounded-sm"></div> {{ reserva[8] }}
+                                                        </span>
+                                                        <span class="flex items-center gap-1 text-red-400">
+                                                            <div class="w-2 h-3 bg-red-500 rounded-sm"></div> {{ reserva[9] }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Mobile Cards -->
+                        <div class="md:hidden divide-y divide-white/5">
+                            {% for reserva in completadas %}
+                                <div class="p-4 sm:p-6 hover:bg-white/[0.02] transition-colors rounded-xl shadow-sm hover:shadow-md">
+                                    <!-- Cancha y Estado -->
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center flex-shrink-0 border border-primary-500/30">
+                                                <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="min-w-0">
+                                                <h3 class="font-bold text-white truncate max-w-[60vw]">{{ reserva[1] }}</h3>
+                                                <p class="text-sm text-gray-400 truncate max-w-[60vw]">{{ reserva[10] }}</p>
+                                            </div>
+                                        </div>
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-gray-500/20 text-gray-400 rounded-full text-xs font-bold border border-gray-500/30">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                                            Completada
+                                        </span>
+                                    </div>
+
+                                    <!-- Detalles -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                                        <div class="bg-white/[0.02] rounded-xl p-3 border border-white/5">
+                                            <span class="text-xs text-gray-500 block mb-1">Fecha</span>
+                                            <span class="text-white font-medium text-sm">{{ reserva[2] }}</span>
+                                        </div>
+                                        <div class="bg-white/[0.02] rounded-xl p-3 border border-white/5">
+                                            <span class="text-xs text-gray-500 block mb-1">Horario</span>
+                                            <span class="text-white font-medium text-sm">{{ reserva[3] }}</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stats -->
+                                    <div class="bg-white/[0.05] rounded-xl p-4 border border-white/10">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <span class="text-xs text-gray-400 font-bold uppercase tracking-wider">Resultado Final</span>
+                                            <div class="flex items-center gap-3 text-xl font-black text-white">
+                                                <span>{{ reserva[6] }}</span>
+                                                <span class="text-gray-500">-</span>
+                                                <span>{{ reserva[7] }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-4 text-sm border-t border-white/10 pt-3">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-3 h-4 bg-yellow-400 rounded-sm shadow-sm"></div>
+                                                <span class="font-bold text-white">{{ reserva[8] }}</span>
+                                                <span class="text-gray-500 text-xs">Amarillas</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-3 h-4 bg-red-500 rounded-sm shadow-sm"></div>
+                                                <span class="font-bold text-white">{{ reserva[9] }}</span>
+                                                <span class="text-gray-500 text-xs">Rojas</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% if reserva[5] %}
+                                        <div class="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20 mt-4">
+                                            <p class="text-xs text-blue-400 font-bold mb-1">Mensaje:</p>
+                                            <p class="text-gray-300 text-sm italic">"{{ reserva[5] }}"</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <!-- Empty State Completadas -->
+                <div class="flex flex-col items-center justify-center py-12 bg-white/[0.03] rounded-2xl border border-white/10">
+                    <div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">No hay reservas completadas</h3>
+                    <p class="text-gray-400 text-sm">El historial de partidos aparecerá aquí</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <script>
+            function switchTab(tab) {
+                // Botones
+                const btnPendientes = document.getElementById('tab-pendientes');
+                const btnCompletadas = document.getElementById('tab-completadas');
+                
+                // Contenidos
+                const contentPendientes = document.getElementById('content-pendientes');
+                const contentCompletadas = document.getElementById('content-completadas');
+                
+                // Clases activas e inactivas para botones
+                const activeClasses = ['bg-primary-600', 'text-white', 'shadow-lg', 'shadow-primary-900/20'];
+                const inactiveClasses = ['text-gray-400', 'hover:text-white', 'hover:bg-white/[0.05]'];
+                
+                if (tab === 'pendientes') {
+                    // Activar Pendientes
+                    btnPendientes.classList.add(...activeClasses);
+                    btnPendientes.classList.remove(...inactiveClasses);
+                    contentPendientes.classList.remove('hidden');
+                    
+                    // Desactivar Completadas
+                    btnCompletadas.classList.remove(...activeClasses);
+                    btnCompletadas.classList.add(...inactiveClasses);
+                    contentCompletadas.classList.add('hidden');
+                } else {
+                    // Activar Completadas
+                    btnCompletadas.classList.add(...activeClasses);
+                    btnCompletadas.classList.remove(...inactiveClasses);
+                    contentCompletadas.classList.remove('hidden');
+                    
+                    // Desactivar Pendientes
+                    btnPendientes.classList.remove(...activeClasses);
+                    btnPendientes.classList.add(...inactiveClasses);
+                    contentPendientes.classList.add('hidden');
+                }
+            }
+        </script>
     </div>
 </div>
 {% endblock %}

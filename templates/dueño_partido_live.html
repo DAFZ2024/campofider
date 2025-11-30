@@ -57,6 +57,32 @@
             </div>
         </div>
 
+        <!-- Timer Section -->
+        <div class="relative mb-8 max-w-xl mx-auto">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-primary-500 to-cyan-500 rounded-2xl blur opacity-20"></div>
+            <div class="relative bg-gray-900/90 backdrop-blur-xl rounded-2xl border border-white/10 p-6 text-center">
+                <h3 class="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">Tiempo de Juego</h3>
+                <div class="text-6xl font-black text-white font-mono mb-6 tabular-nums tracking-wider" id="timer-display">
+                    60:00
+                </div>
+                <div class="flex items-center justify-center gap-4">
+                    <button onclick="toggleTimer()" id="timer-btn" class="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-primary-900/50 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="play-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span id="timer-btn-text">Iniciar</span>
+                    </button>
+                    <button onclick="resetTimer()" class="px-6 py-3 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white rounded-xl font-bold transition-all border border-white/10 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        Reiniciar
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Scoreboard -->
         <div class="relative mb-6">
             <div class="absolute -inset-1 bg-gradient-to-r from-primary-600 to-emerald-600 rounded-3xl blur opacity-20"></div>
@@ -161,8 +187,6 @@
         <div class="relative mb-8">
             <div class="absolute -inset-0.5 bg-gradient-to-r from-yellow-600 to-red-600 rounded-2xl blur opacity-10"></div>
             <div class="relative bg-gray-900/80 backdrop-blur-xl rounded-2xl border border-white/10 p-6">
-                <div class="relative bg-gray-900/80 backdrop-blur-xl rounded-2xl border border-white/10 p-4 sm:p-6">
-                <div class="relative bg-gray-900/80 backdrop-blur-xl rounded-2xl border border-white/10 p-4 sm:p-6">
                 <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
                     <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
@@ -226,6 +250,92 @@ let currentScores = {
     yellowCards: {{ reserva.tarjetas_amarillas|default(0) }},
     redCards: {{ reserva.tarjetas_rojas|default(0) }}
 };
+
+// Timer Logic
+let timeLeft = 3600; // 60 minutes in seconds
+let timerInterval = null;
+let isRunning = false;
+
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+function updateTimerDisplay() {
+    document.getElementById('timer-display').textContent = formatTime(timeLeft);
+    
+    // Visual feedback when time is running low (last 5 minutes)
+    const display = document.getElementById('timer-display');
+    if (timeLeft <= 300) {
+        display.classList.add('text-red-500', 'animate-pulse');
+        display.classList.remove('text-white');
+    } else {
+        display.classList.remove('text-red-500', 'animate-pulse');
+        display.classList.add('text-white');
+    }
+}
+
+function toggleTimer() {
+    const btn = document.getElementById('timer-btn');
+    const btnText = document.getElementById('timer-btn-text');
+    const icon = document.getElementById('play-icon');
+    
+    if (isRunning) {
+        // Pause
+        clearInterval(timerInterval);
+        isRunning = false;
+        btnText.textContent = 'Reanudar';
+        btn.classList.remove('bg-red-600', 'hover:bg-red-500');
+        btn.classList.add('bg-primary-600', 'hover:bg-primary-500');
+        // Change icon to play
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>';
+    } else {
+        // Start
+        if (timeLeft <= 0) return;
+        
+        isRunning = true;
+        btnText.textContent = 'Pausar';
+        btn.classList.remove('bg-primary-600', 'hover:bg-primary-500');
+        btn.classList.add('bg-red-600', 'hover:bg-red-500');
+        // Change icon to pause
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/>';
+        
+        timerInterval = setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                updateTimerDisplay();
+            } else {
+                clearInterval(timerInterval);
+                isRunning = false;
+                btnText.textContent = 'Finalizado';
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                alert('¡El tiempo del partido ha finalizado!');
+            }
+        }, 1000);
+    }
+}
+
+function resetTimer() {
+    if (confirm('¿Reiniciar el cronómetro a 60:00?')) {
+        clearInterval(timerInterval);
+        isRunning = false;
+        timeLeft = 3600;
+        updateTimerDisplay();
+        
+        // Reset button state
+        const btn = document.getElementById('timer-btn');
+        const btnText = document.getElementById('timer-btn-text');
+        const icon = document.getElementById('play-icon');
+        
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-red-600', 'hover:bg-red-500');
+        btn.classList.add('bg-primary-600', 'hover:bg-primary-500');
+        btnText.textContent = 'Iniciar';
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>';
+    }
+}
 
 async function updateScore(team, change) {
     const field = team === 1 ? 'goles_equipo1' : 'goles_equipo2';

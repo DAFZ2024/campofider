@@ -181,14 +181,14 @@ def index():
                 'descripcion': c[1],
                 'imagen': c[2].split(',')[0] if c[2] else None
             })
-    cur.execute("SELECT nombre, descripcion, imagen_url, precio FROM canchas WHERE usuario_id IS NOT NULL")
+    cur.execute("SELECT nombre, descripcion, imagen_url, precio, direccion FROM canchas WHERE usuario_id IS NOT NULL")
     canchas_db = cur.fetchall()
     canchas = []
     for c in canchas_db:
         img_path = c[2].split(',')[0] if c[2] else 'imagenes/cancha1.png'
         if img_path.startswith('static/'):
             img_path = img_path.replace('static/', '', 1)
-        canchas.append((c[0], c[1], img_path, c[3]))
+        canchas.append((c[0], c[1], img_path, c[3], c[4]))
     return render_template('home.html', canchas=canchas, favoritas=favoritas)
 
 @app.route('/nosotros')
@@ -468,7 +468,7 @@ def dueno_reservas():
     cur.execute("""
         SELECT r.id_reserva, r.cancha, r.fecha, r.horario, r.numero, r.mensaje,
                r.goles_equipo1, r.goles_equipo2, r.tarjetas_amarillas, r.tarjetas_rojas,
-               u.nombre as usuario_nombre, u.correo as usuario_correo
+               u.nombre as usuario_nombre, u.correo as usuario_correo, r.estado
         FROM reservas r
         JOIN canchas c ON r.cancha = c.nombre
         JOIN usuarios u ON r.id_usuario = u.id
@@ -683,7 +683,8 @@ def usuario_mis_reservas():
     
     cur.execute("""
         SELECT r.id_reserva, r.cancha, r.fecha, r.horario, r.numero, r.mensaje,
-               c.precio, c.imagen_url, c.direccion, r.estado
+               c.precio, c.imagen_url, c.direccion, r.estado, c.id_cancha,
+               r.goles_equipo1, r.goles_equipo2, r.tarjetas_amarillas, r.tarjetas_rojas
         FROM reservas r
         JOIN canchas c ON r.cancha = c.nombre
         WHERE r.id_usuario = ?

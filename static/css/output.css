@@ -1506,6 +1506,10 @@ body.soccer-field-bg::before {
   cursor: pointer;
 }
 
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
 .resize-none {
   resize: none;
 }
@@ -1890,6 +1894,20 @@ body.soccer-field-bg::before {
   border-color: rgb(234 179 8 / 0.3);
 }
 
+.border-gray-500\/30 {
+  border-color: rgb(107 114 128 / 0.3);
+}
+
+.border-gray-700 {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
+}
+
+.border-primary-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 201 80 / var(--tw-border-opacity, 1));
+}
+
 .bg-black\/20 {
   background-color: rgb(0 0 0 / 0.2);
 }
@@ -2184,6 +2202,33 @@ body.soccer-field-bg::before {
 
 .bg-yellow-500\/20 {
   background-color: rgb(234 179 8 / 0.2);
+}
+
+.bg-blue-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(96 165 250 / var(--tw-bg-opacity, 1));
+}
+
+.bg-gray-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
+}
+
+.bg-gray-500\/20 {
+  background-color: rgb(107 114 128 / 0.2);
+}
+
+.bg-gray-900\/90 {
+  background-color: rgb(17 24 39 / 0.9);
+}
+
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
+}
+
+.bg-primary-600\/90 {
+  background-color: rgb(0 166 62 / 0.9);
 }
 
 .bg-opacity-50 {
@@ -2999,6 +3044,10 @@ body.soccer-field-bg::before {
   --tw-gradient-to: rgb(255 255 255 / 0.03) var(--tw-gradient-to-position);
 }
 
+.to-cyan-500 {
+  --tw-gradient-to: #06b6d4 var(--tw-gradient-to-position);
+}
+
 .bg-\[size\:4rem_4rem\] {
   background-size: 4rem 4rem;
 }
@@ -3205,6 +3254,10 @@ body.soccer-field-bg::before {
   padding-top: 2rem;
 }
 
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -3274,6 +3327,11 @@ body.soccer-field-bg::before {
   line-height: 1rem;
 }
 
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
+}
+
 .font-black {
   font-weight: 900;
 }
@@ -3300,6 +3358,11 @@ body.soccer-field-bg::before {
 
 .italic {
   font-style: italic;
+}
+
+.tabular-nums {
+  --tw-numeric-spacing: tabular-nums;
+  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
 }
 
 .leading-\[1\.1\] {
@@ -3636,6 +3699,11 @@ body.soccer-field-bg::before {
 
 .shadow-red-500\/30 {
   --tw-shadow-color: rgb(239 68 68 / 0.3);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-primary-900\/20 {
+  --tw-shadow-color: rgb(13 84 43 / 0.2);
   --tw-shadow: var(--tw-shadow-colored);
 }
 
@@ -4034,6 +4102,16 @@ body.soccer-field-bg::before {
 
 .hover\:bg-yellow-500\/30:hover {
   background-color: rgb(234 179 8 / 0.3);
+}
+
+.hover\:bg-red-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:from-blue-500:hover {

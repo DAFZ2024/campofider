@@ -116,6 +116,13 @@
                 <p class="text-gray-400 max-w-lg text-lg">
                     Encuentra los mejores espacios deportivos a tu alrededor y reserva tu próximo partido en segundos.
                 </p>
+                <button onclick="ordenarPorCercania()" id="btn-geo" class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors text-sm font-medium border border-gray-700">
+                    <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <span id="btn-geo-text">Ordenar por cercanía</span>
+                </button>
             </div>
             
             <div class="flex items-center gap-3">
@@ -133,10 +140,10 @@
         </div>
         
         <!-- Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="canchas-grid">
             {% if canchas and canchas|length > 0 %}
                 {% for cancha in canchas %}
-                    <div class="group relative bg-gray-900/40 backdrop-blur-md rounded-[2rem] border border-white/5 hover:border-primary-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary-500/10 overflow-hidden flex flex-col h-full">
+                    <div class="cancha-card group relative bg-gray-900/40 backdrop-blur-md rounded-[2rem] border border-white/5 hover:border-primary-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary-500/10 overflow-hidden flex flex-col h-full" data-address="{{ cancha[4] }}">
                         
                         <!-- Image Area -->
                         <div class="relative h-48 md:h-64 overflow-hidden">
@@ -148,6 +155,11 @@
                                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                                     <span class="text-xs font-bold text-white tracking-wide">DISPONIBLE</span>
                                 </div>
+                            </div>
+
+                            <!-- Distance Badge (Hidden by default) -->
+                            <div class="distance-badge hidden absolute bottom-4 right-4 z-20 px-3 py-1 bg-primary-600/90 backdrop-blur-md rounded-full text-xs font-bold text-white shadow-lg">
+                                <span class="distance-value"></span> km
                             </div>
 
                             <!-- Favorite Button (Decorative) -->
@@ -177,7 +189,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
-                                    <span>Ubicación Premium</span>
+                                    <span class="line-clamp-1">{{ cancha[4] if cancha[4] else 'Ubicación no disponible' }}</span>
                                 </div>
                                 <p class="text-gray-400 text-sm line-clamp-2 leading-relaxed">
                                     {{ cancha[1] }}
@@ -218,6 +230,114 @@
         </div>
     </div>
 </section>
+
+<script>
+async function ordenarPorCercania() {
+    const btn = document.getElementById('btn-geo');
+    const btnText = document.getElementById('btn-geo-text');
+    
+    if (!navigator.geolocation) {
+        alert("Tu navegador no soporta geolocalización");
+        return;
+    }
+
+    btn.disabled = true;
+    btnText.textContent = "Obteniendo ubicación...";
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+        const userLat = position.coords.latitude;
+        const userLon = position.coords.longitude;
+        
+        btnText.textContent = "Calculando distancias...";
+        
+        const cards = document.querySelectorAll('.cancha-card');
+        const cardsArray = Array.from(cards);
+        
+        // Cache para evitar llamadas repetidas a la API
+        const geocodeCache = {};
+
+        for (let card of cardsArray) {
+            const address = card.dataset.address;
+            if (!address) continue;
+            
+            // Limpiar dirección y agregar ciudad si es necesario para mejor precisión
+            const queryAddress = address + ", Soacha, Colombia"; // Asumiendo contexto local
+            
+            try {
+                let coords;
+                if (geocodeCache[queryAddress]) {
+                    coords = geocodeCache[queryAddress];
+                } else {
+                    // Usar Nominatim (OpenStreetMap)
+                    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(queryAddress)}`);
+                    const data = await response.json();
+                    if (data && data.length > 0) {
+                        coords = { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+                        geocodeCache[queryAddress] = coords;
+                    }
+                }
+
+                if (coords) {
+                    const dist = calculateDistance(userLat, userLon, coords.lat, coords.lon);
+                    card.dataset.distance = dist;
+                    
+                    // Mostrar badge
+                    const badge = card.querySelector('.distance-badge');
+                    const value = card.querySelector('.distance-value');
+                    if (badge && value) {
+                        value.textContent = dist.toFixed(1);
+                        badge.classList.remove('hidden');
+                    }
+                }
+            } catch (e) {
+                console.error("Error geocodificando:", e);
+            }
+            
+            // Pequeña pausa para no saturar la API
+            await new Promise(r => setTimeout(r, 100));
+        }
+
+        // Ordenar
+        cardsArray.sort((a, b) => {
+            const distA = parseFloat(a.dataset.distance) || 99999;
+            const distB = parseFloat(b.dataset.distance) || 99999;
+            return distA - distB;
+        });
+
+        // Reordenar en el DOM
+        const grid = document.getElementById('canchas-grid');
+        cardsArray.forEach(card => grid.appendChild(card));
+
+        btn.disabled = false;
+        btnText.textContent = "📍 Ordenado por cercanía";
+        btn.classList.add('bg-primary-600', 'border-primary-500');
+        btn.classList.remove('bg-gray-800', 'border-gray-700');
+
+    }, (error) => {
+        console.error("Error de geolocalización:", error);
+        alert("No se pudo obtener tu ubicación. Por favor permite el acceso al GPS.");
+        btn.disabled = false;
+        btnText.textContent = "Ordenar por cercanía";
+    });
+}
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radio de la tierra en km
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon2 - lon1);
+    const a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2); 
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    const d = R * c; // Distancia en km
+    return d;
+}
+
+function deg2rad(deg) {
+    return deg * (Math.PI/180);
+}
+</script>
 
 <!-- Canchas Favoritas -->
 {% if favoritas and favoritas|length > 0 %}
