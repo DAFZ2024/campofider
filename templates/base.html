@@ -11,8 +11,106 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body class="soccer-field-bg min-h-screen overflow-x-hidden">
+    <!-- Background Animation Container -->
+    <div id="animated-bg" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <!-- Balls will be generated here by JS -->
+    </div>
+
+    <style>
+        .bg-soccer-ball {
+            position: absolute;
+            opacity: 0;
+            will-change: transform, opacity;
+            pointer-events: none;
+            z-index: -1;
+            /* Center the transform origin for scaling */
+            transform-origin: center center;
+        }
+        
+        /* Top-Down Drop Animation (Z-axis simulation) */
+        @keyframes dropFromCamera {
+            0% { 
+                transform: scale(5) rotate(0deg); 
+                opacity: 0;
+                animation-timing-function: ease-in;
+            }
+            
+            /* First Hit (Ground) */
+            30% { 
+                transform: scale(0.5) rotate(100deg); 
+                opacity: 1;
+                animation-timing-function: ease-out;
+            }
+            
+            /* First Bounce (Up towards camera) */
+            45% { 
+                transform: scale(1.5) rotate(180deg); 
+                animation-timing-function: ease-in;
+            }
+            
+            /* Second Hit (Ground) */
+            60% { 
+                transform: scale(0.5) rotate(260deg); 
+                animation-timing-function: ease-out;
+            }
+            
+            /* Second Bounce (Up small) */
+            70% { 
+                transform: scale(0.8) rotate(300deg); 
+                animation-timing-function: ease-in;
+            }
+            
+            /* Third Hit (Ground) - Start Rolling */
+            80% { 
+                transform: scale(0.5) rotate(330deg) translateX(0); 
+                opacity: 1;
+            }
+            
+            /* Keep visible while rolling */
+            95% {
+                opacity: 1;
+            }
+            
+            /* Roll further & Fade out */
+            100% { 
+                transform: scale(0.5) rotate(720deg) translateX(150px); 
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('animated-bg');
+            const ballCount = 1; // Keep count low to avoid chaos
+            
+            for (let i = 0; i < ballCount; i++) {
+                const ball = document.createElement('div');
+                ball.classList.add('bg-soccer-ball');
+                ball.textContent = '⚽';
+                
+                // Random positions on the 2D plane
+                const left = Math.random() * 90 + 5; // 5% to 95% horizontal
+                const top = Math.random() * 90 + 5; // 5% to 95% vertical
+                
+                const duration = Math.random() * 20 + 30; // 15s to 25s (Slow drops)
+                const delay = Math.random() * 10; // Staggered starts
+                
+                // Apply styles
+                ball.style.fontSize = '60px'; // Base size
+                ball.style.left = `${left}%`;
+                ball.style.top = `${top}%`;
+                ball.style.animationName = 'dropFromCamera';
+                ball.style.animationDuration = `${duration}s`;
+                ball.style.animationDelay = `-${delay}s`;
+                ball.style.animationIterationCount = 'infinite';
+                
+                container.appendChild(ball);
+            }
+        });
+    </script>
     <!-- Navbar Premium -->
-    <nav class="bg-gradient-to-r from-primary-950 via-primary-900 to-primary-950 border-b border-primary-700/30 sticky top-0 z-50 backdrop-blur-md bg-opacity-90 shadow-xl shadow-primary-950/50">
+    <nav class="bg-gradient-to-r from-primary-950 via-primary-900 to-primary-950 border-b border-primary-700/30 sticky top-0 z-40 backdrop-blur-md bg-opacity-90 shadow-xl shadow-primary-950/50">
         <!-- Top Accent Line -->
         <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary-500 to-transparent"></div>
         

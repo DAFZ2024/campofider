@@ -678,6 +678,10 @@ body.soccer-field-bg::before {
   pointer-events: none;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .static {
   position: static;
 }
@@ -880,6 +884,66 @@ body.soccer-field-bg::before {
   top: 1rem;
 }
 
+.-left-40 {
+  left: -10rem;
+}
+
+.-right-2 {
+  right: -0.5rem;
+}
+
+.-right-40 {
+  right: -10rem;
+}
+
+.-top-2 {
+  top: -0.5rem;
+}
+
+.bottom-32 {
+  bottom: 8rem;
+}
+
+.right-1\/3 {
+  right: 33.333333%;
+}
+
+.top-40 {
+  top: 10rem;
+}
+
+.-bottom-3 {
+  bottom: -0.75rem;
+}
+
+.left-\[15\%\] {
+  left: 15%;
+}
+
+.left-\[5\%\] {
+  left: 5%;
+}
+
+.right-1\/4 {
+  right: 25%;
+}
+
+.right-\[10\%\] {
+  right: 10%;
+}
+
+.right-\[20\%\] {
+  right: 20%;
+}
+
+.top-1\/3 {
+  top: 33.333333%;
+}
+
+.top-24 {
+  top: 6rem;
+}
+
 .isolate {
   isolation: isolate;
 }
@@ -898,6 +962,18 @@ body.soccer-field-bg::before {
 
 .z-50 {
   z-index: 50;
+}
+
+.z-\[9999\] {
+  z-index: 9999;
+}
+
+.z-40 {
+  z-index: 40;
+}
+
+.z-\[10000\] {
+  z-index: 10000;
 }
 
 .col-span-full {
@@ -1079,6 +1155,10 @@ body.soccer-field-bg::before {
 
 .mt-auto {
   margin-top: auto;
+}
+
+.mt-16 {
+  margin-top: 4rem;
 }
 
 .line-clamp-1 {
@@ -1268,6 +1348,10 @@ body.soccer-field-bg::before {
 
 .max-h-\[90vh\] {
   max-height: 90vh;
+}
+
+.max-h-\[calc\(90vh-200px\)\] {
+  max-height: calc(90vh - 200px);
 }
 
 .min-h-\[calc\(100vh-200px\)\] {
@@ -1502,12 +1586,28 @@ body.soccer-field-bg::before {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.cursor-pointer {
-  cursor: pointer;
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
 }
 
 .cursor-not-allowed {
   cursor: not-allowed;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .resize-none {
@@ -1720,6 +1820,10 @@ body.soccer-field-bg::before {
   border-radius: 0.75rem;
 }
 
+.rounded-bl-\[100px\] {
+  border-bottom-left-radius: 100px;
+}
+
 .border {
   border-width: 1px;
 }
@@ -1773,6 +1877,15 @@ body.soccer-field-bg::before {
   border-color: rgb(16 185 129 / 0.3);
 }
 
+.border-gray-500\/30 {
+  border-color: rgb(107 114 128 / 0.3);
+}
+
+.border-gray-700 {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
+}
+
 .border-gray-900 {
   --tw-border-opacity: 1;
   border-color: rgb(17 24 39 / var(--tw-border-opacity, 1));
@@ -1801,6 +1914,11 @@ body.soccer-field-bg::before {
 
 .border-primary-400\/30 {
   border-color: rgb(5 223 114 / 0.3);
+}
+
+.border-primary-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 201 80 / var(--tw-border-opacity, 1));
 }
 
 .border-primary-500\/20 {
@@ -1894,18 +2012,49 @@ body.soccer-field-bg::before {
   border-color: rgb(234 179 8 / 0.3);
 }
 
-.border-gray-500\/30 {
-  border-color: rgb(107 114 128 / 0.3);
+.border-blue-500\/40 {
+  border-color: rgb(59 130 246 / 0.4);
 }
 
-.border-gray-700 {
-  --tw-border-opacity: 1;
-  border-color: rgb(55 65 81 / var(--tw-border-opacity, 1));
+.border-primary-500\/40 {
+  border-color: rgb(0 201 80 / 0.4);
 }
 
-.border-primary-500 {
+.border-purple-500\/40 {
+  border-color: rgb(168 85 247 / 0.4);
+}
+
+.border-white {
   --tw-border-opacity: 1;
-  border-color: rgb(0 201 80 / var(--tw-border-opacity, 1));
+  border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
+}
+
+.border-emerald-500\/40 {
+  border-color: rgb(16 185 129 / 0.4);
+}
+
+.border-yellow-500\/40 {
+  border-color: rgb(234 179 8 / 0.4);
+}
+
+.border-green-500\/20 {
+  border-color: rgb(34 197 94 / 0.2);
+}
+
+.border-orange-500\/20 {
+  border-color: rgb(249 115 22 / 0.2);
+}
+
+.border-emerald-400\/30 {
+  border-color: rgb(52 211 153 / 0.3);
+}
+
+.border-red-400\/30 {
+  border-color: rgb(248 113 113 / 0.3);
+}
+
+.border-red-400\/50 {
+  border-color: rgb(248 113 113 / 0.5);
 }
 
 .bg-black\/20 {
@@ -1931,6 +2080,11 @@ body.soccer-field-bg::before {
 .bg-blue-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(219 234 254 / var(--tw-bg-opacity, 1));
+}
+
+.bg-blue-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(96 165 250 / var(--tw-bg-opacity, 1));
 }
 
 .bg-blue-400\/40 {
@@ -1992,6 +2146,15 @@ body.soccer-field-bg::before {
   background-color: rgb(16 185 129 / 0.9);
 }
 
+.bg-gray-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
+}
+
+.bg-gray-500\/20 {
+  background-color: rgb(107 114 128 / 0.2);
+}
+
 .bg-gray-500\/90 {
   background-color: rgb(107 114 128 / 0.9);
 }
@@ -2019,6 +2182,10 @@ body.soccer-field-bg::before {
   background-color: rgb(17 24 39 / 0.8);
 }
 
+.bg-gray-900\/90 {
+  background-color: rgb(17 24 39 / 0.9);
+}
+
 .bg-gray-900\/95 {
   background-color: rgb(17 24 39 / 0.95);
 }
@@ -2031,10 +2198,6 @@ body.soccer-field-bg::before {
 .bg-green-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity, 1));
-}
-
-.bg-green-500\/90 {
-  background-color: rgb(34 197 94 / 0.9);
 }
 
 .bg-indigo-500\/20 {
@@ -2090,6 +2253,10 @@ body.soccer-field-bg::before {
 
 .bg-primary-600\/20 {
   background-color: rgb(0 166 62 / 0.2);
+}
+
+.bg-primary-600\/90 {
+  background-color: rgb(0 166 62 / 0.9);
 }
 
 .bg-primary-800\/40 {
@@ -2148,6 +2315,11 @@ body.soccer-field-bg::before {
   background-color: rgb(239 68 68 / 0.05);
 }
 
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
+}
+
 .bg-red-600\/20 {
   background-color: rgb(220 38 38 / 0.2);
 }
@@ -2204,31 +2376,41 @@ body.soccer-field-bg::before {
   background-color: rgb(234 179 8 / 0.2);
 }
 
-.bg-blue-400 {
+.bg-cyan-500\/20 {
+  background-color: rgb(6 182 212 / 0.2);
+}
+
+.bg-green-500\/20 {
+  background-color: rgb(34 197 94 / 0.2);
+}
+
+.bg-yellow-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(96 165 250 / var(--tw-bg-opacity, 1));
+  background-color: rgb(234 179 8 / var(--tw-bg-opacity, 1));
 }
 
-.bg-gray-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
+.bg-blue-500\/30 {
+  background-color: rgb(59 130 246 / 0.3);
 }
 
-.bg-gray-500\/20 {
-  background-color: rgb(107 114 128 / 0.2);
+.bg-emerald-500\/30 {
+  background-color: rgb(16 185 129 / 0.3);
 }
 
-.bg-gray-900\/90 {
-  background-color: rgb(17 24 39 / 0.9);
+.bg-primary-500\/30 {
+  background-color: rgb(0 201 80 / 0.3);
 }
 
-.bg-red-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
+.bg-purple-500\/30 {
+  background-color: rgb(168 85 247 / 0.3);
 }
 
-.bg-primary-600\/90 {
-  background-color: rgb(0 166 62 / 0.9);
+.bg-yellow-500\/30 {
+  background-color: rgb(234 179 8 / 0.3);
+}
+
+.bg-red-500\/90 {
+  background-color: rgb(239 68 68 / 0.9);
 }
 
 .bg-opacity-50 {
@@ -2261,6 +2443,10 @@ body.soccer-field-bg::before {
 
 .bg-gradient-to-tr {
   background-image: linear-gradient(to top right, var(--tw-gradient-stops));
+}
+
+.bg-\[linear-gradient\(to_right\2c \#10b981_1px\2c transparent_1px\)\2c linear-gradient\(to_bottom\2c \#10b981_1px\2c transparent_1px\)\] {
+  background-image: linear-gradient(to right,#10b981 1px,transparent 1px),linear-gradient(to bottom,#10b981 1px,transparent 1px);
 }
 
 .from-black\/50 {
@@ -2599,6 +2785,180 @@ body.soccer-field-bg::before {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-blue-500 {
+  --tw-gradient-from: #3b82f6 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(59 130 246 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-blue-500\/30 {
+  --tw-gradient-from: rgb(59 130 246 / 0.3) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(59 130 246 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-primary-500\/30 {
+  --tw-gradient-from: rgb(0 201 80 / 0.3) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(0 201 80 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-primary-900\/10 {
+  --tw-gradient-from: rgb(13 84 43 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(13 84 43 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-purple-500 {
+  --tw-gradient-from: #a855f7 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(168 85 247 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-purple-500\/30 {
+  --tw-gradient-from: rgb(168 85 247 / 0.3) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(168 85 247 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-emerald-500 {
+  --tw-gradient-from: #10b981 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(16 185 129 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-emerald-500\/30 {
+  --tw-gradient-from: rgb(16 185 129 / 0.3) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(16 185 129 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-gray-900\/95 {
+  --tw-gradient-from: rgb(17 24 39 / 0.95) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(17 24 39 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-orange-400 {
+  --tw-gradient-from: #fb923c var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(251 146 60 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-yellow-200\/30 {
+  --tw-gradient-from: rgb(254 240 138 / 0.3) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(254 240 138 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-yellow-300\/20 {
+  --tw-gradient-from: rgb(253 224 71 / 0.2) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(253 224 71 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-yellow-400 {
+  --tw-gradient-from: #facc15 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(250 204 21 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-yellow-500 {
+  --tw-gradient-from: #eab308 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(234 179 8 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-yellow-500\/30 {
+  --tw-gradient-from: rgb(234 179 8 / 0.3) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(234 179 8 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-blue-500\/10 {
+  --tw-gradient-from: rgb(59 130 246 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(59 130 246 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-green-500\/10 {
+  --tw-gradient-from: rgb(34 197 94 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(34 197 94 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-orange-500\/10 {
+  --tw-gradient-from: rgb(249 115 22 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(249 115 22 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-purple-500\/10 {
+  --tw-gradient-from: rgb(168 85 247 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(168 85 247 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-red-500\/10 {
+  --tw-gradient-from: rgb(239 68 68 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(239 68 68 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-yellow-500\/10 {
+  --tw-gradient-from: rgb(234 179 8 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(234 179 8 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-yellow-500\/20 {
+  --tw-gradient-from: rgb(234 179 8 / 0.2) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(234 179 8 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-emerald-500\/90 {
+  --tw-gradient-from: rgb(16 185 129 / 0.9) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(16 185 129 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-gray-900\/60 {
+  --tw-gradient-from: rgb(17 24 39 / 0.6) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(17 24 39 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-primary-600\/95 {
+  --tw-gradient-from: rgb(0 166 62 / 0.95) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(0 166 62 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-red-400 {
+  --tw-gradient-from: #f87171 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(248 113 113 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-red-500\/0 {
+  --tw-gradient-from: rgb(239 68 68 / 0) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(239 68 68 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-red-500\/95 {
+  --tw-gradient-from: rgb(239 68 68 / 0.95) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(239 68 68 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-rose-500\/20 {
+  --tw-gradient-from: rgb(244 63 94 / 0.2) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(244 63 94 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .via-black\/20 {
   --tw-gradient-to: rgb(0 0 0 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), rgb(0 0 0 / 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -2764,6 +3124,31 @@ body.soccer-field-bg::before {
   --tw-gradient-stops: var(--tw-gradient-from), rgb(255 255 255 / 0.4) var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
+.via-cyan-600 {
+  --tw-gradient-to: rgb(8 145 178 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #0891b2 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.via-green-600 {
+  --tw-gradient-to: rgb(22 163 74 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #16a34a var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.via-orange-600 {
+  --tw-gradient-to: rgb(234 88 12 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #ea580c var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.via-pink-600 {
+  --tw-gradient-to: rgb(219 39 119 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #db2777 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.via-pink-400 {
+  --tw-gradient-to: rgb(244 114 182 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #f472b6 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
 .to-blue-200 {
   --tw-gradient-to: #bfdbfe var(--tw-gradient-to-position);
 }
@@ -2790,6 +3175,10 @@ body.soccer-field-bg::before {
 
 .to-blue-600\/20 {
   --tw-gradient-to: rgb(37 99 235 / 0.2) var(--tw-gradient-to-position);
+}
+
+.to-cyan-500 {
+  --tw-gradient-to: #06b6d4 var(--tw-gradient-to-position);
 }
 
 .to-cyan-500\/20 {
@@ -3044,8 +3433,124 @@ body.soccer-field-bg::before {
   --tw-gradient-to: rgb(255 255 255 / 0.03) var(--tw-gradient-to-position);
 }
 
-.to-cyan-500 {
-  --tw-gradient-to: #06b6d4 var(--tw-gradient-to-position);
+.to-cyan-500\/30 {
+  --tw-gradient-to: rgb(6 182 212 / 0.3) var(--tw-gradient-to-position);
+}
+
+.to-emerald-500\/30 {
+  --tw-gradient-to: rgb(16 185 129 / 0.3) var(--tw-gradient-to-position);
+}
+
+.to-pink-500\/30 {
+  --tw-gradient-to: rgb(236 72 153 / 0.3) var(--tw-gradient-to-position);
+}
+
+.to-primary-900\/10 {
+  --tw-gradient-to: rgb(13 84 43 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-emerald-500\/10 {
+  --tw-gradient-to: rgb(16 185 129 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-gray-800\/95 {
+  --tw-gradient-to: rgb(31 41 55 / 0.95) var(--tw-gradient-to-position);
+}
+
+.to-green-500\/30 {
+  --tw-gradient-to: rgb(34 197 94 / 0.3) var(--tw-gradient-to-position);
+}
+
+.to-green-600 {
+  --tw-gradient-to: #16a34a var(--tw-gradient-to-position);
+}
+
+.to-orange-400 {
+  --tw-gradient-to: #fb923c var(--tw-gradient-to-position);
+}
+
+.to-orange-500\/30 {
+  --tw-gradient-to: rgb(249 115 22 / 0.3) var(--tw-gradient-to-position);
+}
+
+.to-orange-600 {
+  --tw-gradient-to: #ea580c var(--tw-gradient-to-position);
+}
+
+.to-yellow-400 {
+  --tw-gradient-to: #facc15 var(--tw-gradient-to-position);
+}
+
+.to-yellow-600 {
+  --tw-gradient-to: #ca8a04 var(--tw-gradient-to-position);
+}
+
+.to-cyan-500\/10 {
+  --tw-gradient-to: rgb(6 182 212 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-gray-800 {
+  --tw-gradient-to: #1f2937 var(--tw-gradient-to-position);
+}
+
+.to-green-500\/10 {
+  --tw-gradient-to: rgb(34 197 94 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-orange-500\/10 {
+  --tw-gradient-to: rgb(249 115 22 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-orange-600\/10 {
+  --tw-gradient-to: rgb(234 88 12 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-pink-500\/10 {
+  --tw-gradient-to: rgb(236 72 153 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-purple-600\/10 {
+  --tw-gradient-to: rgb(147 51 234 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-red-500\/10 {
+  --tw-gradient-to: rgb(239 68 68 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-red-600\/10 {
+  --tw-gradient-to: rgb(220 38 38 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-yellow-600\/10 {
+  --tw-gradient-to: rgb(202 138 4 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-blue-600\/10 {
+  --tw-gradient-to: rgb(37 99 235 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-emerald-600\/10 {
+  --tw-gradient-to: rgb(5 150 105 / 0.1) var(--tw-gradient-to-position);
+}
+
+.to-gray-800\/60 {
+  --tw-gradient-to: rgb(31 41 55 / 0.6) var(--tw-gradient-to-position);
+}
+
+.to-green-500\/90 {
+  --tw-gradient-to: rgb(34 197 94 / 0.9) var(--tw-gradient-to-position);
+}
+
+.to-primary-500\/95 {
+  --tw-gradient-to: rgb(0 201 80 / 0.95) var(--tw-gradient-to-position);
+}
+
+.to-pink-500\/95 {
+  --tw-gradient-to: rgb(236 72 153 / 0.95) var(--tw-gradient-to-position);
+}
+
+.to-red-400 {
+  --tw-gradient-to: #f87171 var(--tw-gradient-to-position);
 }
 
 .bg-\[size\:4rem_4rem\] {
@@ -3100,6 +3605,10 @@ body.soccer-field-bg::before {
 
 .p-8 {
   padding: 2rem;
+}
+
+.p-5 {
+  padding: 1.25rem;
 }
 
 .px-2 {
@@ -3202,6 +3711,11 @@ body.soccer-field-bg::before {
   padding-bottom: 2rem;
 }
 
+.py-24 {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -3242,6 +3756,10 @@ body.soccer-field-bg::before {
   padding-top: 0.5rem;
 }
 
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
 .pt-4 {
   padding-top: 1rem;
 }
@@ -3252,10 +3770,6 @@ body.soccer-field-bg::before {
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pt-3 {
-  padding-top: 0.75rem;
 }
 
 .text-left {
@@ -3294,6 +3808,11 @@ body.soccer-field-bg::before {
   line-height: 1;
 }
 
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
+}
+
 .text-\[10px\] {
   font-size: 10px;
 }
@@ -3327,8 +3846,8 @@ body.soccer-field-bg::before {
   line-height: 1rem;
 }
 
-.text-6xl {
-  font-size: 3.75rem;
+.text-7xl {
+  font-size: 4.5rem;
   line-height: 1;
 }
 
@@ -3371,6 +3890,10 @@ body.soccer-field-bg::before {
 
 .leading-relaxed {
   line-height: 1.625;
+}
+
+.leading-tight {
+  line-height: 1.25;
 }
 
 .tracking-tight {
@@ -3571,6 +4094,35 @@ body.soccer-field-bg::before {
   color: rgb(161 98 7 / var(--tw-text-opacity, 1));
 }
 
+.text-primary-500\/40 {
+  color: rgb(0 201 80 / 0.4);
+}
+
+.text-cyan-300 {
+  --tw-text-opacity: 1;
+  color: rgb(103 232 249 / var(--tw-text-opacity, 1));
+}
+
+.text-green-300 {
+  --tw-text-opacity: 1;
+  color: rgb(134 239 172 / var(--tw-text-opacity, 1));
+}
+
+.text-pink-300 {
+  --tw-text-opacity: 1;
+  color: rgb(249 168 212 / var(--tw-text-opacity, 1));
+}
+
+.text-purple-300 {
+  --tw-text-opacity: 1;
+  color: rgb(216 180 254 / var(--tw-text-opacity, 1));
+}
+
+.text-yellow-300 {
+  --tw-text-opacity: 1;
+  color: rgb(253 224 71 / var(--tw-text-opacity, 1));
+}
+
 .placeholder-gray-500::-moz-placeholder {
   --tw-placeholder-opacity: 1;
   color: rgb(107 114 128 / var(--tw-placeholder-opacity, 1));
@@ -3619,6 +4171,10 @@ body.soccer-field-bg::before {
 
 .opacity-\[0\.03\] {
   opacity: 0.03;
+}
+
+.opacity-\[0\.02\] {
+  opacity: 0.02;
 }
 
 .shadow-2xl {
@@ -3687,6 +4243,11 @@ body.soccer-field-bg::before {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.shadow-primary-900\/20 {
+  --tw-shadow-color: rgb(13 84 43 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .shadow-primary-900\/50 {
   --tw-shadow-color: rgb(13 84 43 / 0.5);
   --tw-shadow: var(--tw-shadow-colored);
@@ -3702,8 +4263,38 @@ body.soccer-field-bg::before {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
-.shadow-primary-900\/20 {
-  --tw-shadow-color: rgb(13 84 43 / 0.2);
+.shadow-blue-500\/20 {
+  --tw-shadow-color: rgb(59 130 246 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-emerald-500\/20 {
+  --tw-shadow-color: rgb(16 185 129 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-primary-500\/20 {
+  --tw-shadow-color: rgb(0 201 80 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-purple-500\/20 {
+  --tw-shadow-color: rgb(168 85 247 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-yellow-500\/20 {
+  --tw-shadow-color: rgb(234 179 8 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-emerald-900\/50 {
+  --tw-shadow-color: rgb(6 78 59 / 0.5);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-red-900\/50 {
+  --tw-shadow-color: rgb(127 29 29 / 0.5);
   --tw-shadow: var(--tw-shadow-colored);
 }
 
@@ -3754,6 +4345,16 @@ body.soccer-field-bg::before {
 
 .blur-xl {
   --tw-blur: blur(24px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.blur-sm {
+  --tw-blur: blur(4px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.blur-\[120px\] {
+  --tw-blur: blur(120px);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
@@ -3856,6 +4457,10 @@ body.soccer-field-bg::before {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .animate-fade-in {
   animation: fadeIn 0.5s ease-in;
 }
@@ -3899,6 +4504,16 @@ body.soccer-field-bg::before {
 
 .hover\:translate-y-\[-2px\]:hover {
   --tw-translate-y: -2px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.hover\:-translate-y-3:hover {
+  --tw-translate-y: -0.75rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.hover\:rotate-90:hover {
+  --tw-rotate: 90deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -4010,6 +4625,24 @@ body.soccer-field-bg::before {
   border-color: rgb(255 255 255 / 0.2);
 }
 
+.hover\:border-green-500\/40:hover {
+  border-color: rgb(34 197 94 / 0.4);
+}
+
+.hover\:border-orange-500\/40:hover {
+  border-color: rgb(249 115 22 / 0.4);
+}
+
+.hover\:border-primary-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(5 223 114 / var(--tw-border-opacity, 1));
+}
+
+.hover\:border-red-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(248 113 113 / var(--tw-border-opacity, 1));
+}
+
 .hover\:bg-blue-400\/10:hover {
   background-color: rgb(96 165 250 / 0.1);
 }
@@ -4020,6 +4653,11 @@ body.soccer-field-bg::before {
 
 .hover\:bg-blue-500\/30:hover {
   background-color: rgb(59 130 246 / 0.3);
+}
+
+.hover\:bg-gray-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-pink-500\/10:hover {
@@ -4042,6 +4680,11 @@ body.soccer-field-bg::before {
 
 .hover\:bg-primary-800\/50:hover {
   background-color: rgb(1 102 48 / 0.5);
+}
+
+.hover\:bg-red-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-red-500\/10:hover {
@@ -4104,14 +4747,9 @@ body.soccer-field-bg::before {
   background-color: rgb(234 179 8 / 0.3);
 }
 
-.hover\:bg-red-500:hover {
+.hover\:bg-red-600:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-gray-700:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:from-blue-500:hover {
@@ -4232,6 +4870,10 @@ body.soccer-field-bg::before {
 
 .hover\:to-white\/\[0\.06\]:hover {
   --tw-gradient-to: rgb(255 255 255 / 0.06) var(--tw-gradient-to-position);
+}
+
+.hover\:to-pink-500:hover {
+  --tw-gradient-to: #ec4899 var(--tw-gradient-to-position);
 }
 
 .hover\:text-emerald-300:hover {
@@ -4380,6 +5022,11 @@ body.soccer-field-bg::before {
 
 .hover\:shadow-red-900\/50:hover {
   --tw-shadow-color: rgb(127 29 29 / 0.5);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.hover\:shadow-red-500\/50:hover {
+  --tw-shadow-color: rgb(239 68 68 / 0.5);
   --tw-shadow: var(--tw-shadow-colored);
 }
 
@@ -4541,6 +5188,21 @@ body.soccer-field-bg::before {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.group:hover .group-hover\:-translate-y-3 {
+  --tw-translate-y: -0.75rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:hover .group-hover\:-translate-y-2 {
+  --tw-translate-y: -0.5rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group\/cta:hover .group-hover\/cta\:translate-x-1 {
+  --tw-translate-x: 0.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .group\/cancel:hover .group-hover\/cancel\:rotate-90 {
   --tw-rotate: 90deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -4563,6 +5225,11 @@ body.soccer-field-bg::before {
 
 .group:hover .group-hover\:rotate-6 {
   --tw-rotate: 6deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:hover .group-hover\:rotate-\[360deg\] {
+  --tw-rotate: 360deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -4590,9 +5257,45 @@ body.soccer-field-bg::before {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.group:hover .group-hover\:animate-bounce {
+  animation: bounce 1s infinite;
+}
+
 .group:hover .group-hover\:border-primary-500 {
   --tw-border-opacity: 1;
   border-color: rgb(0 201 80 / var(--tw-border-opacity, 1));
+}
+
+.group:hover .group-hover\:border-blue-500\/50 {
+  border-color: rgb(59 130 246 / 0.5);
+}
+
+.group:hover .group-hover\:border-primary-500\/50 {
+  border-color: rgb(0 201 80 / 0.5);
+}
+
+.group:hover .group-hover\:border-purple-500\/50 {
+  border-color: rgb(168 85 247 / 0.5);
+}
+
+.group:hover .group-hover\:border-emerald-500\/50 {
+  border-color: rgb(16 185 129 / 0.5);
+}
+
+.group:hover .group-hover\:border-yellow-500\/50 {
+  border-color: rgb(234 179 8 / 0.5);
 }
 
 .group:hover .group-hover\:bg-primary-600 {
@@ -4787,6 +5490,16 @@ body.soccer-field-bg::before {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
+.group:hover .group-hover\:text-yellow-400 {
+  --tw-text-opacity: 1;
+  color: rgb(250 204 21 / var(--tw-text-opacity, 1));
+}
+
+.group:hover .group-hover\:text-red-400 {
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity, 1));
+}
+
 .group\/login:hover .group-hover\/login\:opacity-100 {
   opacity: 1;
 }
@@ -4827,9 +5540,54 @@ body.soccer-field-bg::before {
   opacity: 0.75;
 }
 
+.group:hover .group-hover\:opacity-50 {
+  opacity: 0.5;
+}
+
+.group:hover .group-hover\:shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .group:hover .group-hover\:shadow-red-500\/50 {
   --tw-shadow-color: rgb(239 68 68 / 0.5);
   --tw-shadow: var(--tw-shadow-colored);
+}
+
+.group:hover .group-hover\:shadow-blue-500\/20 {
+  --tw-shadow-color: rgb(59 130 246 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.group:hover .group-hover\:shadow-primary-500\/20 {
+  --tw-shadow-color: rgb(0 201 80 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.group:hover .group-hover\:shadow-purple-500\/20 {
+  --tw-shadow-color: rgb(168 85 247 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.group:hover .group-hover\:shadow-emerald-500\/20 {
+  --tw-shadow-color: rgb(16 185 129 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.group:hover .group-hover\:shadow-yellow-500\/20 {
+  --tw-shadow-color: rgb(234 179 8 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.group:hover .group-hover\:blur-3xl {
+  --tw-blur: blur(64px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.group:hover .group-hover\:blur-2xl {
+  --tw-blur: blur(40px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .group:hover .group-hover\:duration-200 {
@@ -5181,6 +5939,10 @@ body.soccer-field-bg::before {
     align-items: center;
   }
 
+  .md\:justify-start {
+    justify-content: flex-start;
+  }
+
   .md\:p-10 {
     padding: 2.5rem;
   }
@@ -5206,6 +5968,15 @@ body.soccer-field-bg::before {
   .md\:py-4 {
     padding-top: 1rem;
     padding-bottom: 1rem;
+  }
+
+  .md\:py-28 {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+
+  .md\:text-left {
+    text-align: left;
   }
 
   .md\:text-2xl {
@@ -5242,6 +6013,11 @@ body.soccer-field-bg::before {
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
+
+  .md\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -5267,6 +6043,10 @@ body.soccer-field-bg::before {
 
   .lg\:col-span-6 {
     grid-column: span 6 / span 6;
+  }
+
+  .lg\:block {
+    display: block;
   }
 
   .lg\:h-auto {
@@ -5299,6 +6079,10 @@ body.soccer-field-bg::before {
 
   .lg\:gap-12 {
     gap: 3rem;
+  }
+
+  .lg\:gap-8 {
+    gap: 2rem;
   }
 
   .lg\:px-8 {

@@ -169,7 +169,7 @@ def index():
     favoritas = []
     if current_user.is_authenticated:
         cur.execute("""
-            SELECT c.nombre, c.descripcion, c.imagen_url
+            SELECT c.id_cancha, c.nombre, c.descripcion, c.imagen_url
             FROM favoritos f
             JOIN canchas c ON f.cancha = c.nombre
             WHERE f.id_usuario = ?
@@ -177,18 +177,19 @@ def index():
         favoritas_db = cur.fetchall()
         for c in favoritas_db:
             favoritas.append({
-                'nombre': c[0],
-                'descripcion': c[1],
-                'imagen': c[2].split(',')[0] if c[2] else None
+                'id_cancha': c[0],
+                'nombre': c[1],
+                'descripcion': c[2],
+                'imagen': c[3].split(',')[0] if c[3] else None
             })
-    cur.execute("SELECT nombre, descripcion, imagen_url, precio, direccion FROM canchas WHERE usuario_id IS NOT NULL")
+    cur.execute("SELECT id_cancha, nombre, descripcion, imagen_url, precio, direccion FROM canchas WHERE usuario_id IS NOT NULL")
     canchas_db = cur.fetchall()
     canchas = []
     for c in canchas_db:
-        img_path = c[2].split(',')[0] if c[2] else 'imagenes/cancha1.png'
+        img_path = c[3].split(',')[0] if c[3] else 'imagenes/cancha1.png'
         if img_path.startswith('static/'):
             img_path = img_path.replace('static/', '', 1)
-        canchas.append((c[0], c[1], img_path, c[3], c[4]))
+        canchas.append((c[0], c[1], c[2], img_path, c[4], c[5]))
     return render_template('home.html', canchas=canchas, favoritas=favoritas)
 
 @app.route('/nosotros')
