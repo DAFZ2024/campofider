@@ -265,6 +265,16 @@
                                     </svg>
                                     <span class="line-clamp-1">{{ cancha[5] if cancha[5] else 'Ubicación no disponible' }}</span>
                                 </div>
+                                
+                                <!-- Operating Hours -->
+                                {% if cancha[6] and cancha[7] %}
+                                <div class="flex items-center gap-2 text-gray-400 text-sm mt-2">
+                                    <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>{{ cancha[6].strftime('%I:%M %p') if cancha[6].__class__.__name__ == 'time' else cancha[6] }} - {{ cancha[7].strftime('%I:%M %p') if cancha[7].__class__.__name__ == 'time' else cancha[7] }}</span>
+                                </div>
+                                {% endif %}
                             </div>
 
                             <!-- Features Tags -->
@@ -535,6 +545,16 @@ function deg2rad(deg) {
                             <p class="text-gray-400 text-sm line-clamp-2 leading-relaxed">
                                 {{ cancha.descripcion }}
                             </p>
+                            
+                            <!-- Operating Hours -->
+                            {% if cancha.hora_inicio and cancha.hora_fin %}
+                            <div class="flex items-center gap-2 text-gray-400 text-sm mt-3">
+                                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>{{ cancha.hora_inicio.strftime('%I:%M %p') if cancha.hora_inicio.__class__.__name__ == 'time' else cancha.hora_inicio }} - {{ cancha.hora_fin.strftime('%I:%M %p') if cancha.hora_fin.__class__.__name__ == 'time' else cancha.hora_fin }}</span>
+                            </div>
+                            {% endif %}
                         </div>
 
                         <!-- Features Tags -->

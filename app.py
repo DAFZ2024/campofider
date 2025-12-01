@@ -169,9 +169,10 @@ def index():
     favoritas = []
     if current_user.is_authenticated:
         cur.execute("""
-            SELECT c.id_cancha, c.nombre, c.descripcion, c.imagen_url
+            SELECT c.id_cancha, c.nombre, c.descripcion, c.imagen_url, h.hora_inicio, h.hora_fin
             FROM favoritos f
             JOIN canchas c ON f.cancha = c.nombre
+            LEFT JOIN horarios_canchas h ON c.id_cancha = h.id_cancha
             WHERE f.id_usuario = ?
         """, (current_user.id,))
         favoritas_db = cur.fetchall()
@@ -180,16 +181,27 @@ def index():
                 'id_cancha': c[0],
                 'nombre': c[1],
                 'descripcion': c[2],
-                'imagen': c[3].split(',')[0] if c[3] else None
+                'imagen': c[3].split(',')[0] if c[3] else None,
+                'hora_inicio': c[4],
+                'hora_fin': c[5]
             })
-    cur.execute("SELECT id_cancha, nombre, descripcion, imagen_url, precio, direccion FROM canchas WHERE usuario_id IS NOT NULL")
+    
+    # Obtener canchas con sus horarios
+    cur.execute("""
+        SELECT c.id_cancha, c.nombre, c.descripcion, c.imagen_url, c.precio, c.direccion,
+               h.hora_inicio, h.hora_fin
+        FROM canchas c
+        LEFT JOIN horarios_canchas h ON c.id_cancha = h.id_cancha
+        WHERE c.usuario_id IS NOT NULL
+    """)
     canchas_db = cur.fetchall()
     canchas = []
     for c in canchas_db:
         img_path = c[3].split(',')[0] if c[3] else 'imagenes/cancha1.png'
         if img_path.startswith('static/'):
             img_path = img_path.replace('static/', '', 1)
-        canchas.append((c[0], c[1], c[2], img_path, c[4], c[5]))
+        # Formato: (id, nombre, descripcion, imagen, precio, direccion, hora_inicio, hora_fin)
+        canchas.append((c[0], c[1], c[2], img_path, c[4], c[5], c[6], c[7]))
     return render_template('home.html', canchas=canchas, favoritas=favoritas)
 
 @app.route('/nosotros')
@@ -349,6 +361,14 @@ def dueno_agregar_cancha():
             precio = request.form['precio']
             descripcion = request.form['descripcion']
             direccion = request.form.get('direccion', '')
+            hora_apertura = request.form.get('hora_apertura')
+            hora_cierre = request.form.get('hora_cierre')
+            
+            # Validar horarios
+            if hora_apertura and hora_cierre:
+                if hora_apertura >= hora_cierre:
+                    flash('La hora de cierre debe ser posterior a la hora de apertura', 'error')
+                    return render_template('dueño_agregar_cancha.html')
             
             imagen_url = ''
             if 'imagen' in request.files:
@@ -366,6 +386,17 @@ def dueno_agregar_cancha():
                 INSERT INTO canchas (nombre, precio, descripcion, imagen_url, direccion, usuario_id)
                 VALUES (?, ?, ?, ?, ?, ?)
             """, (nombre, precio, descripcion, imagen_url, direccion, current_user.id))
+            
+            # Obtener el ID de la cancha recién creada
+            id_cancha = cur.lastrowid
+            
+            # Insertar horarios de funcionamiento si se proporcionaron
+            if hora_apertura and hora_cierre:
+                cur.execute("""
+                    INSERT INTO horarios_canchas (id_cancha, hora_inicio, hora_fin, disponible)
+                    VALUES (?, ?, ?, TRUE)
+                """, (id_cancha, hora_apertura, hora_cierre))
+            
             db.commit()
             
             flash(f'Cancha "{nombre}" agregada exitosamente', 'success')
@@ -395,12 +426,24 @@ def dueno_editar_cancha(id):
         flash('Cancha no encontrada o no tienes permiso para editarla', 'error')
         return redirect(url_for('dashboard_dueño'))
     
+    # Obtener horarios existentes
+    cur.execute("SELECT * FROM horarios_canchas WHERE id_cancha = ?", (id,))
+    horario = cur.fetchone()
+    
     if request.method == 'POST':
         try:
             nombre = request.form['nombre']
             precio = request.form['precio']
             descripcion = request.form['descripcion']
             direccion = request.form.get('direccion', '')
+            hora_apertura = request.form.get('hora_apertura')
+            hora_cierre = request.form.get('hora_cierre')
+            
+            # Validar horarios
+            if hora_apertura and hora_cierre:
+                if hora_apertura >= hora_cierre:
+                    flash('La hora de cierre debe ser posterior a la hora de apertura', 'error')
+                    return render_template('dueño_editar_cancha.html', cancha=cancha, horario=horario)
             
             imagen_url = cancha['imagen_url']
             if 'imagen' in request.files:
@@ -417,6 +460,23 @@ def dueno_editar_cancha(id):
                 SET nombre = ?, precio = ?, descripcion = ?, imagen_url = ?, direccion = ?
                 WHERE id_cancha = ? AND usuario_id = ?
             """, (nombre, precio, descripcion, imagen_url, direccion, id, current_user.id))
+            
+            # Actualizar o insertar horarios
+            if hora_apertura and hora_cierre:
+                if horario:
+                    # Actualizar horarios existentes
+                    cur.execute("""
+                        UPDATE horarios_canchas
+                        SET hora_inicio = ?, hora_fin = ?
+                        WHERE id_cancha = ?
+                    """, (hora_apertura, hora_cierre, id))
+                else:
+                    # Insertar nuevos horarios
+                    cur.execute("""
+                        INSERT INTO horarios_canchas (id_cancha, hora_inicio, hora_fin, disponible)
+                        VALUES (?, ?, ?, TRUE)
+                    """, (id, hora_apertura, hora_cierre))
+            
             db.commit()
             
             flash(f'Cancha "{nombre}" actualizada exitosamente', 'success')
@@ -427,7 +487,7 @@ def dueno_editar_cancha(id):
             print(f"Error al editar cancha: {str(e)}")
             flash('Error al editar la cancha. Por favor, intenta de nuevo.', 'error')
     
-    return render_template('dueño_editar_cancha.html', cancha=cancha)
+    return render_template('dueño_editar_cancha.html', cancha=cancha, horario=horario)
 
 @app.route('/dueño/canchas/eliminar/<int:id>', methods=['POST'])
 @login_required
@@ -622,8 +682,10 @@ def usuario_explorar():
     
     cur.execute("""
         SELECT c.id_cancha, c.nombre, c.precio, c.descripcion, c.imagen_url, c.direccion,
-               EXISTS(SELECT 1 FROM favoritos f WHERE f.cancha = c.nombre AND f.id_usuario = ?) as es_favorito
+               EXISTS(SELECT 1 FROM favoritos f WHERE f.cancha = c.nombre AND f.id_usuario = ?) as es_favorito,
+               h.hora_inicio, h.hora_fin
         FROM canchas c
+        LEFT JOIN horarios_canchas h ON c.id_cancha = h.id_cancha
         WHERE c.usuario_id IS NOT NULL
         ORDER BY c.id_cancha DESC
     """, (current_user.id,))
@@ -648,6 +710,14 @@ def usuario_reservar(id_cancha):
         flash('Cancha no encontrada', 'error')
         return redirect(url_for('usuario_explorar'))
     
+    # Obtener horarios de funcionamiento
+    cur.execute("""
+        SELECT hora_inicio, hora_fin
+        FROM horarios_canchas
+        WHERE id_cancha = ?
+    """, (id_cancha,))
+    horario_funcionamiento = cur.fetchone()
+    
     if request.method == 'POST':
         try:
             fecha = request.form['fecha']
@@ -658,7 +728,7 @@ def usuario_reservar(id_cancha):
             fecha_reserva = datetime.strptime(fecha, '%Y-%m-%d').date()
             if fecha_reserva < datetime.now().date():
                 flash('No puedes reservar en una fecha pasada', 'error')
-                return render_template('usuario_reservar.html', cancha=cancha)
+                return render_template('usuario_reservar.html', cancha=cancha, horario_funcionamiento=horario_funcionamiento)
             
             cur.execute("""
                 INSERT INTO reservas (id_usuario, cancha, fecha, horario, numero, mensaje, estado)
@@ -674,7 +744,7 @@ def usuario_reservar(id_cancha):
             print(f"Error al crear reserva: {str(e)}")
             flash('Error al procesar la reserva. Por favor, intenta de nuevo.', 'error')
     
-    return render_template('usuario_reservar.html', cancha=cancha)
+    return render_template('usuario_reservar.html', cancha=cancha, horario_funcionamiento=horario_funcionamiento)
 
 @app.route('/usuario/mis-reservas')
 @login_required

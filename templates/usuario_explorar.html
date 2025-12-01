@@ -164,6 +164,16 @@
                                         <span class="line-clamp-1">{{ cancha['direccion'] }}</span>
                                     </div>
                                 {% endif %}
+                                
+                                <!-- Operating Hours -->
+                                {% if cancha[7] and cancha[8] %}
+                                <div class="flex items-center gap-2 text-gray-400 mb-4 text-sm">
+                                    <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>{{ cancha[7].strftime('%I:%M %p') if cancha[7].__class__.__name__ == 'time' else cancha[7] }} - {{ cancha[8].strftime('%I:%M %p') if cancha[8].__class__.__name__ == 'time' else cancha[8] }}</span>
+                                </div>
+                                {% endif %}
 
                                 <p class="text-gray-300 mb-6 line-clamp-3 text-sm leading-relaxed">
                                     {{ cancha['descripcion'] }}
